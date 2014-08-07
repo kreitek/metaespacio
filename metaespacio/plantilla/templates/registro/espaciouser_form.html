@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block body %}
+
+<p>Date de alta en esta plataforma/espacio usando este formulario. Un correo
+electrónico te será enviado para confirmar la dirección de email.</p>
+
 <form method="POST" action="{% url 'create_user' %}">
     {% csrf_token %}
     {{form.as_p}}
