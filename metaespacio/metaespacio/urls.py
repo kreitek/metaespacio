@@ -5,5 +5,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^plantilla/', include('plantilla.urls')),
+    url(r'^registro/', include('registro.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
