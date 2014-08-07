@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from .models import EspacioUser
+from .models import Usuario
 
-class EspacioUserForm(forms.ModelForm):
+class UsuarioForm(forms.ModelForm):
     class Meta:
-        model = EspacioUser
+        model = Usuario
         fields = ['first_name', 'last_name', 'username', 'email',
                   'dni', 'direccion', 'telefono']

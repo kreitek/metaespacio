@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import CreateView
 
-from .models import EspacioUser
-from .forms import EspacioUserForm
+from .models import Usuario
+from .forms import UsuarioForm
 
 class CreateUser(CreateView):
-    model = EspacioUser
-    form_class = EspacioUserForm
+    model = Usuario
+    form_class = UsuarioForm
 
     def form_valid(self, form):
         redirect_url = super(CreateUser, self).form_valid(form)
