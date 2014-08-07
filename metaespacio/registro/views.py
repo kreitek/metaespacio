@@ -10,7 +10,6 @@ class CreateUser(CreateView):
 
     def form_valid(self, form):
         redirect_url = super(CreateUser, self).form_valid(form)
-        # FIXME esto no esta haciendo nada ???!!!!
-        #form.instance.active = False
-        #form.instance.save()
+        self.object.is_active = False
+        self.object.save()
         return redirect_url
