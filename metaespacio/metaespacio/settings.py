@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'plantilla',
     'registro',
     'espacios',
+    'captcha',
 )
 
 MIDDLEWARE_CLASSES = (
