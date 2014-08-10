@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 
 from .models import Usuario
 from .forms import UsuarioForm
@@ -13,3 +13,7 @@ class CreateUser(CreateView):
         self.object.is_active = False
         self.object.save()
         return redirect_url
+
+class DetailUser(DetailView):
+    model = Usuario
+    template_name = "registro/usuario_detalle.html"

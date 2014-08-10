@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<h1>Página de datos personales / Resumen de cuenta</ h1>
+
+<div class="container">
+   <div class="row">
+      <div class="col-xs-3">
+
+        <div class="clearfix">
+        <h2><u>ID de usuario:</u> {{ object.id }}</h2>
+        </div>
+
+        {% comment "Contabilidad" %}
+        <div>
+        <h2><u>Módulo contabilidad</u></h2>
+        <h4>Estado</h4>
+        </div>
+        {% endcomment %}
+
+        <div class="clearfix">
+        <h1><u>Foto</u></h1>
+        <img src="..." alt="..." class="img-thumbnail">
+        </div>
+
+     </div><div class="col-xs-5">
+
+        <div class="pull-right">
+        <h2><u>Datos personales</u></h2>
+        <h4>Nombre de usuario: {{ object.username }}</h4>
+        <h4>Correo electrónico: {{ object.email }}</h4>
+        <h4>Nombre: {{ object.first_name }}</h4>
+        <h4>Apellidos: {{ object.last_name }}</h4>
+        <h4>Dirección: {{ object.direccion }}</h4>
+        <h4>DNI: {{ object.dni }}</h4>
+        <h4>Teléfono: {{ object.telefono }}</h4>
+        </div>
+
+   </div>
+</div>
+<div class="container">
+
+{% endblock body %}
