@@ -2,12 +2,20 @@
 
 {% block body %}
 
-<p>Date de alta en esta plataforma/espacio usando este formulario. Un correo
-electrónico te será enviado para confirmar la dirección de email.</p>
 
-<form method="POST" action="{% url 'create_user' %}">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Enviar" />
-</form>
+<div role="main" class="container theme-showcase">
+        <center>
+      <div class="jumbotron">
+        <p>Instrucciones:<p>
+        <p>Date de alta en esta plataforma/espacio usando este formulario. Un correo electrónico te será enviado para confirmar la dirección de email.</p>
+        <p><a role="button" class="btn btn-primary btn-lg" href="#">Más Información</a></p>
+      </div></center>
+
+<h2><b>Inscripción</b></h2><br>
+
+    <form method="POST" action="{% url 'create_user' %}">
+        {% csrf_token %}
+        {{form.as_p}}
+        <br><input type="submit" class="btn btn-lg btn-info btn-lg" value="Enviar" />
+    </form>
 {% endblock body %}

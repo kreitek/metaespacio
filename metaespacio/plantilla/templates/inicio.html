@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+        {% block body %}
+        <center>
+        <h1><b>Bienvenido a la web de Servicios</b></h1>
+        <h2><b>Andén Sin Límite</b></h2>
+        <br><br>
+        <h4><i>Inscríbete y accede como miembros a una amplia variedad de servicios y posibilidades.</i></h4><br>
+        <a href="/registro/create" class="btn btn-lg btn-success btn-lg" type="button">Inscríbite aquí</a>
+        <a href="/registro/login" class="btn btn-lg btn-info btn-lg" type="button">Acceso Miembros</a>
+        <br><br><br><br>
+        <div class="row">
+            <div class="col-lg-5 col-lg-offset-1 col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Servicios Disponibles</h3>
+                    </div>
+                    <div class="panel-body">
+                      -Usuario y contraseña único para todos los servicios.<br>
+                      -Resumen contabilidad del espacio. <br>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-md-6 col-lg-5">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Servicios en Desarrollo</h3>
+                    </div>
+                    <div class="panel-body">
+                      -Biblioteca Digital.<br>
+                      -Bolsa de habilidades. <br>
+                      -Gestión de Proyectos. <br>
+                      -Inventario <br>
+                      -Eventos y formación.<br>
+                    </div>
+                  </div>
+                  </div>
+            </div>
+        </div>
+
+        </center>
+
+        {% endblock body %}
+
+
