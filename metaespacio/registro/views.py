@@ -17,3 +17,7 @@ class CreateUser(CreateView):
 class DetailUser(DetailView):
     model = Usuario
     template_name = "registro/usuario_detalle.html"
+
+class LoginUser(CreateView):
+    model = Usuario
+    template_name = "registro/login.html"
