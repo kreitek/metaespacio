@@ -8,25 +8,24 @@
     {% endif %}
 
 <center>
-<h2><b>Acceso / Login</b></h2>
-    <br>
-    <form method="post" action="{% url 'login_user' %}">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-       </table>
-        <br>
-       <input type="submit" class="btn btn-lg btn-info" value="Entrar" />
-       <input type="hidden" name="next" value="{{ next }}" />
-   </form>
 
+<h1><i>Una cuenta. Todo el Andén Sin Límite.</i></h1>
+
+<div class="">
+    <div class="container">
+      <form role="form" class="form-signin">
+        <h2 class="form-signin-heading">Acceso/Login</h2>
+        <input type="email" autofocus="" required="" placeholder="Email" class="form-control">
+        <input type="password" required="" placeholder="Password" class="form-control">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+      </form>
+    </div>
+    </div>
 </center>
 
 {% endblock body %}

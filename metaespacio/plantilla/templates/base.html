@@ -26,13 +26,32 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">{% block projectname %}MetaEspacio{% endblock projectname %}</a>
+          <a class="navbar-brand" href="/">{% block projectname %}ANDEN SIN LIMITE{% endblock projectname %}</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">INICIO</a></li>
             <li><a href="#about">Menu 2</a></li>
-          </ul>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Redes Sociales<span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                      <li><a href="https://www.facebook.com/andensinlimite" target="_blank">Facebook FanPage</a></li>
+                      <li><a href="https://www.facebook.com/groups/736359233061123/" target="_blank">Facebook Group</a></li>
+                      <li><a href="https://plus.google.com/118087280687899429051/posts?pageId=109149070667711813854" target="_blank">Google +</a></li>
+                      <li><a href="https://groups.google.com/forum/#!forum/andensinlimite" target="_blank">Google Group</a></li>
+                      <li><a href="https://www.youtube.com/channel/UCoU0_1sU2lL7a5tys3N_WzQ" target="_blank">Youtube</a></li>
+                      <li><a href="https://twitter.com/Andensinlimite" target="_blank">Twitter</a></li>
+                      <li class="divider"></li>
+                      <li class="dropdown-header">Otros</li>
+                      <li><a href="http://www.andensinlimite.org" target="_blank">WEB Oficial</a></li>
+                      <li><a href="http://www.andensinlimite.org/blog-2/" target="_blank">Blog</a></li>
+                      <li><a href="https://sites.google.com/site/andensinlimite/" target="_blank">Google Site</a></li>
+                    </ul>
+                  </li>
+                </ul>
+
         </div><!--/.nav-collapse -->
       </div>
     </div>
@@ -42,10 +61,19 @@
         <h1>Hello, world!</h1>
         {% endblock body %}
     </div><!-- /.container -->
+    <br><br>
+
+    <div class="footer">
+          <div class="container">
+            <p class="text-muted" align="right">Realizado con METAESPACIO</p>
+          </div>
+    </div>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   </body>
 </html>
+
 
