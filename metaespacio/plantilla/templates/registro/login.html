@@ -7,7 +7,14 @@
         <p>Su Usuario y Contraseña no coincide. Por favor, vuelva a intentarlo.</p>
     {% endif %}
 
-<center>
+    <h2>Acceso / Login</h2>
+    <form method="post" action="{% url 'login_user' %}">
+        {% csrf_token %}
+        {{form.as_table}}
+        <br>
+       <input type="submit" class="btn btn-lg btn-info" value="Entrar" />
+       <input type="hidden" name="next" value="{{ next }}" />
+   </form>
 
 <h1><i>Una cuenta. Todo el Andén Sin Límite.</i></h1>
 
