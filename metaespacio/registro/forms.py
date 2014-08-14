@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from localflavor.es.forms import ESIdentityCardNumberField
 from captcha.fields import CaptchaField
 from .models import Usuario
 from django.contrib.auth.models import User
@@ -51,6 +52,11 @@ class UsuarioForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(UsuarioForm, self).clean()
+        dni = cleaned_data.get("dni")
+        try:
+            ESIdentityCardNumberField().clean(dni)
+        except forms.ValidationError:
+            raise forms.ValidationError("El número identificador no es válido")
         p1 = cleaned_data.get('password1')
         p2 = cleaned_data.get('password2')
         if p1 and p2 and p1 != p2:

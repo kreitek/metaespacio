@@ -1,3 +1,4 @@
 django==1.6
 django-simple-captcha
 django-crispy-forms
+django-localflavor
