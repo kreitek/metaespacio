@@ -56,7 +56,7 @@ class UsuarioForm(forms.ModelForm):
         try:
             ESIdentityCardNumberField().clean(dni)
         except forms.ValidationError:
-            raise forms.ValidationError("El número identificador no es válido")
+            raise forms.ValidationError("El número identificador (DNI) no es válido")
         p1 = cleaned_data.get('password1')
         p2 = cleaned_data.get('password2')
         if p1 and p2 and p1 != p2:
@@ -65,5 +65,4 @@ class UsuarioForm(forms.ModelForm):
 
     class Meta:
         model = Usuario
-        fields = ['first_name', 'last_name', 'username', 'email',
-                  'dni', 'direccion', 'telefono']
+        fields = ['first_name', 'last_name', 'email', 'dni', 'direccion', 'telefono', 'username']

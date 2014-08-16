@@ -3,14 +3,14 @@
 
 {% block body %}
     <div class="container-fluid">
-        <h1 class="center-block">Una cuenta. Todo el Andén Sin Límite.</h1>
+        <h1 class="center-block" align="center"><i>Una cuenta. Todo el Andén Sin Límite.</i></h1><br>
         <div class="row">
             <div class="col-md-offset-4 col-md-4">
                 <form role="form" class="panel" method="POST" action="{% url 'login' %}">
-                    <h2 class="form-signin-heading">Acceso/Login</h2>
+                    <h2 class="form-signin-heading" align="center">Acceso/Login</h2>
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button type="submit" class="btn btn-primary">Sign in</button>
+                    <center><button type="submit" class="btn btn-primary">Sign in / Acceso</button></center>
                 </form>
             </div>
         </div>
