@@ -32,5 +32,5 @@ As far as dependencies are installed, start the app with:
 
     cd metaespacio
     python manage.py syncdb
-    # python manage.py migrate
+    python manage.py migrate
     python manage.py runserver
