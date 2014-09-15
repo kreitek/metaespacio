@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<h1>Últimos libros disponibles</h1>
+<ul>
+{% for book in object_list %}
+    <li>{{ book.entry_date|date }} - {{ book.title }}</li>
+{% empty %}
+    <li>No hay libros todavía</li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}

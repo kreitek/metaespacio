@@ -1,0 +1,253 @@
+[
+{
+    "pk": 1, 
+    "model": "bibliotheca.author", 
+    "fields": {
+        "surname": "Roberts", 
+        "middle_name": "", 
+        "given_name": "Dustyn"
+    }
+},
+{
+    "pk": 2, 
+    "model": "bibliotheca.author", 
+    "fields": {
+        "surname": "Aspinwall", 
+        "middle_name": "", 
+        "given_name": "Jim"
+    }
+},
+{
+    "pk": 3, 
+    "model": "bibliotheca.author", 
+    "fields": {
+        "surname": "Baichtal", 
+        "middle_name": "", 
+        "given_name": "John"
+    }
+},
+{
+    "pk": 4, 
+    "model": "bibliotheca.author", 
+    "fields": {
+        "surname": "Monk", 
+        "middle_name": "", 
+        "given_name": "Simon"
+    }
+},
+{
+    "pk": 5, 
+    "model": "bibliotheca.author", 
+    "fields": {
+        "surname": "Gray", 
+        "middle_name": "", 
+        "given_name": "Theo"
+    }
+},
+{
+    "pk": 6, 
+    "model": "bibliotheca.author", 
+    "fields": {
+        "surname": "McComb", 
+        "middle_name": "", 
+        "given_name": "Gordon"
+    }
+},
+{
+    "pk": 2, 
+    "model": "bibliotheca.publisher", 
+    "fields": {
+        "publisher_name": "McGraw Hill", 
+        "url": "http://mhprofessional.com/"
+    }
+},
+{
+    "pk": 3, 
+    "model": "bibliotheca.publisher", 
+    "fields": {
+        "publisher_name": "Anaya Multimedia", 
+        "url": "http://www.anayamultimedia.es/"
+    }
+},
+{
+    "pk": 4, 
+    "model": "bibliotheca.publisher", 
+    "fields": {
+        "publisher_name": "Que Publiching", 
+        "url": "http://quepublishing.com/"
+    }
+},
+{
+    "pk": 5, 
+    "model": "bibliotheca.publisher", 
+    "fields": {
+        "publisher_name": "Vox", 
+        "url": "http://www.vox.es/"
+    }
+},
+{
+    "pk": 6, 
+    "model": "bibliotheca.publisher", 
+    "fields": {
+        "publisher_name": "O'Reilly", 
+        "url": "http://www.oreilly.com/"
+    }
+},
+{
+    "pk": 1, 
+    "model": "bibliotheca.book", 
+    "fields": {
+        "lang": "en", 
+        "isbn": "9780071741675", 
+        "title": "Making Things Move", 
+        "url": "", 
+        "cover": "", 
+        "n_pages": 350, 
+        "publisher": 2, 
+        "owner": 1, 
+        "subtitle": "DIY Mechanisms for Inventors, Hobbyist, and Artists", 
+        "digest": ""
+    }
+},
+{
+    "pk": 2, 
+    "model": "bibliotheca.book", 
+    "fields": {
+        "lang": "en", 
+        "isbn": "9788441518209", 
+        "title": "EL PC Los mejores trucos", 
+        "url": "", 
+        "cover": "bibliotheca/book/cover/El_PC_Los_Mejore_trucos.png", 
+        "n_pages": 336, 
+        "publisher": 3, 
+        "owner": 1, 
+        "subtitle": "", 
+        "digest": "Hacer que el inicio del PC sea m\u00e1s r\u00e1pido, mejorar su fiabilidad, utilizar m\u00faltiples sistemas operativos o poder recuperarse de forma r\u00e1pida cuando algo va mal... El PC. Los mejores trucos le propone sacar el m\u00e1ximo partido al software y al hardware de su equipo y hacer que su experiencia frente al ordenador sea m\u00e1s satisfactoria de lo que ha sido nunca. Hallar\u00e1 un truco para cada aspecto de su PC, desde la fuente de alimentaci\u00f3n al puerto del rat\u00f3n, desde el v\u00eddeo a las conexiones de red, y tendr\u00e1 la oportunidad de aprender mucho sobre cada una de las secciones de un PC a lo largo del camino. Si necesita controlar su RAM, configurar discos duros y llevar a cabo particiones, modificar su placa base, CPU, perif\u00e9ricos y sistema operativo, tiene una ayuda \u00fanica en este libro para resolver \u00e9stas y otras muchas cuestiones. Esta obra combina un estilo sencillo con el tratamiento del hardware inform\u00e1tico m\u00e1s popular del mundo. Se presenta en un formato claro y directo y contempla tanto Windows como Linux, convirti\u00e9ndose en la garant\u00eda de que mejorar\u00e1 y ajustar\u00e1 su forma de conseguir el mejor rendimiento posible de su ordenador."
+    }
+},
+{
+    "pk": 3, 
+    "model": "bibliotheca.book", 
+    "fields": {
+        "lang": "en", 
+        "isbn": "978078974897", 
+        "title": "Hack This!", 
+        "url": "", 
+        "cover": "bibliotheca/book/cover/hack_this_cover_1.jpg", 
+        "n_pages": 293, 
+        "publisher": 4, 
+        "owner": 1, 
+        "subtitle": "24 Incredible Hackerspace Projects", 
+        "digest": "what hackerspaces are, how they work, who runs them, what they\u2019re building\u2014and how you can join (or start!) one. Next, he walks you through 24 of today\u2019s best hackerspace projects\u2026everything from robotic grilled-cheese sandwich-makers to devices that make music with zaps of electricity. Every project\u2019s packed with color photos, explanations, lists of resources and tools, and instructions for getting started on your own similar project so you can DIY!\r\n\r\nSome of the projects you\u2019ll learn about include:\r\n\r\n- Kung-fu fighting robots\r\n- Home-brewed Geiger counter\r\n- TransAtlantic balloon\r\n- Twitter-monitoring Christmas tree\r\n- Sandwich-making robot\r\n- Interactive Space Invaders mural\r\n- CNC mill that carves designs into wood, plastic and metal\r\n- Telepresence robot that runs an Internet classroom\r\n- Toy cars that are ridden by people\r\n- Bronze-melting blast furnace\r\n- Laptop-controlled robot fashioned from a wheelchair\r\n- DIY book scanner"
+    }
+},
+{
+    "pk": 4, 
+    "model": "bibliotheca.book", 
+    "fields": {
+        "lang": "en", 
+        "isbn": "978007174133", 
+        "title": "30 Arduino Projects for the Evil Genius", 
+        "url": "", 
+        "cover": "bibliotheca/book/cover/30-Arduino-Projects.png", 
+        "n_pages": 191, 
+        "publisher": 2, 
+        "owner": 1, 
+        "subtitle": "", 
+        "digest": "Build these and other devious devices:\r\n\r\n- Morse code translator\r\n- High-powered strobe light\r\n- Seasonal affective disorder light\r\n- LED dice\r\n- Keypad security code\r\n- Pulse rate monitor\r\n- USB temperature logger\r\n- Oscilloscope\r\n- Light harp\r\n- LCD thermostat\r\n- Computer-controlled fan\r\n- Hypnotizer\r\n- Servo-controlled laser\r\n- Lie detector\r\n- Magnetic door lock\r\n- Infrared remote\r\n\r\nEach project includes a detailed list of materials, sources for parts, schematics, and lots of clear, well-illustrated instructions for easy assembly. The larger workbook-style layout and convenient two-column format make following the step-by-step instructions a breeze. "
+    }
+},
+{
+    "pk": 5, 
+    "model": "bibliotheca.book", 
+    "fields": {
+        "lang": "sp", 
+        "isbn": "9788499740270", 
+        "title": "Ciencia Loca", 
+        "url": "", 
+        "cover": "bibliotheca/book/cover/ciencia_loca.png", 
+        "n_pages": 239, 
+        "publisher": 5, 
+        "owner": 1, 
+        "subtitle": "Experimentos que se pueden hacer en casa, aunque mejor no intentarlo", 
+        "digest": "En Ciencia loca, el autor demuestra principios cient\u00edficos mediante experimentos extremos. Utiliza una galleta Oreo como combustible para lanzar un cohete de juguete, suspende medio gramo de f\u00f3sforo blanco dentro de un globo de ox\u00edgeno puro para encender un sol de f\u00f3sforo, es capaz de devanar un ovillo de nailon casero enlazando mol\u00e9culas de hexametilendiamina y cloruro de sebacoilo,y la cosa se anima cuando con 225 kilos de cal viva convierte una ba\u00f1era en un rudimentario jacuzzi. Cada uno de los experimentos de este libro est\u00e1 ilustrado con impresionantes fotograf\u00edas in\u00e9ditas a todo color que ofrecen un primer plano de las reacciones qu\u00edmicas y la actividad subat\u00f3mica.\r\n\r\nEl autor, adem\u00e1s, explica paso a paso c\u00f3mo realizar la mayor\u00eda de los experimentos. Pero, tanto si el lector reproduce los experimentos como si se limita a observarlos, el relato del autor siempre resulta fresco y divertido, y consigue hacer de la ciencia algo emocionante y comprensible.\r\n\r\n1. Cocina experimental.\r\n2. El bricolaje experimental.\r\n3. Potencia bruta.\r\n4. Jugando con fuego.\r\n5. Heavy metal.\r\n6. Maravillas de la naturaleza.\r\n7. Una extra\u00f1a clase de taller."
+    }
+},
+{
+    "pk": 6, 
+    "model": "bibliotheca.book", 
+    "fields": {
+        "lang": "en", 
+        "isbn": "978007175036", 
+        "title": "Robot Builder's Bonanza", 
+        "url": "http://www.robotoid.com/", 
+        "cover": "bibliotheca/book/cover/robot-builders-bonanza.png", 
+        "n_pages": 704, 
+        "publisher": 2, 
+        "owner": 1, 
+        "subtitle": "", 
+        "digest": "This robot builder's paradise is packed with more than 100 affordable projects, including 10 completely new robot designs. The projects are modular and can be combined to create a variety of highly intelligent and workable robots of all shapes and sizes. Mix and match the projects to develop your own unique creations. The only limit is your imagination!\r\n\r\nRobot Builder's Bonanza, Fourth Edition covers:\r\n\r\n- Parts, materials, and tools\r\n- Building motorized wooden, plastic, and metal platforms\r\n- Rapid prototyping methods\r\n- Drafting bots with computer-aided design\r\n- Constructing high-tech robots from toys\r\n- Building bots from found parts\r\n- Power, motors, and locomotion\r\n- Robots with wheels, tracks, and legs\r\n- Constructing robotic arms and grippers\r\n- Robot electronics and circuit making\r\n- Computers and electronic control\r\n- Microcontrollers--Arduino, PICAXE, and the BASIC stamp\r\n- Remote control systems\r\n- Sensors, navigation, and visual feedback\r\n- Robot vision via proximity, light, and distance"
+    }
+},
+{
+    "pk": 7, 
+    "model": "bibliotheca.book", 
+    "fields": {
+        "lang": "en", 
+        "isbn": "9780596514280", 
+        "title": "MAKE: The Best Of", 
+        "url": "http://shop.oreilly.com/product/9780596514280.do", 
+        "cover": "bibliotheca/book/cover/The-best-of-MAKE.jpg", 
+        "n_pages": 379, 
+        "publisher": 6, 
+        "owner": 1, 
+        "subtitle": "75 Projects from the pages of MAKE", 
+        "digest": "Find out why MAKE has attracted a passionate following of tech and DIY enthusiasts worldwide with one million web site visitors and a quarter of a million magazine readers. And why our podcasts consistently rank in the top-25 for computers and technology. With the Best of MAKE, you'll share the curiosity, zeal, and energy of Makers -- the citizen scientists, circuit benders, homemakers, students, automotive enthusiasts, roboticists, software developers, musicians, hackers, hobbyists, and crafters -- through this unique and inspiring assortment of DIY projects chosen by the magazine's editors.\r\n\r\nLearn to:\r\n\r\n- Hack your gadgets and toys\r\n- Program micontrollers to sense and react to things\r\n- Take flight with rockets, planes, and other projectiles\r\n- Make music from the most surprising of things\r\n- Find new ways to take photos and make video\r\n- Outfit yourself with the coolest tools\r\n\r\nPut together by popular demand, the Best of MAKE is the perfect gift for any maker, including current subscribers who missed early volumes of the magazine. Do you or someone you know have a passion for the magic of tinkering, hacking, and creation? Do you enjoy finding imaginative and unexpected uses for the technology and materials in your life? Then get on board with the Best of MAKE!"
+    }
+},
+{
+    "pk": 1, 
+    "model": "bibliotheca.authorship", 
+    "fields": {
+        "book": 1, 
+        "rank": 0, 
+        "author": 1
+    }
+},
+{
+    "pk": 2, 
+    "model": "bibliotheca.authorship", 
+    "fields": {
+        "book": 2, 
+        "rank": 0, 
+        "author": 2
+    }
+},
+{
+    "pk": 3, 
+    "model": "bibliotheca.authorship", 
+    "fields": {
+        "book": 3, 
+        "rank": 0, 
+        "author": 3
+    }
+},
+{
+    "pk": 4, 
+    "model": "bibliotheca.authorship", 
+    "fields": {
+        "book": 4, 
+        "rank": 0, 
+        "author": 4
+    }
+},
+{
+    "pk": 5, 
+    "model": "bibliotheca.authorship", 
+    "fields": {
+        "book": 5, 
+        "rank": 0, 
+        "author": 5
+    }
+}
+]
