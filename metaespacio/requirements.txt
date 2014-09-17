@@ -4,3 +4,4 @@ django-crispy-forms==1.4.0
 django-localflavor==1.0
 django-extensions==1.4.0
 South==1.0
+django-tastypie==0.12.0
