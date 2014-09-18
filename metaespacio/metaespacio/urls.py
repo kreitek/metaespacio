@@ -1,11 +1,16 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 from tastypie.api import Api
-from bibliotheca.api import BookResource, PublisherResource
+from bibliotheca.api import (
+    BookResource, 
+    BooksResource, 
+    PublisherResource
+    )
 
 v1_api = Api(api_name='v1')
 v1_api.register(BookResource())
 v1_api.register(PublisherResource())
+v1_api.register(BooksResource())
 
 from django.contrib import admin
 admin.autodiscover()
