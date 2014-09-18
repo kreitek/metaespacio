@@ -1,16 +1,16 @@
+from django.conf import settings
 from django.db import models
-from django.contrib.auth import get_user_model
 
 # Create your models here.
 
 
 class Taquillero(models.Model):
-    name = models.CharField(max_lenght=20)
+    name = models.CharField(max_length=20)
     rows = models.IntegerField()
     cols = models.IntegerField()
 
     def __unicode__(self):
-        return self.name
+        return u"{} ({}x{})".format(self.name, self.row, self.col)
 
 
 class Taquilla(models.Model):
@@ -19,11 +19,11 @@ class Taquilla(models.Model):
     col = models.IntegerField()
 
     def __unicode__(self):
-        return "1"
+        return u"{} {}".format(self.row, self.col)
 
 
 class AbonoTaquilla(models.Model):
-    owner = models.ForeignKey(get_user_model()
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     taquilla = models.ForeignKey(Taquilla)
     start_date = models.DateField()
     end_date = models.DateField()

@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'registro',
     'espacios',
     'captcha',
+    'taquilla',
     'bibliotheca',
     'tastypie',
 )
