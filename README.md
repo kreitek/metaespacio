@@ -15,13 +15,9 @@ util en tu idioma, por favor contáctcanos y podremos unir esfuerzos.
 Instalation
 ===========
 
-These django apps require django=1.6, which is the current stable.
+These django apps require django=1.8, which is the current stable.
 
-If you use debian testing, you can install the dependencies using:
-
-    apt-get install python-django # python-django-south
-
-If you use virtualenv, you can install dependencies this way:
+When using virtualenv, you can install dependencies this way:
 
     apt-get install python-virtualenv
     virtualenv virtualenv
@@ -31,6 +27,8 @@ If you use virtualenv, you can install dependencies this way:
 As far as dependencies are installed, start the app with:
 
     cd metaespacio
-    python manage.py syncdb
+    python manage.py makemigrations
     python manage.py migrate
+    # python manage.py loaddata demo.json
     python manage.py runserver
+    # username=passwords like admin test1 etc
