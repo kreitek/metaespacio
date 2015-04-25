@@ -1,7 +1,7 @@
-django<1.7
-django-simple-captcha==0.4.2
-django-crispy-forms==1.4.0
-django-localflavor==1.0
-django-extensions<1.5
-South==1.0
-django-tastypie==0.12.0
+django
+django-simple-captcha
+django-crispy-forms
+django-localflavor
+django-extensions
+django-tastypie
+# pygraphviz  # para django-extensions (graph_models)

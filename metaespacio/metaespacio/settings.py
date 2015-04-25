@@ -38,14 +38,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'crispy_forms',
-    'south',
     'plantilla',
     'registro',
     'espacios',
     'captcha',
     'taquilla',
-    'bibliotheca',
-    'tastypie',
+    # 'bibliotheca',  # necesita actualizar a 1.8
+    # 'tastypie',  # necesita actualizar a 1.8
 )
 
 MIDDLEWARE_CLASSES = (

@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import datetime
-
 from django.conf import settings
+from django.utils import timezone
 from django.db import models
 
 # Create your models here.
@@ -66,7 +65,7 @@ class Book(models.Model):
         blank = True,
         )
     lang = models.CharField(max_length=2, choices=_LANGUAGES)
-    entry_date = models.DateField(default=datetime.date.today())
+    entry_date = models.DateField(default=timezone.now)
 
     def __unicode__(self):
         return '{} (ISBN: {})'.format(self.title, self.isbn)
