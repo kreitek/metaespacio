@@ -3,7 +3,6 @@
 from django import forms
 from localflavor.es.forms import ESIdentityCardNumberField
 from captcha.fields import CaptchaField
-from .models import Usuario
 from django.contrib.auth.models import User
 import string
 
@@ -22,7 +21,7 @@ def cuenta_upper_lower_digits_other(cadena):
     return upper, lower, digits, other
 
 
-class UsuarioForm(forms.ModelForm):
+class UserForm(forms.ModelForm):
     password1 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput)
     password2 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput)
     captcha = CaptchaField()
@@ -51,7 +50,7 @@ class UsuarioForm(forms.ModelForm):
         return passwd
 
     def clean(self):
-        cleaned_data = super(UsuarioForm, self).clean()
+        cleaned_data = super(UserForm, self).clean()
         dni = cleaned_data.get("dni")
         try:
             ESIdentityCardNumberField().clean(dni)
@@ -64,5 +63,5 @@ class UsuarioForm(forms.ModelForm):
         return cleaned_data
 
     class Meta:
-        model = Usuario
-        fields = ['first_name', 'last_name', 'email', 'dni', 'direccion', 'telefono', 'username']
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username']

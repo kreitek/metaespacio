@@ -1,14 +1,24 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.db import models
 
 
-class Usuario(User):
+class DatosPersonales(models.Model):
+    user = models.OneToOneField(User)
     dni = models.CharField(max_length=9)
-    direccion = models.TextField(help_text=u"Dirección postal completa, puede tener varias líneas")
+    direccion = models.TextField(help_text="Dirección postal completa, puede tener varias líneas")
     telefono = models.CharField(max_length=9)
+    avatar = models.ImageField(upload_to="avatares")
 
-    def get_absolute_url(self):
-        return reverse("detail_user", kwargs={'pk': self.pk})
+    def __unicode__(self):
+        return "{} ({})".format(self.user, self.dni)
+
+
+class Mac(models.Model):
+    user = models.ForeignKey(User)
+    mac = models.CharField(max_length=20)
+
+    def __unicode__(self):
+        return "{} ({})".format(self.mac, self.user)

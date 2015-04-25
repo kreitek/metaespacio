@@ -1,18 +1,18 @@
 from django.contrib import admin
 
-from .models import Taquillero, Taquilla, AbonoTaquilla
+from .models import Taquillero, Taquilla, Abono
 
 
 class TaquilleroAdmin(admin.ModelAdmin):
     pass
 
 
-class AbonoTaquillaInline(admin.TabularInline):
-    model = AbonoTaquilla
+class AbonoInline(admin.TabularInline):
+    model = Abono
 
 
 class TaquillaAdmin(admin.ModelAdmin):
-    inlines = [AbonoTaquillaInline, ]
+    inlines = [AbonoInline, ]
 
 
 admin.site.register(Taquillero, TaquilleroAdmin)

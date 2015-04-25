@@ -2,9 +2,10 @@
 
 from django.views.generic import CreateView, DetailView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
-from .models import Usuario
-from .forms import UsuarioForm
+from .models import DatosPersonales
+from .forms import UserForm
 
 
 class LoginRequiredMixin(object):
@@ -15,8 +16,8 @@ class LoginRequiredMixin(object):
 
 
 class CreateUser(CreateView):
-    model = Usuario
-    form_class = UsuarioForm
+    model = User
+    form_class = UserForm
 
     def form_valid(self, form):
         redirect_url = super(CreateUser, self).form_valid(form)
@@ -28,5 +29,5 @@ class CreateUser(CreateView):
 
 
 class DetailUser(LoginRequiredMixin, DetailView):
-    model = Usuario
+    model = User
     template_name = "registro/usuario_detalle.html"
