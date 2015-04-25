@@ -38,10 +38,10 @@ INSTALLED_APPS = (
     'common',
     'registro',
     'espacios',
+    'pages',
     'captcha',
     'taquilla',
     'encuestas',
-    'pages',
     # 'bibliotheca',  # necesita actualizar a 1.8
     # 'tastypie',  # necesita actualizar a 1.8
 )
@@ -54,6 +54,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+from django.conf import global_settings
+TEMPLATE_CONTEXT_PROCESSORS = \
+    global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+        'common.context_processor.site',
+    )
 
 ROOT_URLCONF = 'metaespacio.urls'
 

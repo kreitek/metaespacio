@@ -12,6 +12,17 @@ class Espacio(models.Model):
     miembros = models.ManyToManyField(User, through='Miembro')
     logo = models.ImageField(upload_to="logos")
 
+    # enlaces redes sociales y otros
+    facebook_fanpage = models.URLField(blank=True, null=True)
+    facebook_group = models.URLField(blank=True, null=True)
+    google_plus = models.URLField(blank=True, null=True)
+    google_group = models.URLField(blank=True, null=True)
+    youtube = models.URLField(blank=True, null=True)
+    twitter = models.URLField(blank=True, null=True)
+    www = models.URLField(blank=True, null=True)
+    blog = models.URLField(blank=True, null=True)
+    google_site = models.URLField(blank=True, null=True)
+
     def __unicode__(self):
         return "{}".format(self.nombre)
 

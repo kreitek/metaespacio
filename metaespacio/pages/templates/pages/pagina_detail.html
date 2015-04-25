@@ -1,0 +1,9 @@
+{% extends "common/base.html" %}
+
+{% block body %}
+<h1>{{object.title}}</h1>
+<hr>
+{{object.body|safe}}
+<hr>
+{% endblock body %}
+

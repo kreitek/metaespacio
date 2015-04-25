@@ -4,8 +4,10 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^registro/', include('registro.urls')),
+    url(r'^pages/', include('pages.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^informacion/$', TemplateView.as_view(template_name='informacion.html')),

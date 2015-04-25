@@ -1,0 +1,35 @@
+<li class="dropdown">
+<a data-toggle="dropdown" class="dropdown-toggle" href="#">Redes Sociales<span class="caret"></span></a>
+<ul role="menu" class="dropdown-menu">
+    {% if espacio.facebook_fanpage %}
+    <li><a href="{{espacio.facebook_fanpage}}" target="_blank">Facebook FanPage</a></li>
+    {% endif %}
+    {% if espacio.facebook_group %}
+    <li><a href="{{espacio.facebook_group}}" target="_blank">Facebook Group</a></li>
+    {% endif %}
+    {% if espacio.google_plus %}
+    <li><a href="{{espacio.google_plus}}" target="_blank">Google +</a></li>
+    {% endif %}
+    {% if espacio.google_group %}
+    <li><a href="{{espacio.google_group}}" target="_blank">Google Group</a></li>
+    {% endif %}
+    {% if espacio.youtube %}
+    <li><a href="{{espacio.youtube}}" target="_blank">Youtube</a></li>
+    {% endif %}
+    {% if espacio.twitter %}
+    <li><a href="{{espacio.twitter}}" target="_blank">Twitter</a></li>
+    {% endif %}
+    <li class="divider"></li>
+    <li class="dropdown-header">Otros</li>
+    {% if espacio.www %}
+    <li><a href="{{espacio.www}}" target="_blank">WEB Oficial</a></li>
+    {% endif %}
+    {% if espacio.blog %}
+    <li><a href="{{espacio.blog}}" target="_blank">Blog</a></li>
+    {% endif %}
+    {% if espacio.google_site %}
+    <li><a href="{{espacio.google_site}}" target="_blank">Google Site</a></li>
+    {% endif %}
+</ul>
+</li>
+

@@ -2,7 +2,4 @@ django
 django-simple-captcha
 django-crispy-forms
 django-localflavor
-django-extensions
 django-tastypie
-# pygraphviz  # para django-extensions (graph_models)
-django_debug_toolbar
