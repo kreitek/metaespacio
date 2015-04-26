@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
+from django.shortcuts import get_object_or_404
 from django.views.generic import FormView
 from espacios.models import Miembro
 from .forms import EncuestaFormChoice, EncuestaFormMulti
@@ -14,8 +15,8 @@ class EncuestaView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         self.site = get_current_site(request)
-        self.encuesta = Encuesta.objects.get(espacio__site=self.site, pk=kwargs['pk'])
-        self.miembro = Miembro.objects.get(user=self.request.user, espacio=self.encuesta.espacio)
+        self.encuesta = get_object_or_404(Encuesta, espacio__site=self.site, pk=kwargs['pk'])
+        self.miembro = get_object_or_404(Miembro, user=self.request.user.pk, espacio=self.encuesta.espacio)
         self.qs_votos = self.miembro.voto_set.filter(opcion__encuesta=self.encuesta)
         return super(EncuestaView, self).dispatch(request, *args, **kwargs)
 
