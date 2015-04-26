@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-
+from __future__ import unicode_literals
 from django import forms
-from localflavor.es.forms import ESIdentityCardNumberField
+# from localflavor.es.forms import ESIdentityCardNumberField
 from captcha.fields import CaptchaField
 from django.contrib.auth.models import User
 import string
@@ -22,8 +22,9 @@ def cuenta_upper_lower_digits_other(cadena):
 
 
 class UserForm(forms.ModelForm):
-    password1 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput)
-    password2 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput)
+    PASSWORD_HELP_TEXT = "Contraseña de un mínimo de 8 caracteres con una mayúscula, una minúscula y un número"
+    password1 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput, help_text=PASSWORD_HELP_TEXT)
+    password2 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput, help_text=PASSWORD_HELP_TEXT)
     captcha = CaptchaField()
 
     def clean_username(self):
@@ -51,11 +52,11 @@ class UserForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(UserForm, self).clean()
-        dni = cleaned_data.get("dni")
-        try:
-            ESIdentityCardNumberField().clean(dni)
-        except forms.ValidationError:
-            raise forms.ValidationError("El número identificador (DNI) no es válido")
+        # dni = cleaned_data.get("dni")
+        # try:
+        #     ESIdentityCardNumberField().clean(dni)
+        # except forms.ValidationError:
+        #    raise forms.ValidationError("El número identificador (DNI) no es válido")
         p1 = cleaned_data.get('password1')
         p2 = cleaned_data.get('password2')
         if p1 and p2 and p1 != p2:
