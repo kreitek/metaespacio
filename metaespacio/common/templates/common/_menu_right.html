@@ -1,3 +1,4 @@
+{% load espacios %}
 <li class="dropdown">
 <a data-toggle="dropdown" class="dropdown-toggle" href="#">Redes Sociales<span class="caret"></span></a>
 <ul role="menu" class="dropdown-menu">
@@ -33,3 +34,9 @@
 </ul>
 </li>
 
+<li class="dropdown">
+<a data-toggle="dropdown" class="dropdown-toggle" href="#">Otros espacios<span class="caret"></span></a>
+<ul role="menu" class="dropdown-menu">
+    {% otros_espacios %}
+</ul>
+</li>
