@@ -1,9 +1,10 @@
 {% extends "common/base.html" %}
+{% load adminurl %}
 
 {% block body %}
 <h1>{{object.title}}</h1>
 <hr>
-{{object.body|safe}}
+{{object.body|safe}} {% admin object %}
 <hr>
 {% endblock body %}
 

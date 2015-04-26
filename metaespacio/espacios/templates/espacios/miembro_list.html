@@ -1,0 +1,29 @@
+{% extends "common/base.html" %}
+{% load adminurl %}
+
+{% block body %}
+<h1>Miembros {{espacio.nombre}}</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Avatar</th>
+            <th>Nick</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Fecha Alta</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td><img style="height: 30px" alt="avatar" src="{{MEDIA_URL}}{{object.user.datospersonales.avatar}}"/></td>
+            <td><a href="{% url 'detail_user' object.user.username %}">{{object.user.username}}</a></td>
+            <td>{{object.user.first_name}}</td>
+            <td>{{object.user.last_name}}</td>
+            <td>{{object.fecha_alta}} {% admin object object.user %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock body %}

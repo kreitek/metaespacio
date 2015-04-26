@@ -2,9 +2,15 @@
 
 {% block body %}
 <div class="block text-center">
-    <h1>Bienvenido a la web de Servicios</h1>
-    <h2>{{espacio.nombre}}</h2>
+    <h1>Bienvenido a la web de Servicios del {{espacio.nombre}}</h1>
     <hr/>
+
+    {% if user.is_authenticated %}
+    <h4>Panel de control</h4>
+
+    <p>Aqui poner un listado de los ultimos recordatorios</p>
+
+    {% else %}
     <h4>Inscríbete y accede como miembro a una amplia variedad de servicios y posibilidades.</h4>
     <div class="container">
         <div class="row">
@@ -35,6 +41,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 {% endblock body %}
 
