@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <h1 class="block-center" align="center">Una cuenta para todos los espacios</h1><br>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <p>Esto es un inicio de sesión unificado para la red de metaespacios, que ahora mismo la forman: </p>
                 <ul>
                     {% for esp in espacios %}
@@ -15,11 +15,14 @@
                 <p>Si eres miembro de uno de estos espacios y no tienes nombre de usuario, inscríbete y cuando los administradores te validen, podrás acceder a los servicios que el espacio te ofrece.</p>
                 <p>Si gestionas un espacio y quieres que formar parte de nuestra red, contáctanos.</p>
             </div>
-            <div class="col-md-offset-1 col-md-4">
+            <div class="col-md-offset-1 col-md-5">
                 <form role="form" class="panel" method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <center><button type="submit" class="btn btn-primary">Sign in / Acceso</button></center>
+                    <center>
+                        <button type="submit" class="btn btn-primary">Sign in / Acceso</button>
+                        <a type="button" class="btn btn-info" href="{% url 'password_reset' %}" >Resetear contraseña</a>
+                    </center>
                 </form>
             </div>
         </div>

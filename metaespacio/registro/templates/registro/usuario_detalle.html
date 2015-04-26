@@ -1,132 +1,55 @@
-{% extends "base.html" %}
+{% extends "common/base.html" %}
 
 {% block body %}
-<br>
-<div class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a href="#" class="navbar-brand">AREA PERSONAL</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">DATOS</a></li>
-              <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">SERVICIOS<span class="caret"></span></a>
-                <ul role="menu" class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                </ul>
-                <li><a href="#">NOTIFICACIONES</a></li>
-              </li>
-            </ul>
-          </div>
-        </div>
-    </div><br>
-
-
-
 <div class="container-fluid">
-        <div class="row">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading"><i class=""></i> Información de Socio/Miembro</div>
+                <div class="panel-body">
+                    <ul class="nav nav-pills nav-stacked">
+                    </ul>
+                </div>
+            </div>
 
-<div class="col-md-3">
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                </i> Identificador de usuario: <strong>{{ object.id }}</strong>
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class=""></i> Fotografía</div>
+                <div class="panel-body">
+                    <img class="img-responsive" alt="avatar" src="{{MEDIA_URL}}{{object.datospersonales.avatar}}">
+                </div>
             </div>
         </div>
-
-
-    <div class="panel panel-danger">
-        <div class="panel-heading"></i> Información de Socio/Miembro</div>
-        <div class="panel-body">
-            <ul class="nav nav-pills nav-stacked">
-            </ul>
-        </div>
-    </div>
-
-
-    <div class="panel panel-default">
-        <div class="panel-heading"></i> Fotografía</div>
-        <div class="panel-body">
-            <div class="row">
-                <div style="text-align: center" class="col-md-12">
-                	<img width="120" height="160" alt="" src="">
+        <div class="col-md-9">
+            <div class="panel panel-warning">
+                <div class="panel-heading"><i class=""></i> Notifiaciones - Alertas</div>
+                <div class="panel-body">
                 </div>
             </div>
 
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-9">
-        <div class="panel panel-warning">
-            <div class="panel-heading"></i> Notifiaciones - Alertas</div>
-            <div class="panel-body">
-
-          </div>
-          </div>
-
-    <div class="panel panel-default panel-datos-personales">
-        <div class="panel-heading"></i> Datos personales</div>
-        <div class="panel-body">
-        <form role="form" class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Nombre de usuario (Nick)</label>
-                <div class="col-sm-8">
-                    <p class="form-control-static">{{ object.username }}</p>
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class=""></i> Datos de sistema</div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>Nombre de usuario</dt><dd>{{ object.username }}</dd>
+                        <dt>Correo electrónico</dt><dd>{{ object.email }}</dd>
+                        <dt>Nombre</dt><dd>{{ object.first_name }}</dd>
+                        <dt>Apellidos</dt><dd>{{ object.last_name }}</dd>
+                    </dl>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Correo electrónico</label>
-                <div class="col-sm-8">
-                    <p class="form-control-static">{{ object.email }}</p>
+            {% ifequal user this_user %}
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class=""></i> Datos personales</div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>Documento identidad</dt><dd>{{ object.datospersonales.dni }}</dd>
+                        <dt>Dirección</dt><dd>{{ object.datospersonales.direccion }}</dd>
+                        <dt>Teléfono</dt><dd>{{ object.datospersonales.telefono }}</dd>
+                    </dl>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Nombre</label>
-                <div class="col-sm-8">
-                    <p class="form-control-static">{{ object.first_name }}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Apellidos</label>
-                <div class="col-sm-8">
-                    <p class="form-control-static">{{ object.last_name }}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Documento de identidad (DNI)</label>
-                <div class="col-sm-8">
-                    <p class="form-control-static">{{ object.dni }}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Dirección</label>
-                <div class="col-sm-8">
-                    <p class="form-control-static">{{ object.direccion }}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Teléfono</label>
-                <div class="col-sm-8">
-                    <p class="form-control-static">{{ object.telefono }}</p>
-                </div>
-            </div>
-
-        </form>
+            {% endifequal %}
         </div>
     </div>
-
 </div>
-
-        </div>
-    </div>
-
 {% endblock body %}

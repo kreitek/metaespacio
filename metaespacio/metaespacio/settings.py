@@ -26,7 +26,6 @@ TEMPLATE_DEBUG = DEBUG
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -44,6 +43,7 @@ INSTALLED_APPS = (
     'encuestas',
     # 'bibliotheca',  # necesita actualizar a 1.8
     # 'tastypie',  # necesita actualizar a 1.8
+    'django.contrib.admin',  # al final por un override de templates
 )
 
 MIDDLEWARE_CLASSES = (
@@ -91,6 +91,7 @@ USE_TZ = True
 
 SITE_ID = 1
 
+TEMPLATE_LOADERS = ('django.template.loaders.app_directories.Loader', )
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
@@ -115,9 +116,7 @@ else:
     # en preproduccion o produccion si se usa
     ALLOWED_HOSTS = ['*']
 
-
 MEDIA_URL = "/media/"
-
 STATIC_URL = '/static/'
-
+LOGIN_REDIRECT_URL = "/"
 CRISPY_TEMPLATE_PACK = "bootstrap3"
