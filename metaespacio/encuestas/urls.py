@@ -5,5 +5,5 @@ from . import views as v
 
 urlpatterns = patterns(
     '',
-    url(r'^(?P<slug>.+)$', v.PaginaView.as_view(), name="pagina_view"),
+    url(r'^(?P<pk>\d+)/$', v.EncuestaView.as_view(), name="encuesta_view"),
 )

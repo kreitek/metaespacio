@@ -40,6 +40,20 @@
             </div>
         </div>
 
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{% ifequal message.tags "error" %}danger{% else %}{{ message.tags }}{% endifequal %}">
+            {{ messages.tags }}
+            <button data-dismiss="alert" class="close">&times;</button>
+            {% ifequal message.tags "error" %}
+            <i class="fa fa-exclamation-triangle"></i>
+            {% else %}
+            <i class="fa fa-check-circle"></i>
+            {% endifequal %}
+            {{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
         <div class="container" align="right">
             {% include "common/_menu_user.html" %}
         </div>
@@ -50,6 +64,7 @@
             {% endblock body %}
         </div>
 
+        <hr/>
         <div class="footer">
             <div class="container">
                 <p class="text-muted" align="right">Realizado con METAESPACIO</p>

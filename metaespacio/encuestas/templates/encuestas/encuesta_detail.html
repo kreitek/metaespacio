@@ -1,0 +1,85 @@
+{% extends "common/base.html" %}
+{% load adminurl crispy_forms_tags %}
+
+{% block body %}
+<br/>
+<div class="container">
+    <div class="row ">
+        <div class="col-md-12">
+            <h1>Encuesta #{{object.pk}}: {{object.pregunta}}</h1>
+        </div>
+    </div>
+    <div class="row well">
+        <div class="col-md-4">
+            <dl class="dl">
+                <dt>Fecha creación:</dt><dd>{{ object.fecha_creacion }}</dd>
+                <dt>Fecha finalización:</dt><dd> {{ object.fecha_finalizacion|default:"No finalizada"}}</li>
+            </dl>
+        </div>
+        <div class="col-md-4">
+            <dl class="dl">
+                <dt>¿Es anónima?</dt><dd>{{ object.voto_anonimo|yesno:'sí,no' }}</dd>
+                <dt>¿Puede elegir multiples opciones?</dt><dd>{{ object.voto_multiple|yesno:'sí,no' }}</dd>
+                <dt>¿Puede modificar el voto?</dt><dd>{{ object.voto_editable|yesno:'sí,no' }}</dd>
+            </dl>
+        </div>
+        <div class="col-md-4">
+            <dl class="dl">
+                <dt>Número de miembros del espacio:</dt><dd> {{ espacio.miembro_set.count}}</dd>
+                <dt>Número de miembros que han votado:</dt><dd> {{ object.miembro_count}}</dd>
+                <dt>Número total de votos:</dt><dd> {{ object.voto_count }}</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="lead">{{object.texto|safe}} {% admin object %}</p>
+        </div>
+    </div>
+    <div class="row">
+        {% for opcion in object.opcion_set.all %}
+        <div class="col-md-4">
+            <div class="alert alert-info">
+                <h2>{{opcion.eleccion}}</h2>
+                <p>{{opcion.texto|safe}}</p>
+            </div>
+            <hr/>
+            <p>Han votado por esta alternativa {{opcion.voto_count}} personas.
+            {% if not object.voto_anonimo %}
+            Son: {% for voto in opcion.voto_set.all %}{{voto.miembro.user.username}} {% empty %} (nadie){% endfor %}.
+            {% endif %}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% if object.finalizada %}
+<div class="alert alert-success" role="alert">
+    <p>Encuesta finalizada.</p>
+</div>
+{% elif not object.voto_editable and mis_votos %}
+<div class="alert alert-success" role="alert">
+    <p>Ya votó por {% for voto in mis_votos %} <span class="label label-primary">{{voto.opcion.eleccion}}</span> {% endfor %}. No puede modificar su voto.</p>
+</div>
+{% else %}
+<form role="form" class="row alert alert-info" method="POST" action=".">
+    <div class="col-md-4">
+        {% if object.voto_multiple %}
+        <h3>Vote. Elija multiples opciones:</h3>
+        {% else %}
+        <h3>Vote. Elija una opción:</h3>
+        {% endif %}
+    </div>
+    <div class="col-md-5">
+        {% csrf_token %}
+        {{form|crispy}}
+    </div>
+    <div class="col-md-2">
+        <center><button type="submit" class="btn btn-primary">Enviar</button></center>
+    </div>
+</form>
+{% endif %}
+
+{% endblock body %}
+
