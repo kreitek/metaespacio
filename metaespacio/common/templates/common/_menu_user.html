@@ -1,12 +1,10 @@
 {% if user.is_authenticated %}
-<a type="button" class="btn btn-success" href="/accounts/profile/">Mi cuenta ({{ user.username }}) </a>
-
 {% if espacio.encuesta_set.count %}
 <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Encuestas <span class="caret"></span></button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-stats"></i> Encuestas <span class="caret"></span></button>
     <ul role="menu" class="dropdown-menu">
         {% for encuesta in espacio.encuesta_set.all %}
-        <li><a href="{% url 'encuesta_view' encuesta.pk %}" target="_blank">{{forloop.counter}}: {{encuesta.pregunta}}</a></li>
+        <li><a href="{% url 'encuesta_view' encuesta.pk %}">{{forloop.counter}}: {{encuesta.pregunta}}</a></li>
         {% endfor %}
     </ul>
 </div>
@@ -14,13 +12,24 @@
 
 {% if user.is_superuser %}
 <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Administrator <span class="caret"></span></button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-wrench"></i> Administrator <span class="caret"></span></button>
     <ul role="menu" class="dropdown-menu">
         <li><a href="{% url 'admin:index' %}" target="_blank">Django admin</a></li>
     </ul>
 </div>
 {% endif %}
-<a type="button" class="btn btn-warning" href="/accounts/logout/">Salir</a>
+
+<div class="btn-group">
+    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> Mi cuenta ({{ user.username }}) <span class="caret"></span></button>
+    <ul role="menu" class="dropdown-menu">
+        <li><a href="#">Ver perfil</a></li>
+        <li><a href="#">Editar datos de usuario</a></li>
+        <li><a href="#">Editar datos personales</a></li>
+        <li class="divider"></li>
+        <li><a href="/accounts/logout/">Salir</a></li>
+    </ul>
+</div>
+
 
 {% else %}
 <a type="button" class="btn btn-success" href="/registro/create">Inscríbete aquí</a>
