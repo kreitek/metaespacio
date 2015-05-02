@@ -15,6 +15,10 @@ class DatosPersonales(models.Model):
     def __unicode__(self):
         return "{} ({})".format(self.user, self.dni)
 
+    class Meta:
+        verbose_name = "dato personal"
+        verbose_name_plural = "datos personales"
+
 
 class Mac(models.Model):
     user = models.ForeignKey(User)

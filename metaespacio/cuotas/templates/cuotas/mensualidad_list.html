@@ -1,0 +1,33 @@
+{% extends "common/base.html" %}
+{% load adminurl %}
+
+{% block body %}
+<h1>Cuotas {{espacio.nombre}}</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Mensualidad</th>
+            <th>Cantidad</th>
+            <th>Pagado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{object.fecha_efecto|date:"m/Y"}}</td>
+            <td>{{object.cantidad|floatformat:2}} €</td>
+            <td>
+                <span class="label label-default">{{object.pago.fecha|date:"SHORT_DATE_FORMAT"}}</span>
+                {% if object.cantidad != object.pago.cantidad %}
+                pago total de {{object.pago.cantidad|floatformat:2}} €
+                {% endif %}
+                {% if user != object.pago.pagador.user %}
+                por {{object.pago.pagador.user.username}}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock body %}

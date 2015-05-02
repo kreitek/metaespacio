@@ -3,49 +3,56 @@
 from __future__ import unicode_literals
 from django.db import models
 from espacios.models import Espacio, Miembro
-import datetime
 
 
 class FormaPago(models.Model):
     "Efectivo, Cuenta corriente, Stripe?, Otras"
     espacio = models.ForeignKey(Espacio)
     nombre = models.CharField(max_length=255, blank=True, null=True)
+    porcentaje_comision = models.FloatField(default=0.0)
 
-    # for fp in anden.formapago_set.all():
-    #     print fp.nombre, sum(fp.pago_set.values_list("cantidad"))
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name = "forma de pago"
+        verbose_name_plural = "formas de pago"
 
 
 class CuotaPeriodica(models.Model):
     "Cantidad mensual a aportar por miembro"
-    forma_pago = models.ForeignKey(FormaPago)
+    espacio = models.ForeignKey(Espacio)
+    cantidad = models.FloatField()
     fecha_inicial = models.DateField()
     fecha_final = models.DateField(blank=True, null=True)
-    cantidad = models.FloatField()
+
+    def __unicode__(self):
+        return "{} euros/mes [{}-{}]".format(
+            self.cantidad,
+            self.fecha_inicial.strftime("%m/%y"),
+            self.fecha_final.strftime("%m/%y") if self.fecha_final else "-")
+
+    class Meta:
+        verbose_name = "cuota periódica"
+        verbose_name_plural = "cuotas periódicas"
 
 
 class Pago(models.Model):
     pagador = models.ForeignKey(Miembro)
-    fecha_pago = models.DateField()
+    fecha = models.DateField()
     cantidad = models.FloatField()
     forma_pago = models.ForeignKey(FormaPago)
     description = models.CharField(max_length=255, blank=True, null=True)
 
-    @property
-    def fecha_inicio(self):
-        return self.fecha_efecto or self.fecha_pago
+    def __unicode__(self):
+        return "{} pagó {:.2f} € el dia {} por {}".format(
+            self.pagador,
+            self.cantidad,
+            self.fecha,
+            self.forma_pago)
 
-    @property
-    def dias(self):
-        # FIXME arreglar esto y que sea mensual++
-        # (buscar libreria de timedeltas avanzados)
-        return int(self.cantidad * self.forma_pago.cantidad / 30.0)
-
-    @property
-    def fecha_final(self):
-        return self.fecha_inicio + datetime.timedelta(days=self.dias)
-
-    # class Meta:
-    #     ordering = ('miembro', 'fecha_pago')
+    class Meta:
+        ordering = ('fecha', )
 
 
 class Mensualidad(models.Model):
@@ -57,3 +64,8 @@ class Mensualidad(models.Model):
     @property
     def fecha_inicio(self):
         return self.fecha_efecto or self.fecha_pago
+
+    class Meta:
+        ordering = ('fecha_efecto', )
+        verbose_name = "mensualidad"
+        verbose_name_plural = "mensualidades"
