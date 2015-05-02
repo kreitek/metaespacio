@@ -58,14 +58,10 @@ class Pago(models.Model):
 class Mensualidad(models.Model):
     pago = models.ForeignKey(Pago)
     miembro = models.ForeignKey(Miembro)
-    fecha_efecto = models.DateField(blank=True, null=True)
+    fecha = models.DateField(blank=True, null=True)
     cantidad = models.FloatField()
 
-    @property
-    def fecha_inicio(self):
-        return self.fecha_efecto or self.fecha_pago
-
     class Meta:
-        ordering = ('fecha_efecto', )
+        ordering = ('fecha', )
         verbose_name = "mensualidad"
         verbose_name_plural = "mensualidades"
