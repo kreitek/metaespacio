@@ -15,7 +15,7 @@
     <tbody>
         {% for object in object_list %}
         <tr>
-            <td>{{object.fecha_efecto|date:"m/Y"}}</td>
+            <td>{{object.fecha|date:"m/Y"}}</td>
             <td>{{object.cantidad|floatformat:2}} €</td>
             <td>
                 <span class="label label-default">{{object.pago.fecha|date:"SHORT_DATE_FORMAT"}}</span>
@@ -25,6 +25,7 @@
                 {% if user != object.pago.pagador.user %}
                 por {{object.pago.pagador.user.username}}
                 {% endif %}
+                {% admin object.pago %}
             </td>
         </tr>
         {% endfor %}
