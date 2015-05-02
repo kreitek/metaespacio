@@ -31,6 +31,7 @@ class Miembro(models.Model):
     espacio = models.ForeignKey(Espacio)
     user = models.ForeignKey(User)
     fecha_alta = models.DateField(auto_now=True)
+    es_socio = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "{}@{}".format(self.user, self.espacio.slug)

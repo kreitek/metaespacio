@@ -38,7 +38,7 @@ class CuotaPeriodica(models.Model):
 
 
 class Pago(models.Model):
-    pagador = models.ForeignKey(Miembro)
+    pagador = models.ForeignKey(Miembro, blank=True, null=True)
     fecha = models.DateField()
     cantidad = models.FloatField()
     forma_pago = models.ForeignKey(FormaPago)
