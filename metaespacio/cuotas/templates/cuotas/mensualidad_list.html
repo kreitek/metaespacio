@@ -8,18 +8,18 @@
     <thead>
         <tr>
             <th>Mensualidad</th>
-            <th>Cantidad</th>
+            <th style="text-align: right">Cantidad</th>
             <th>Forma de pago</th>
             <th>Concepto del pago</th>
             <th>Fecha de pago</th>
-            <th>(Otros)</th>
+            <th>(extra)</th>
         </tr>
     </thead>
     <tbody>
         {% for object in object_list %}
         <tr>
             <td>{{object.fecha|date:"m/Y"}}</td>
-            <td>{{object.cantidad|floatformat:2}} €</td>
+            <td style="text-align: right">{{object.cantidad|floatformat:2}} €</td>
             <td>{{object.pago.forma_pago}}</td>
             <td>{{object.pago.description}}</td>
             <td>{{object.pago.fecha|date:"SHORT_DATE_FORMAT"}}</td>
