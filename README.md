@@ -35,10 +35,11 @@ These django apps require django=1.8, which is the current stable.
 
 When using virtualenv, you can install dependencies this way:
 
-    apt-get install python-virtualenv
+    apt-get install python-virtualenv python-dev libjpeg-dev libfreetype6-dev
     virtualenv virtualenv
     . virtualenv/bin/activate
     pip install -r metaespacio/requirements.txt
+    pip install -r metaespacio/requirements_dev.txt
 
 As far as dependencies are installed, start the app with:
 
@@ -46,5 +47,7 @@ As far as dependencies are installed, start the app with:
     python manage.py makemigrations
     python manage.py migrate
     # python manage.py loaddata demo.json
+    python manage.py createsuperuser
+    touch metaespacio/settings_local.py
     python manage.py runserver
     # username=passwords like admin test1 etc
