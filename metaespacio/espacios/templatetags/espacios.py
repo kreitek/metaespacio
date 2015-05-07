@@ -10,5 +10,7 @@ register = Library()
 def otros_espacios(context):
     qs = Espacio.objects.all()
     if 'espacio' in context:
-        qs = qs.exclude(pk=context['espacio'].pk)
+        obj = context['espacio']
+        if obj:
+            qs = qs.exclude(pk=obj.pk)
     return {'otros_espacios': qs}
