@@ -52,7 +52,7 @@ class EncuestaView(FormView):
             messages.error(self.request, 'Ya votó')
             return url
 
-        if not self.encuesta.finalizada:
+        if self.encuesta.finalizada:
             messages.error(self.request, 'Encuesta finalizada')
             return url
 
