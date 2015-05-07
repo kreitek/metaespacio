@@ -44,10 +44,8 @@ When using virtualenv, you can install dependencies this way:
 As far as dependencies are installed, start the app with:
 
     cd metaespacio
-    python manage.py makemigrations
+    python manage.py makemigrations  # normally does nothing
     python manage.py migrate
-    # python manage.py loaddata demo.json
-    python manage.py createsuperuser
+    python manage.py loaddata demo.json  # creates admin/admin and user/user and some data
     touch metaespacio/settings_local.py
     python manage.py runserver
-    # username=passwords like admin test1 etc

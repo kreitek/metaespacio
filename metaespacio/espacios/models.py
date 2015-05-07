@@ -10,7 +10,7 @@ class Espacio(models.Model):
     nombre = models.CharField(max_length=60)
     slug = models.CharField(max_length=60)
     miembros = models.ManyToManyField(User, through='Miembro')
-    logo = models.ImageField(upload_to="logos")
+    logo = models.ImageField(upload_to="logos", blank=True, null=True)
 
     # enlaces redes sociales y otros
     facebook_fanpage = models.URLField(blank=True, null=True)
