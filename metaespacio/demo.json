@@ -824,6 +824,24 @@
 },
 {
  "fields": {
+  "opcion": 3,
+  "miembro": 1,
+  "time": "2015-05-07T17:15:32.220Z"
+ },
+ "model": "encuestas.voto",
+ "pk": 3
+},
+{
+ "fields": {
+  "opcion": 2,
+  "miembro": 1,
+  "time": "2015-05-07T17:15:32.245Z"
+ },
+ "model": "encuestas.voto",
+ "pk": 4
+},
+{
+ "fields": {
   "nombre": "Contado",
   "porcentaje_comision": 0.0,
   "espacio": 1
