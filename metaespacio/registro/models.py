@@ -5,12 +5,17 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+def upload_to(instance, filename):
+    ext = filename.split(".")[-1]
+    return "avatares/{}.{}".format(instance.user.username, ext)
+
+
 class DatosPersonales(models.Model):
     user = models.OneToOneField(User)
     dni = models.CharField(max_length=9)
     direccion = models.TextField(help_text="Dirección postal completa, puede tener varias líneas")
     telefono = models.CharField(max_length=9)
-    avatar = models.ImageField(upload_to="avatares")
+    avatar = models.ImageField(upload_to=upload_to)
 
     def __unicode__(self):
         return "{} ({})".format(self.user, self.dni)

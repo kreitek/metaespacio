@@ -5,12 +5,17 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
 
+def upload_to(instance, filename):
+    ext = filename.split(".")[-1]
+    return "logos/{}.{}".format(instance.slug, ext)
+
+
 class Espacio(models.Model):
     site = models.ForeignKey(Site)
     nombre = models.CharField(max_length=60)
     slug = models.CharField(max_length=60)
     miembros = models.ManyToManyField(User, through='Miembro')
-    logo = models.ImageField(upload_to="logos", blank=True, null=True)
+    logo = models.ImageField(upload_to=upload_to, blank=True, null=True)
 
     # enlaces redes sociales y otros
     facebook_fanpage = models.URLField(blank=True, null=True)
