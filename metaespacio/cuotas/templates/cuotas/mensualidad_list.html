@@ -18,8 +18,8 @@
     <tbody>
         {% for object in object_list %}
         <tr>
-            <td style="text-align: center">{{object.fecha|date:"E / Y"}}</td>
-            <td style="text-align: right">{{object.cantidad|floatformat:2}} €</td>
+            <td class="text-center">{{object.fecha|date:"E / Y"}}</td>
+            <td class="text-right">{{object.cantidad|floatformat:2}} €</td>
             <td>{{object.pago.forma_pago}}</td>
             <td>{{object.pago.description}}</td>
             <td>{{object.pago.fecha|date:"SHORT_DATE_FORMAT"}}</td>
