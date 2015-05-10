@@ -658,7 +658,7 @@
 },
 {
  "fields": {
-  "domain": "localhost",
+  "domain": "localhost:8000",
   "name": "Test site"
  },
  "model": "sites.site",
@@ -666,7 +666,7 @@
 },
 {
  "fields": {
-  "domain": "localhost2",
+  "domain": "127.0.0.1:8000",
   "name": "Test site 2"
  },
  "model": "sites.site",
@@ -732,6 +732,39 @@
 },
 {
  "fields": {
+  "body": "Esta es la informaci\u00f3n del espacio de prueba 1",
+  "orden": 0,
+  "title": "Informaci\u00f3n",
+  "slug": "informacion",
+  "espacio": 1
+ },
+ "model": "pages.pagina",
+ "pk": 1
+},
+{
+ "fields": {
+  "body": "El espacio de prueba 2 no tiene ni miembros ni nada.",
+  "orden": 0,
+  "title": "En construcci\u00f3n",
+  "slug": "en_construccion",
+  "espacio": 2
+ },
+ "model": "pages.pagina",
+ "pk": 2
+},
+{
+ "fields": {
+  "body": "Esto es otra p\u00e1gina solo para los efectos de verlo en el menu y probar.",
+  "orden": 1,
+  "title": "Otra p\u00e1gina",
+  "slug": "otra",
+  "espacio": 1
+ },
+ "model": "pages.pagina",
+ "pk": 3
+},
+{
+ "fields": {
   "voto_anonimo": false,
   "espacio": 1,
   "fecha_creacion": "2015-01-01T00:00:00Z",
@@ -788,39 +821,6 @@
  },
  "model": "encuestas.voto",
  "pk": 1
-},
-{
- "fields": {
-  "body": "Esta es la informaci\u00f3n del espacio de prueba 1",
-  "orden": 0,
-  "title": "Informaci\u00f3n",
-  "slug": "informacion",
-  "espacio": 1
- },
- "model": "pages.pagina",
- "pk": 1
-},
-{
- "fields": {
-  "body": "El espacio de prueba 2 no tiene ni miembros ni nada.",
-  "orden": 0,
-  "title": "En construcci\u00f3n",
-  "slug": "en_construccion",
-  "espacio": 2
- },
- "model": "pages.pagina",
- "pk": 2
-},
-{
- "fields": {
-  "body": "Esto es otra p\u00e1gina solo para los efectos de verlo en el menu y probar.",
-  "orden": 1,
-  "title": "Otra p\u00e1gina",
-  "slug": "otra",
-  "espacio": 1
- },
- "model": "pages.pagina",
- "pk": 3
 },
 {
  "fields": {
