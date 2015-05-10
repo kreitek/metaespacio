@@ -7,7 +7,13 @@
             <div class="panel panel-danger">
                 <div class="panel-heading"><i class=""></i> Información de Socio/Miembro</div>
                 <div class="panel-body">
-                    <ul class="nav nav-pills nav-stacked">
+                    <ul class="nav nav-pills nav-stacked" style="text-align: right">
+                        {% for miembro in espacios %}
+                        <li>{% if miembro.es_socio %} <b>Socio</b>
+                            {% else  %} Miembro
+                            {% endif %} de 
+                            <nobr>{{ miembro.espacio.nombre }}<nobr/><li/>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -15,7 +21,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><i class=""></i> Fotografía</div>
                 <div class="panel-body">
+                    {% if object.datospersonales.avatar %}
                     <img class="img-responsive" alt="avatar" src="{{MEDIA_URL}}{{object.datospersonales.avatar}}">
+                    {% else %}
+                    <pre><p style="text-align:center">Envíanos tu foto de <br>perfil para añadirla aquí</p></pre>
+                    {% endif %}
                 </div>
             </div>
         </div>

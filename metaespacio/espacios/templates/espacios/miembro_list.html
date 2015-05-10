@@ -17,7 +17,11 @@
     <tbody>
         {% for object in object_list %}
         <tr>
-            <td><img style="height: 30px" alt="avatar" src="{{MEDIA_URL}}{{object.user.datospersonales.avatar}}"/></td>
+            <td>
+                {% if object.user.datospersonales.avatar %}
+                <img style="height: 30px" alt="avatar" src="{{MEDIA_URL}}{{object.user.datospersonales.avatar}}"/>
+                {% endif %}
+            </td>
             <td><a href="{% url 'detail_user' object.user.username %}">{{object.user.username}}</a></td>
             <td>{{object.user.first_name}}</td>
             <td>{{object.user.last_name}}</td>
