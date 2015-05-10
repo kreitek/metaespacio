@@ -13,6 +13,10 @@ class Pagina(models.Model):
     menu = models.CharField(max_length=255, blank=True, null=True, help_text="Si quieres que salga en el menú, pon el nombre aqui")
     body = models.TextField()
 
+    def __unicode__(self):
+        return self.title
+
     class Meta:
         unique_together = (('espacio', 'slug'), )
         ordering = ('espacio', 'orden')
+        verbose_name = 'página'
