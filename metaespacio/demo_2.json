@@ -1,0 +1,966 @@
+[
+{
+ "fields": {
+  "codename": "add_permission",
+  "name": "Can add permission",
+  "content_type": 1
+ },
+ "model": "auth.permission",
+ "pk": 1
+},
+{
+ "fields": {
+  "codename": "change_permission",
+  "name": "Can change permission",
+  "content_type": 1
+ },
+ "model": "auth.permission",
+ "pk": 2
+},
+{
+ "fields": {
+  "codename": "delete_permission",
+  "name": "Can delete permission",
+  "content_type": 1
+ },
+ "model": "auth.permission",
+ "pk": 3
+},
+{
+ "fields": {
+  "codename": "add_group",
+  "name": "Can add group",
+  "content_type": 2
+ },
+ "model": "auth.permission",
+ "pk": 4
+},
+{
+ "fields": {
+  "codename": "change_group",
+  "name": "Can change group",
+  "content_type": 2
+ },
+ "model": "auth.permission",
+ "pk": 5
+},
+{
+ "fields": {
+  "codename": "delete_group",
+  "name": "Can delete group",
+  "content_type": 2
+ },
+ "model": "auth.permission",
+ "pk": 6
+},
+{
+ "fields": {
+  "codename": "add_user",
+  "name": "Can add user",
+  "content_type": 3
+ },
+ "model": "auth.permission",
+ "pk": 7
+},
+{
+ "fields": {
+  "codename": "change_user",
+  "name": "Can change user",
+  "content_type": 3
+ },
+ "model": "auth.permission",
+ "pk": 8
+},
+{
+ "fields": {
+  "codename": "delete_user",
+  "name": "Can delete user",
+  "content_type": 3
+ },
+ "model": "auth.permission",
+ "pk": 9
+},
+{
+ "fields": {
+  "codename": "add_contenttype",
+  "name": "Can add content type",
+  "content_type": 4
+ },
+ "model": "auth.permission",
+ "pk": 10
+},
+{
+ "fields": {
+  "codename": "change_contenttype",
+  "name": "Can change content type",
+  "content_type": 4
+ },
+ "model": "auth.permission",
+ "pk": 11
+},
+{
+ "fields": {
+  "codename": "delete_contenttype",
+  "name": "Can delete content type",
+  "content_type": 4
+ },
+ "model": "auth.permission",
+ "pk": 12
+},
+{
+ "fields": {
+  "codename": "add_session",
+  "name": "Can add session",
+  "content_type": 5
+ },
+ "model": "auth.permission",
+ "pk": 13
+},
+{
+ "fields": {
+  "codename": "change_session",
+  "name": "Can change session",
+  "content_type": 5
+ },
+ "model": "auth.permission",
+ "pk": 14
+},
+{
+ "fields": {
+  "codename": "delete_session",
+  "name": "Can delete session",
+  "content_type": 5
+ },
+ "model": "auth.permission",
+ "pk": 15
+},
+{
+ "fields": {
+  "codename": "add_site",
+  "name": "Can add site",
+  "content_type": 6
+ },
+ "model": "auth.permission",
+ "pk": 16
+},
+{
+ "fields": {
+  "codename": "change_site",
+  "name": "Can change site",
+  "content_type": 6
+ },
+ "model": "auth.permission",
+ "pk": 17
+},
+{
+ "fields": {
+  "codename": "delete_site",
+  "name": "Can delete site",
+  "content_type": 6
+ },
+ "model": "auth.permission",
+ "pk": 18
+},
+{
+ "fields": {
+  "codename": "add_datospersonales",
+  "name": "Can add dato personal",
+  "content_type": 7
+ },
+ "model": "auth.permission",
+ "pk": 19
+},
+{
+ "fields": {
+  "codename": "change_datospersonales",
+  "name": "Can change dato personal",
+  "content_type": 7
+ },
+ "model": "auth.permission",
+ "pk": 20
+},
+{
+ "fields": {
+  "codename": "delete_datospersonales",
+  "name": "Can delete dato personal",
+  "content_type": 7
+ },
+ "model": "auth.permission",
+ "pk": 21
+},
+{
+ "fields": {
+  "codename": "add_mac",
+  "name": "Can add mac",
+  "content_type": 8
+ },
+ "model": "auth.permission",
+ "pk": 22
+},
+{
+ "fields": {
+  "codename": "change_mac",
+  "name": "Can change mac",
+  "content_type": 8
+ },
+ "model": "auth.permission",
+ "pk": 23
+},
+{
+ "fields": {
+  "codename": "delete_mac",
+  "name": "Can delete mac",
+  "content_type": 8
+ },
+ "model": "auth.permission",
+ "pk": 24
+},
+{
+ "fields": {
+  "codename": "add_espacio",
+  "name": "Can add espacio",
+  "content_type": 9
+ },
+ "model": "auth.permission",
+ "pk": 25
+},
+{
+ "fields": {
+  "codename": "change_espacio",
+  "name": "Can change espacio",
+  "content_type": 9
+ },
+ "model": "auth.permission",
+ "pk": 26
+},
+{
+ "fields": {
+  "codename": "delete_espacio",
+  "name": "Can delete espacio",
+  "content_type": 9
+ },
+ "model": "auth.permission",
+ "pk": 27
+},
+{
+ "fields": {
+  "codename": "add_miembro",
+  "name": "Can add miembro",
+  "content_type": 10
+ },
+ "model": "auth.permission",
+ "pk": 28
+},
+{
+ "fields": {
+  "codename": "change_miembro",
+  "name": "Can change miembro",
+  "content_type": 10
+ },
+ "model": "auth.permission",
+ "pk": 29
+},
+{
+ "fields": {
+  "codename": "delete_miembro",
+  "name": "Can delete miembro",
+  "content_type": 10
+ },
+ "model": "auth.permission",
+ "pk": 30
+},
+{
+ "fields": {
+  "codename": "add_pagina",
+  "name": "Can add pagina",
+  "content_type": 11
+ },
+ "model": "auth.permission",
+ "pk": 31
+},
+{
+ "fields": {
+  "codename": "change_pagina",
+  "name": "Can change pagina",
+  "content_type": 11
+ },
+ "model": "auth.permission",
+ "pk": 32
+},
+{
+ "fields": {
+  "codename": "delete_pagina",
+  "name": "Can delete pagina",
+  "content_type": 11
+ },
+ "model": "auth.permission",
+ "pk": 33
+},
+{
+ "fields": {
+  "codename": "add_captchastore",
+  "name": "Can add captcha store",
+  "content_type": 12
+ },
+ "model": "auth.permission",
+ "pk": 34
+},
+{
+ "fields": {
+  "codename": "change_captchastore",
+  "name": "Can change captcha store",
+  "content_type": 12
+ },
+ "model": "auth.permission",
+ "pk": 35
+},
+{
+ "fields": {
+  "codename": "delete_captchastore",
+  "name": "Can delete captcha store",
+  "content_type": 12
+ },
+ "model": "auth.permission",
+ "pk": 36
+},
+{
+ "fields": {
+  "codename": "add_taquillero",
+  "name": "Can add taquillero",
+  "content_type": 13
+ },
+ "model": "auth.permission",
+ "pk": 37
+},
+{
+ "fields": {
+  "codename": "change_taquillero",
+  "name": "Can change taquillero",
+  "content_type": 13
+ },
+ "model": "auth.permission",
+ "pk": 38
+},
+{
+ "fields": {
+  "codename": "delete_taquillero",
+  "name": "Can delete taquillero",
+  "content_type": 13
+ },
+ "model": "auth.permission",
+ "pk": 39
+},
+{
+ "fields": {
+  "codename": "add_taquilla",
+  "name": "Can add taquilla",
+  "content_type": 14
+ },
+ "model": "auth.permission",
+ "pk": 40
+},
+{
+ "fields": {
+  "codename": "change_taquilla",
+  "name": "Can change taquilla",
+  "content_type": 14
+ },
+ "model": "auth.permission",
+ "pk": 41
+},
+{
+ "fields": {
+  "codename": "delete_taquilla",
+  "name": "Can delete taquilla",
+  "content_type": 14
+ },
+ "model": "auth.permission",
+ "pk": 42
+},
+{
+ "fields": {
+  "codename": "add_abono",
+  "name": "Can add abono",
+  "content_type": 15
+ },
+ "model": "auth.permission",
+ "pk": 43
+},
+{
+ "fields": {
+  "codename": "change_abono",
+  "name": "Can change abono",
+  "content_type": 15
+ },
+ "model": "auth.permission",
+ "pk": 44
+},
+{
+ "fields": {
+  "codename": "delete_abono",
+  "name": "Can delete abono",
+  "content_type": 15
+ },
+ "model": "auth.permission",
+ "pk": 45
+},
+{
+ "fields": {
+  "codename": "add_encuesta",
+  "name": "Can add encuesta",
+  "content_type": 16
+ },
+ "model": "auth.permission",
+ "pk": 46
+},
+{
+ "fields": {
+  "codename": "change_encuesta",
+  "name": "Can change encuesta",
+  "content_type": 16
+ },
+ "model": "auth.permission",
+ "pk": 47
+},
+{
+ "fields": {
+  "codename": "delete_encuesta",
+  "name": "Can delete encuesta",
+  "content_type": 16
+ },
+ "model": "auth.permission",
+ "pk": 48
+},
+{
+ "fields": {
+  "codename": "add_opcion",
+  "name": "Can add opcion",
+  "content_type": 17
+ },
+ "model": "auth.permission",
+ "pk": 49
+},
+{
+ "fields": {
+  "codename": "change_opcion",
+  "name": "Can change opcion",
+  "content_type": 17
+ },
+ "model": "auth.permission",
+ "pk": 50
+},
+{
+ "fields": {
+  "codename": "delete_opcion",
+  "name": "Can delete opcion",
+  "content_type": 17
+ },
+ "model": "auth.permission",
+ "pk": 51
+},
+{
+ "fields": {
+  "codename": "add_voto",
+  "name": "Can add voto",
+  "content_type": 18
+ },
+ "model": "auth.permission",
+ "pk": 52
+},
+{
+ "fields": {
+  "codename": "change_voto",
+  "name": "Can change voto",
+  "content_type": 18
+ },
+ "model": "auth.permission",
+ "pk": 53
+},
+{
+ "fields": {
+  "codename": "delete_voto",
+  "name": "Can delete voto",
+  "content_type": 18
+ },
+ "model": "auth.permission",
+ "pk": 54
+},
+{
+ "fields": {
+  "codename": "add_logentry",
+  "name": "Can add log entry",
+  "content_type": 19
+ },
+ "model": "auth.permission",
+ "pk": 55
+},
+{
+ "fields": {
+  "codename": "change_logentry",
+  "name": "Can change log entry",
+  "content_type": 19
+ },
+ "model": "auth.permission",
+ "pk": 56
+},
+{
+ "fields": {
+  "codename": "delete_logentry",
+  "name": "Can delete log entry",
+  "content_type": 19
+ },
+ "model": "auth.permission",
+ "pk": 57
+},
+{
+ "fields": {
+  "codename": "add_formapago",
+  "name": "Can add forma de pago",
+  "content_type": 20
+ },
+ "model": "auth.permission",
+ "pk": 58
+},
+{
+ "fields": {
+  "codename": "change_formapago",
+  "name": "Can change forma de pago",
+  "content_type": 20
+ },
+ "model": "auth.permission",
+ "pk": 59
+},
+{
+ "fields": {
+  "codename": "delete_formapago",
+  "name": "Can delete forma de pago",
+  "content_type": 20
+ },
+ "model": "auth.permission",
+ "pk": 60
+},
+{
+ "fields": {
+  "codename": "add_cuotaperiodica",
+  "name": "Can add cuota peri\u00f3dica",
+  "content_type": 21
+ },
+ "model": "auth.permission",
+ "pk": 61
+},
+{
+ "fields": {
+  "codename": "change_cuotaperiodica",
+  "name": "Can change cuota peri\u00f3dica",
+  "content_type": 21
+ },
+ "model": "auth.permission",
+ "pk": 62
+},
+{
+ "fields": {
+  "codename": "delete_cuotaperiodica",
+  "name": "Can delete cuota peri\u00f3dica",
+  "content_type": 21
+ },
+ "model": "auth.permission",
+ "pk": 63
+},
+{
+ "fields": {
+  "codename": "add_pago",
+  "name": "Can add pago",
+  "content_type": 22
+ },
+ "model": "auth.permission",
+ "pk": 64
+},
+{
+ "fields": {
+  "codename": "change_pago",
+  "name": "Can change pago",
+  "content_type": 22
+ },
+ "model": "auth.permission",
+ "pk": 65
+},
+{
+ "fields": {
+  "codename": "delete_pago",
+  "name": "Can delete pago",
+  "content_type": 22
+ },
+ "model": "auth.permission",
+ "pk": 66
+},
+{
+ "fields": {
+  "codename": "add_mensualidad",
+  "name": "Can add mensualidad",
+  "content_type": 23
+ },
+ "model": "auth.permission",
+ "pk": 67
+},
+{
+ "fields": {
+  "codename": "change_mensualidad",
+  "name": "Can change mensualidad",
+  "content_type": 23
+ },
+ "model": "auth.permission",
+ "pk": 68
+},
+{
+ "fields": {
+  "codename": "delete_mensualidad",
+  "name": "Can delete mensualidad",
+  "content_type": 23
+ },
+ "model": "auth.permission",
+ "pk": 69
+},
+{
+ "fields": {
+  "username": "admin",
+  "first_name": "Se\u00f1or",
+  "last_name": "Administrador",
+  "is_active": true,
+  "is_superuser": true,
+  "is_staff": true,
+  "last_login": "2015-05-10T17:46:11.171Z",
+  "groups": [],
+  "user_permissions": [],
+  "password": "pbkdf2_sha256$20000$f4MJyC7pa9fw$9xKFN9HhLKvU3KSr1E5FTwe0+2CSW76NojxTQB9hHWk=",
+  "email": "admin@admin.com",
+  "date_joined": "2015-05-07T16:44:23Z"
+ },
+ "model": "auth.user",
+ "pk": 1
+},
+{
+ "fields": {
+  "username": "user",
+  "first_name": "Se\u00f1or",
+  "last_name": "Usuario",
+  "is_active": true,
+  "is_superuser": false,
+  "is_staff": false,
+  "last_login": "2015-05-10T17:37:13.264Z",
+  "groups": [],
+  "user_permissions": [],
+  "password": "pbkdf2_sha256$20000$ofdOd73hYpv7$n6RhIB6UHQRo717LcJL5f4KR/x+uz5WdOZO15RNWB4I=",
+  "email": "user@user.com",
+  "date_joined": "2015-05-07T16:53:51Z"
+ },
+ "model": "auth.user",
+ "pk": 2
+},
+{
+ "fields": {
+  "domain": "localhost:8000",
+  "name": "Test site"
+ },
+ "model": "sites.site",
+ "pk": 1
+},
+{
+ "fields": {
+  "domain": "127.0.0.1:8000",
+  "name": "Test site 2"
+ },
+ "model": "sites.site",
+ "pk": 2
+},
+{
+ "fields": {
+  "www": "",
+  "google_group": "",
+  "twitter": "",
+  "google_plus": "",
+  "youtube": "",
+  "site": 1,
+  "facebook_fanpage": "",
+  "blog": "",
+  "google_site": "",
+  "facebook_group": "",
+  "nombre": "Espacio de prueba 1",
+  "logo": "",
+  "slug": "prueba1"
+ },
+ "model": "espacios.espacio",
+ "pk": 1
+},
+{
+ "fields": {
+  "www": "",
+  "google_group": "",
+  "twitter": "",
+  "google_plus": "",
+  "youtube": "",
+  "site": 2,
+  "facebook_fanpage": "",
+  "blog": "",
+  "google_site": "",
+  "facebook_group": "",
+  "nombre": "Espacio de prueba 2",
+  "logo": "",
+  "slug": "prueba2"
+ },
+ "model": "espacios.espacio",
+ "pk": 2
+},
+{
+ "fields": {
+  "es_socio": false,
+  "user": 1,
+  "fecha_alta": "2015-05-07",
+  "espacio": 1
+ },
+ "model": "espacios.miembro",
+ "pk": 1
+},
+{
+ "fields": {
+  "es_socio": false,
+  "user": 2,
+  "fecha_alta": "2015-05-07",
+  "espacio": 1
+ },
+ "model": "espacios.miembro",
+ "pk": 2
+},
+{
+ "fields": {
+  "es_socio": true,
+  "user": 1,
+  "fecha_alta": "2015-05-10",
+  "espacio": 2
+ },
+ "model": "espacios.miembro",
+ "pk": 3
+},
+{
+ "fields": {
+  "body": "Esta es la informaci\u00f3n del espacio de prueba 1",
+  "orden": 0,
+  "title": "Informaci\u00f3n",
+  "slug": "informacion",
+  "espacio": 1
+ },
+ "model": "pages.pagina",
+ "pk": 1
+},
+{
+ "fields": {
+  "body": "El espacio de prueba 2 no tiene ni miembros ni nada.",
+  "orden": 0,
+  "title": "En construcci\u00f3n",
+  "slug": "en_construccion",
+  "espacio": 2
+ },
+ "model": "pages.pagina",
+ "pk": 2
+},
+{
+ "fields": {
+  "body": "Esto es otra p\u00e1gina solo para los efectos de verlo en el menu y probar.",
+  "orden": 1,
+  "title": "Otra p\u00e1gina",
+  "slug": "otra",
+  "espacio": 1
+ },
+ "model": "pages.pagina",
+ "pk": 3
+},
+{
+ "fields": {
+  "voto_anonimo": false,
+  "espacio": 1,
+  "fecha_creacion": "2015-01-01T00:00:00Z",
+  "texto": "Encuesta totalmente absurda para probar la definici\u00f3n de encuestas.",
+  "pregunta": "\u00bfQu\u00e9 pizza te gusta?",
+  "voto_editable": true,
+  "fecha_finalizacion": null,
+  "voto_multiple": true
+ },
+ "model": "encuestas.encuesta",
+ "pk": 1
+},
+{
+ "fields": {
+  "encuesta": 1,
+  "eleccion": "Margarita",
+  "texto": "Pizza bastante basica"
+ },
+ "model": "encuestas.opcion",
+ "pk": 1
+},
+{
+ "fields": {
+  "encuesta": 1,
+  "eleccion": "Cuatro quesos",
+  "texto": "Todo es l\u00edquido solidificado"
+ },
+ "model": "encuestas.opcion",
+ "pk": 2
+},
+{
+ "fields": {
+  "encuesta": 1,
+  "eleccion": "Barbacoa",
+  "texto": "Con una salsa como si te estuvieras comiendo una chuleta, pero en pizza"
+ },
+ "model": "encuestas.opcion",
+ "pk": 3
+},
+{
+ "fields": {
+  "encuesta": 1,
+  "eleccion": "Fruti di mare",
+  "texto": "Como la de frutas del bosque, pero del mar."
+ },
+ "model": "encuestas.opcion",
+ "pk": 4
+},
+{
+ "fields": {
+  "opcion": 3,
+  "miembro": 2,
+  "time": "2015-05-07T16:58:07.963Z"
+ },
+ "model": "encuestas.voto",
+ "pk": 1
+},
+{
+ "fields": {
+  "nombre": "Contado",
+  "porcentaje_comision": 0.0,
+  "espacio": 1
+ },
+ "model": "cuotas.formapago",
+ "pk": 1
+},
+{
+ "fields": {
+  "nombre": "Tarjeta",
+  "porcentaje_comision": 4.0,
+  "espacio": 1
+ },
+ "model": "cuotas.formapago",
+ "pk": 2
+},
+{
+ "fields": {
+  "nombre": "Especie",
+  "porcentaje_comision": 0.0,
+  "espacio": 1
+ },
+ "model": "cuotas.formapago",
+ "pk": 3
+},
+{
+ "fields": {
+  "fecha_inicial": "2015-01-01",
+  "fecha_final": "2016-12-31",
+  "cantidad": 10.0,
+  "espacio": 1
+ },
+ "model": "cuotas.cuotaperiodica",
+ "pk": 1
+},
+{
+ "fields": {
+  "fecha": "2015-04-01",
+  "forma_pago": 1,
+  "description": "Pago dos meses al contado de prueba 1",
+  "cantidad": 20.0,
+  "pagador": 1
+ },
+ "model": "cuotas.pago",
+ "pk": 1
+},
+{
+ "fields": {
+  "fecha": "2015-05-07",
+  "forma_pago": 1,
+  "description": "",
+  "cantidad": 10.0,
+  "pagador": 2
+ },
+ "model": "cuotas.pago",
+ "pk": 2
+},
+{
+ "fields": {
+  "fecha": "2015-02-01",
+  "forma_pago": 1,
+  "description": "",
+  "cantidad": 10.0,
+  "pagador": 1
+ },
+ "model": "cuotas.pago",
+ "pk": 3
+},
+{
+ "fields": {
+  "fecha": "2015-05-10",
+  "forma_pago": 3,
+  "description": "Compra tutu",
+  "cantidad": 8.0,
+  "pagador": 1
+ },
+ "model": "cuotas.pago",
+ "pk": 4
+},
+{
+ "fields": {
+  "fecha": "2015-04-01",
+  "miembro": 1,
+  "cantidad": 10.0,
+  "pago": 1
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 1
+},
+{
+ "fields": {
+  "fecha": "2015-05-01",
+  "miembro": 1,
+  "cantidad": 10.0,
+  "pago": 1
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 2
+},
+{
+ "fields": {
+  "fecha": "2015-05-01",
+  "miembro": 2,
+  "cantidad": 10.0,
+  "pago": 2
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 3
+},
+{
+ "fields": {
+  "fecha": "2015-02-01",
+  "miembro": 1,
+  "cantidad": 10.0,
+  "pago": 3
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 4
+},
+{
+ "fields": {
+  "fecha": "2015-05-10",
+  "miembro": 1,
+  "cantidad": 8.0,
+  "pago": 4
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 5
+}
+]
