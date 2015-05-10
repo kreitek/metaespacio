@@ -5,9 +5,17 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
 
-def upload_to(instance, filename):
+def logos_upload_to(instance, filename):
     ext = filename.split(".")[-1]
     return "logos/{}.{}".format(instance.slug, ext)
+
+
+def favicons_upload_to(instance, filename):
+    ext = filename.split(".")[-1]
+    return "favicons/{}.{}".format(instance.slug, ext)
+
+# esto es para que una migration vieja se calle (no usar)
+upload_to = logos_upload_to
 
 
 class Espacio(models.Model):
@@ -15,7 +23,8 @@ class Espacio(models.Model):
     nombre = models.CharField(max_length=60)
     slug = models.CharField(max_length=60)
     miembros = models.ManyToManyField(User, through='Miembro')
-    logo = models.ImageField(upload_to=upload_to, blank=True, null=True)
+    logo = models.ImageField(upload_to=logos_upload_to, blank=True, null=True)
+    favicon = models.ImageField(upload_to=favicons_upload_to, blank=True, null=True, help_text="El formato debe ser PNG y tamaño 16x16 o 32x32")
 
     # enlaces redes sociales y otros
     facebook_fanpage = models.URLField(blank=True, null=True)

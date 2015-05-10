@@ -1,7 +1,8 @@
 {% load espacios %}
 <li class="dropdown">
-<a data-toggle="dropdown" class="dropdown-toggle navbar-brand" href="#">{{espacio.nombre}} <span class="caret"></span></a>
+<a data-toggle="dropdown" class="dropdown-toggle navbar-brand" title="Otros espacios" href="#"><span class="glyphicon glyphicon-globe"></span></a>
 <ul role="menu" class="dropdown-menu">
+    <li role="presentation" class="dropdown-header"><a href="#">Otros espacios</a></li>
     {% otros_espacios %}
 </ul>
 </li>
