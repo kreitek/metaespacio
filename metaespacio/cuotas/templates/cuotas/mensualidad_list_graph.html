@@ -1,0 +1,27 @@
+{% extends "common/base.html" %}
+{% load adminurl %}
+
+{% block extra_head %}
+{# aqui poner los javascriptes que sea necesario cargar en <head> #}
+{% endblock extra_head %}
+
+{% block body %}
+<h1>Gráfico cuotas {{espacio.nombre}}</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Mensualidad</th>
+            <th style="text-align: right">Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for anyo, cantidad in sumas.items %}
+        <tr>
+            <td class="text-center">{{anyo|date:"E / Y"}}</td>
+            <td class="text-right">{{cantidad|floatformat:2}} €</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock body %}

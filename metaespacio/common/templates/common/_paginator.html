@@ -1,0 +1,25 @@
+{% if is_paginated %}
+{% load i18n %}
+<ul class="pagination">
+        {% ifnotequal 1 page_obj.number %}
+        <li><a href="?{{ filter }}page={{ page_obj.first }}{% if frame %}&amp;frame=1{% endif %}" title="{% trans 'first page' %}">1</a></li>
+        {% endifnotequal %}
+        {% if page_obj.number|add:-2 > 1 %}
+        <li><span>...</span></li>
+        {% endif %}
+        {% if page_obj.number|add:-1 > 1 %}
+        <li><a href="?{{ filter }}page={{ page_obj.previous_page_number }}{% if frame %}&amp;frame=1{% endif %}" title="{% trans 'previous page' %}">{{page_obj.previous_page_number }}</a></li>
+        {% endif %}
+        <li class="active"><span>{{ page_obj.number }}</span></li>
+        {% if page_obj.number|add:1 < page_obj.paginator.num_pages %}
+        <li><a href="?{{ filter }}page={{ page_obj.next_page_number }}{% if frame %}&amp;frame=1{% endif %}" title="{% trans 'next page' %}">{{ page_obj.next_page_number }}</a></li>
+        {% endif %}
+        {% if page_obj.number|add:2 < page_obj.paginator.num_pages %}
+        <li><span>...</span></li>
+        {% endif %}
+        {% ifnotequal page_obj.paginator.num_pages page_obj.number %}
+        <li><a href="?{{ filter }}page={{ page_obj.paginator.num_pages}}{% if frame %}&amp;frame=1{% endif %}" title="{% trans 'last page' %}">{{page_obj.paginator.num_pages}}</a></li>
+        {% endifnotequal %}
+</ul>
+{% endif %}
+
