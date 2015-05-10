@@ -6,8 +6,10 @@
 </ul>
 </li>
 {% for pagina in espacio.pagina_set.all %}
+{% if pagina.menu %}
 <li {% ifequal object pagina %} class="active" {% endifequal %}>
-    <a href="{% url 'pagina_view' pagina.slug %}">{{pagina.title}}</a>
+    <a href="{% url 'pagina_view' pagina.slug %}">{{pagina.menu}}</a>
 </li>
+{% endif %}
 {% endfor %}
 <li><a href="{% url 'list_member' %}">Lista de miembros</a></li>

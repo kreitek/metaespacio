@@ -734,9 +734,10 @@
  "fields": {
   "body": "Esta es la informaci\u00f3n del espacio de prueba 1",
   "orden": 0,
-  "title": "Informaci\u00f3n",
-  "slug": "informacion",
-  "espacio": 1
+  "title": "Información de Inicio",
+  "menu": "Inicio",
+  "espacio": 1,
+  "slug": "inicio"
  },
  "model": "pages.pagina",
  "pk": 1
@@ -746,8 +747,9 @@
   "body": "El espacio de prueba 2 no tiene ni miembros ni nada.",
   "orden": 0,
   "title": "En construcci\u00f3n",
-  "slug": "en_construccion",
-  "espacio": 2
+  "menu": "Homepage",
+  "espacio": 2,
+  "slug": "en_construccion"
  },
  "model": "pages.pagina",
  "pk": 2
@@ -757,8 +759,9 @@
   "body": "Esto es otra p\u00e1gina solo para los efectos de verlo en el menu y probar.",
   "orden": 1,
   "title": "Otra p\u00e1gina",
-  "slug": "otra",
-  "espacio": 1
+  "menu": "Otra p\u00e1gina",
+  "espacio": 1,
+  "slug": "otra"
  },
  "model": "pages.pagina",
  "pk": 3

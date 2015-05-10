@@ -10,6 +10,7 @@ class Pagina(models.Model):
     orden = models.IntegerField(default=0)
     slug = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
+    menu = models.CharField(max_length=255, blank=True, null=True, help_text="Si quieres que salga en el menú, pon el nombre aqui")
     body = models.TextField()
 
     class Meta:
