@@ -5,7 +5,6 @@
     {% otros_espacios %}
 </ul>
 </li>
-<li {% if not object %}class="active"{% endif %}><a href="/">Inicio</a></li>
 {% for pagina in espacio.pagina_set.all %}
 <li {% ifequal object pagina %} class="active" {% endifequal %}>
     <a href="{% url 'pagina_view' pagina.slug %}">{{pagina.title}}</a>

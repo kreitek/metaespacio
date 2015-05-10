@@ -5,4 +5,9 @@ from espacios.views import FilterEspacioSiteMixin
 
 
 class PaginaView(FilterEspacioSiteMixin, DetailView):
-     model = Pagina
+    model = Pagina
+
+
+class PaginaIndex(PaginaView):
+    def get_object(self):
+        return self.get_queryset().first()
