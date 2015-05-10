@@ -894,6 +894,17 @@
 },
 {
  "fields": {
+  "fecha": "2015-04-10",
+  "forma_pago": 1,
+  "description": "Un pago extra de alguna cosa",
+  "cantidad": 12.0,
+  "pagador": 1
+ },
+ "model": "cuotas.pago",
+ "pk": 4
+},
+{
+ "fields": {
   "fecha": "2015-04-01",
   "miembro": 1,
   "cantidad": 10.0,
@@ -931,5 +942,15 @@
  },
  "model": "cuotas.mensualidad",
  "pk": 4
+},
+{
+ "fields": {
+  "fecha": "2015-04-10",
+  "miembro": 1,
+  "cantidad": 12.0,
+  "pago": 4
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 5
 }
 ]
