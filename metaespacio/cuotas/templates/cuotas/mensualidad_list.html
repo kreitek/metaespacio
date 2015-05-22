@@ -2,12 +2,20 @@
 {% load adminurl %}
 
 {% block body %}
+
+{% if usuario %}
+<h1>Cuotas {{usuario}}</h1>
+{% else %}
 <h1>Cuotas {{espacio.nombre}}</h1>
+{% endif %}
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Mensualidad</th>
+            {% if not usuario %}
+            <th>Usuario</th>
+            {% endif %}
             <th style="text-align: right">Cantidad</th>
             <th>Forma de pago</th>
             <th>Concepto del pago</th>
@@ -19,6 +27,9 @@
         {% for object in object_list %}
         <tr>
             <td class="text-center">{{object.fecha|date:"E / Y"}}</td>
+            {% if not usuario %}
+            <td>{{object.miembro.user.username}}</td>
+            {% endif %}
             <td class="text-right">{{object.cantidad|floatformat:2}} €</td>
             <td>{{object.pago.forma_pago}}</td>
             <td>{{object.pago.description}}</td>

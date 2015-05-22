@@ -6,7 +6,11 @@
 {% endblock extra_head %}
 
 {% block body %}
+{% if usuario %}
 <h1>Contabilidad resumida de {{usuario}}</h1>
+{% else %}
+<h1>Contabilidad resumida del {{espacio.nombre}}</h1>
+{% endif %}
 
 <table class="table table-striped">
     <thead>
@@ -30,6 +34,10 @@
     </tbody>
 </table>
 
-<p class="text-center"><a class="btn btn-default" href="{% url 'mensualidad_pagos' user.username %}">Ver detalles de pagos</a></p>
+{% if usuario %}
+<p class="text-center"><a class="btn btn-default" href="{% url 'mensualidad_pagos' usuario %}">Ver detalles de pagos</a></p>
+{% else %}
+<p class="text-center"><a class="btn btn-default" href="{% url 'mensualidad_pagos' %}">Ver detalles de pagos</a></p>
+{% endif %}
 
 {% endblock body %}

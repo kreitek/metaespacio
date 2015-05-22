@@ -12,13 +12,20 @@ class MensualidadList(SiteMixin, ListView):
     model = Mensualidad
 
     def get_queryset(self):
-        url_user = get_object_or_404(User, username=self.kwargs['username'])
+        kwargs = {"miembro__espacio__site": self.site}
+        username = self.kwargs.get('username')
+        if username:
+            url_user = get_object_or_404(User, username=username)
+            kwargs["miembro__user"] = url_user
         login_user = self.request.user
         if not login_user.is_superuser and url_user.pk != login_user.pk:
             raise Http404
-        return super(MensualidadList, self).get_queryset().filter(
-            miembro__user=url_user,
-            miembro__espacio__site=self.site)
+        return super(MensualidadList, self).get_queryset().filter(**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(MensualidadList, self).get_context_data(**kwargs)
+        context['usuario'] = self.kwargs.get('username')
+        return context
 
 
 class MensualidadListSuma(MensualidadList):
@@ -41,7 +48,6 @@ class MensualidadListSuma(MensualidadList):
             sumas_mensuales[mes][columna] += mensualidad.cantidad
             sumas_mensuales[mes][n-1] += mensualidad.cantidad
 
-        context['usuario'] = self.kwargs['username']
         context['columnas'] = columnas
         context['sumas'] = sumas_mensuales
         return context
