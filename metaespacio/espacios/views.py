@@ -7,6 +7,8 @@ from .models import Miembro
 class SiteMixin(object):
     def dispatch(self, request, *args, **kwargs):
         self.site = get_current_site(request)
+        # FIXME espacio-site debe ser un 1to1 no un fk
+        self.espacio = self.site.espacio_set.first()
         return super(SiteMixin, self).dispatch(request, *args, **kwargs)
 
 

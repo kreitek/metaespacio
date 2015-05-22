@@ -6,22 +6,30 @@
 {% endblock extra_head %}
 
 {% block body %}
-<h1>Gráfico cuotas {{espacio.nombre}}</h1>
+<h1>Contabilidad resumida de {{user.username}}</h1>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Mensualidad</th>
-            <th style="text-align: right">Cantidad</th>
+            <th style="text-align: center">Mensualidad</th>
+            {% for columna in columnas %}
+            <th style="text-align: right">{{columna}}</th>
+            {% endfor %}
+            <th style="text-align: right">Total</th>
         </tr>
     </thead>
     <tbody>
-        {% for anyo, cantidad in sumas.items %}
+        {% for anyo, cantidades in sumas.items %}
         <tr>
             <td class="text-center">{{anyo|date:"E / Y"}}</td>
+            {% for cantidad in cantidades %}
             <td class="text-right">{{cantidad|floatformat:2}} €</td>
+            {% endfor %}
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<p class="text-center"><a class="btn btn-default" href="{% url 'mensualidad_pagos' user.username %}">Ver detalles de pagos</a></p>
+
 {% endblock body %}

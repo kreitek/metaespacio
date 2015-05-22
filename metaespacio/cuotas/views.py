@@ -27,13 +27,21 @@ class MensualidadListSuma(MensualidadList):
 
     def get_context_data(self, **kwargs):
         context = super(MensualidadListSuma, self).get_context_data(**kwargs)
+        columnas = list(self.espacio.formapago_set.all())
+        columnas_dict = {x.pk: i for i, x in enumerate(columnas)}
+        n = len(columnas) + 1
+        zeros = [0.0] * n
         sumas_mensuales = OrderedDict()
         for mensualidad in self.get_queryset():
+            key = mensualidad.pago.forma_pago.pk
+            columna = columnas_dict[key]
             mes = mensualidad.fecha.replace(day=1)
             if mes not in sumas_mensuales:
-                sumas_mensuales[mes] = mensualidad.cantidad
-            else:
-                sumas_mensuales[mes] += mensualidad.cantidad
+                sumas_mensuales[mes] = zeros[:]
+            sumas_mensuales[mes][columna] += mensualidad.cantidad
+            sumas_mensuales[mes][n-1] += mensualidad.cantidad
+
+        context['columnas'] = columnas
         context['sumas'] = sumas_mensuales
         return context
 

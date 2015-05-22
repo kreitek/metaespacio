@@ -23,7 +23,7 @@
     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> Mi cuenta ({{ user.username }}) <span class="caret"></span></button>
     <ul role="menu" class="dropdown-menu">
         <li><a href="{% url 'detail_user' user.username %}">Ver perfil</a></li>
-        <li><a href="{% url 'mensualidad_list' user.username %}">Ver cuotas</a></li>
+        <li><a href="{% url 'mensualidad_resumen' user.username %}">Ver cuotas</a></li>
         <li><a href="#">Editar datos de usuario</a></li>
         <li><a href="#">Editar datos personales</a></li>
         <li><a href="{% url 'password_change' %}">Cambiar contraseña</a></li>
