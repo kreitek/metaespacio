@@ -41,6 +41,7 @@ class MensualidadListSuma(MensualidadList):
             sumas_mensuales[mes][columna] += mensualidad.cantidad
             sumas_mensuales[mes][n-1] += mensualidad.cantidad
 
+        context['usuario'] = self.kwargs['username']
         context['columnas'] = columnas
         context['sumas'] = sumas_mensuales
         return context
