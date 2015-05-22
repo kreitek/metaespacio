@@ -21,12 +21,12 @@ class MensualidadList(SiteMixin, ListView):
             miembro__espacio__site=self.site)
 
 
-class MensualidadListGraph(MensualidadList):
+class MensualidadListSuma(MensualidadList):
     def get_template_names(self):
-        return ["cuotas/mensualidad_list_graph.html"]
+        return ["cuotas/mensualidad_list_suma.html"]
 
     def get_context_data(self, **kwargs):
-        context = super(MensualidadListGraph, self).get_context_data(**kwargs)
+        context = super(MensualidadListSuma, self).get_context_data(**kwargs)
         sumas_mensuales = OrderedDict()
         for mensualidad in self.get_queryset():
             mes = mensualidad.fecha.replace(day=1)
@@ -36,3 +36,8 @@ class MensualidadListGraph(MensualidadList):
                 sumas_mensuales[mes] += mensualidad.cantidad
         context['sumas'] = sumas_mensuales
         return context
+
+
+class MensualidadListGraph(MensualidadListSuma):
+    def get_template_names(self):
+        return ["cuotas/mensualidad_list_graph.html"]
