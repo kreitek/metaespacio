@@ -6,7 +6,9 @@
 {% endblock extra_head %}
 
 {% block body %}
-<h1>Gráfico cuotas {{espacio.nombre}}</h1>
+<h1>Gráfico cuotas de {{usuario}}</h1>
+
+{{chart.as_html}}
 
 <table class="table table-striped">
     <thead>
