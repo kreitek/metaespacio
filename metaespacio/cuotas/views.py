@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from .models import Mensualidad
 from espacios.views import SiteMixin
 from collections import OrderedDict
-from graphos.source.simple import SimpleDataSource
+from graphos.sources.simple import SimpleDataSource
 from graphos.renderers.gchart import BarChart
 
 
@@ -17,7 +17,7 @@ class MensualidadList(SiteMixin, ListView):
         kwargs = {"miembro__espacio__site": self.site}
         username = self.kwargs.get('username')
         if username:
-            url_user = get_object_or_404(User username=username)
+            url_user = get_object_or_404(User, username=username)
             kwargs["miembro__user"] = url_user
         login_user = self.request.user
         if not login_user.is_superuser and url_user.pk != login_user.pk:
@@ -59,10 +59,17 @@ class MensualidadListGraph(MensualidadListSuma):
     def get_template_names(self):
         return ["cuotas/mensualidad_list_graph.html"]
       
-    def get_context_data(self):
+    def get_context_data(self, **kwargs):
         context = super(MensualidadListGraph, self).get_context_data(**kwargs)
-        data = [[x.nombre for x in context['columnas']], context['sumas'][:][:-1]]
-        meses = {x.fecha.replace(day=1): '' for x in self.get_queryset()}
-        chart = BarChart(SimpleDataSource(data=data), options={'isStacked': True, 'title': 'Mensualidades', 'vAxis': meses.keys()})
+        data = []
+        if context['columnas']: data.append([x.nombre for x in context['columnas']])
+        #import pdb
+        #pdb.set_trace()
+        if context['sumas']:
+            data.append([[str(k.strftime('%b / %Y'))]+x[:-1] \
+                                            for k, x in context['sumas'].items()])
+        print(data)
+        chart = BarChart(SimpleDataSource(data=data), options={'isStacked': True,  \
+            'title': 'Mensualidades', 'vAxis': {'title': 'Meses'}})
         context['chart'] = chart
         return context

@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     # 'tastypie',  # necesita actualizar a 1.8
     'django.contrib.admin',  # al final por un override de templates
     'cuotas',
+    'graphos',
 )
 
 MIDDLEWARE_CLASSES = (
