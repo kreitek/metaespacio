@@ -3,4 +3,4 @@ django-simple-captcha
 django-crispy-forms
 django-localflavor
 django-tastypie
-django-graphos
+django-graphos==0.0.2a

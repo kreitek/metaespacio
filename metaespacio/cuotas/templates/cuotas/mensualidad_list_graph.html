@@ -3,6 +3,10 @@
 
 {% block extra_head %}
 {# aqui poner los javascriptes que sea necesario cargar en <head> #}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+</script>
 {% endblock extra_head %}
 
 {% block body %}
@@ -18,10 +22,12 @@
         </tr>
     </thead>
     <tbody>
-        {% for anyo, cantidad in sumas.items %}
+        {% for anyo, cantidades in sumas.items %}
         <tr>
             <td class="text-center">{{anyo|date:"E / Y"}}</td>
+            {% for cantidad in cantidades %}
             <td class="text-right">{{cantidad|floatformat:2}} €</td>
+            {% endfor %}
         </tr>
         {% endfor %}
     </tbody>
