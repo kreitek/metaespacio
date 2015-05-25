@@ -72,3 +72,7 @@ class MensualidadListGraph(MensualidadListSuma):
             'title': 'Mensualidades', 'vAxis': {'title': 'Meses'}})
         context['chart'] = chart
         return context
+
+class MensualidadListGeneralGraph(MensualidadListGraph):
+    def get_template_names(self):
+        return ["cuotas/mensualidad_list_suma.html"]
