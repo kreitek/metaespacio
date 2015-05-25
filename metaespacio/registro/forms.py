@@ -5,7 +5,7 @@ from django import forms
 from captcha.fields import CaptchaField
 from django.contrib.auth.models import User
 import string
-
+import re
 
 def cuenta_upper_lower_digits_other(cadena):
     upper = lower = digits = other = 0
@@ -31,6 +31,9 @@ class UserForm(forms.ModelForm):
         username = self.cleaned_data['username']
         if User.objects.filter(username__iexact=username).count() > 0:
             raise forms.ValidationError(u"El nombre de usuario está en uso")
+        # BUG: El mensaje de ayuda del username entra en contradicción con la siguiente validación
+        if re.match(r"^([a-zA-Z0-9_])+$", username) is None:
+            raise forms.ValidationError(u"El nombre de usuario solo debe contener letras o cifras o _")
         return username
 
     def clean_password1(self):
