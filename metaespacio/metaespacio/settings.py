@@ -98,7 +98,10 @@ TEMPLATE_LOADERS = ('django.template.loaders.app_directories.Loader', )
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-from .settings_local import *
+try:
+    from .settings_local import *  # noqa
+except ImportError:
+    pass
 
 if DEBUG:
     # static en desarrollo en carpeta del proyecto
