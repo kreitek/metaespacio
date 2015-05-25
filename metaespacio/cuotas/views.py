@@ -62,12 +62,11 @@ class MensualidadListGraph(MensualidadListSuma):
     def get_context_data(self, **kwargs):
         context = super(MensualidadListGraph, self).get_context_data(**kwargs)
         data = []
-        if context['columnas']: data.append([x.nombre for x in context['columnas']])
-        #import pdb
-        #pdb.set_trace()
+        if context['columnas']: 
+            data.append([u'Meses']+[x.nombre for x in context['columnas']])
         if context['sumas']:
-            data.append([[str(k.strftime('%b / %Y'))]+x[:-1] \
-                                            for k, x in context['sumas'].items()])
+            for k, x in context['sumas'].items():
+                data.append([str(k.strftime('%b / %Y'))] + x[:-1])
         print(data)
         chart = BarChart(SimpleDataSource(data=data), options={'isStacked': True,  \
             'title': 'Mensualidades', 'vAxis': {'title': 'Meses'}})
