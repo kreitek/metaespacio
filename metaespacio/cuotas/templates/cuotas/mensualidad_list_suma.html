@@ -3,6 +3,10 @@
 
 {% block extra_head %}
 {# aqui poner los javascriptes que sea necesario cargar en <head> #}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+</script>
 {% endblock extra_head %}
 
 {% block body %}
@@ -11,6 +15,8 @@
 {% else %}
 <h1>Contabilidad resumida del {{espacio.nombre}}</h1>
 {% endif %}
+
+{{chart.as_html}}
 
 <table class="table table-striped">
     <thead>
