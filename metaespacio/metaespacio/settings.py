@@ -116,8 +116,6 @@ else:
     # FIXME Esto revisarlo porque tampoco lo estamos poniendo aqui exactamente
     STATIC_ROOT = '/var/www/metaespacio/static/'
     MEDIA_ROOT = '/opt/metaespacio/media/'
-    # Envia correos bien
-    ADMINS = (("Root", "changeme@andensinlimite.org"), )
     # en preproduccion o produccion si se usa
     ALLOWED_HOSTS = ['*']
 
