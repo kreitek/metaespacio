@@ -11,6 +11,7 @@ class DatosPersonalesInline(admin.StackedInline):
 
 class UserAdmin2(UserAdmin):
     inlines = UserAdmin.inlines + [DatosPersonalesInline]
+    list_filter = ('espacio', ) + UserAdmin.list_filter
 
 
 admin.site.unregister(User)
