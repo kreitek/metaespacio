@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.http import Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView
 from .models import Mensualidad
 from espacios.views import SiteMixin
@@ -13,14 +13,19 @@ from graphos.renderers.gchart import BarChart
 class MensualidadList(SiteMixin, ListView):
     model = Mensualidad
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return redirect('/')
+        return super(MensualidadList, self).dispatch(request, *args, **kwargs)
+
     def get_queryset(self):
         kwargs = {"miembro__espacio__site": self.site}
         username = self.kwargs.get('username')
         if username:
             url_user = get_object_or_404(User, username=username)
             kwargs["miembro__user"] = url_user
-        login_user = self.request.user
-        if not login_user.is_superuser and url_user.pk != login_user.pk:
+        user = self.request.user
+        if self.espacio not in user.espacio_set.all():
             raise Http404
         return super(MensualidadList, self).get_queryset().filter(**kwargs)
 

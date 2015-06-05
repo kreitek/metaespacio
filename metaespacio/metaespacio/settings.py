@@ -98,7 +98,10 @@ TEMPLATE_LOADERS = ('django.template.loaders.app_directories.Loader', )
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-from .settings_local import *
+try:
+    from .settings_local import *  # noqa
+except ImportError:
+    pass
 
 if DEBUG:
     # static en desarrollo en carpeta del proyecto
@@ -113,8 +116,6 @@ else:
     # FIXME Esto revisarlo porque tampoco lo estamos poniendo aqui exactamente
     STATIC_ROOT = '/var/www/metaespacio/static/'
     MEDIA_ROOT = '/opt/metaespacio/media/'
-    # Envia correos bien
-    ADMINS = (("Root", "changeme@andensinlimite.org"), )
     # en preproduccion o produccion si se usa
     ALLOWED_HOSTS = ['*']
 
