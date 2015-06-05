@@ -73,8 +73,9 @@ class MensualidadListGraph(MensualidadListSuma):
             for k, x in context['sumas'].items():
                 data.append([str(k.strftime('%b / %Y'))] + x[:-1])
         print(data)
-        chart = BarChart(SimpleDataSource(data=data), options={'isStacked': True,  \
-            'title': 'Mensualidades', 'vAxis': {'title': 'Meses'}})
+        chart = BarChart(SimpleDataSource(data=data), width="100%;", \
+            height="auto;", options={'isStacked': True, 'title': 'Mensualidades', \
+            "colors": ["#32CD32", "#4169E1", "#FFA500"], 'vAxis': {'title': 'Meses'}})
         context['chart'] = chart
         return context
 
