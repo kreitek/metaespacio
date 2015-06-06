@@ -8,7 +8,29 @@ from espacios.views import SiteMixin
 from collections import OrderedDict
 from graphos.sources.simple import SimpleDataSource
 from graphos.renderers.gchart import BarChart
+from .gchart import ComboChart
 
+from calendar import monthrange
+from datetime import datetime, timedelta, date
+import calendar
+
+def monthdelta(d1, d2):
+    delta = 0
+    while True:
+        mdays = monthrange(d1.year, d1.month)[1]
+        d1 += timedelta(days=mdays)
+        if d1 <= d2:
+            delta += 1
+        else:
+            break
+    return delta
+
+def add_months(sourcedate, months):
+    month = sourcedate.month - 1 + months
+    year = sourcedate.year + month / 12
+    month = month % 12 + 1
+    day = min(sourcedate.day, calendar.monthrange(year, month)[1])
+    return date(year, month, day)
 
 class MensualidadList(SiteMixin, ListView):
     model = Mensualidad
@@ -55,27 +77,68 @@ class MensualidadListSuma(MensualidadList):
             sumas_mensuales[mes][columna] += mensualidad.cantidad
             sumas_mensuales[mes][n-1] += mensualidad.cantidad
 
+        # Rellena de ceros los meses intermedios no pagados
+        meses = sumas_mensuales.keys()
+        for i, mes in enumerate(meses):
+            if i < len(meses)-1:
+                mdelta = monthdelta(meses[i], meses[i+1])
+                if mdelta > 1:
+                    for m in range(1, mdelta):
+                        new = add_months(mes, m)
+                        sumas_mensuales[new] = zeros[:]
+        sumas_mensuales = OrderedDict(sorted(sumas_mensuales.items(), key=lambda t: t[0]))
+
+
         context['columnas'] = columnas
         context['sumas'] = sumas_mensuales
         return context
 
 
 class MensualidadListGraph(MensualidadListSuma):
+
+    bar_colors = [
+        "#32CD32",  # lime green
+        "#4169E1",  # royal blue
+        "#FFA500",  # orange
+    ]
+    expenses_color = "red"
+
     def get_template_names(self):
         return ["cuotas/mensualidad_list_graph.html"]
       
     def get_context_data(self, **kwargs):
         context = super(MensualidadListGraph, self).get_context_data(**kwargs)
         data = []
-        if context['columnas']: 
-            data.append([u'Meses']+[x.nombre for x in context['columnas']])
+        colors = []
+        if context['columnas']:
+            # Titulos de las barras
+            threshold = u'Gastos fijos' if not context['usuario'] else u'Cuota mínima'
+            data.append([u'Meses']+[x.nombre for x in context['columnas']]+[threshold])
+            # Colores de las barras
+            for i, x in enumerate(context['columnas']):
+                colors.append(self.bar_colors[i % len(self.bar_colors[i])])
+            colors.append(self.expenses_color)
         if context['sumas']:
             for k, x in context['sumas'].items():
-                data.append([str(k.strftime('%b / %Y'))] + x[:-1])
+                # Para marcar los gastos fijos y la cuota minima
+                if context['usuario']:
+                    #FIXME: Fijar la cuota minima aplicable a su correspondiente mes
+                    #   Por ahora cuota minima fija a 10.0
+                    expenses = 9.95 # -0.05 para solapar la linea
+                else :
+                    #FIXME: Fijar gastos variables por cada mes
+                    #   Por ahora gastos fijos de 300.0
+                    expenses = 300.0
+                # Datos de las mensualidades
+                data.append([str(k.strftime('%b / %Y'))] + x[:-1] + [expenses])
         print(data)
-        chart = BarChart(SimpleDataSource(data=data), width="100%;", \
-            height="auto;", options={'isStacked': True, 'title': 'Mensualidades', \
-            "colors": ["#32CD32", "#4169E1", "#FFA500"], 'vAxis': {'title': 'Meses'}})
+
+        # Construye la grafica
+        chart = ComboChart(SimpleDataSource(data=data), width="100%;", \
+            height="auto;", options={'title': 'Mensualidades', \
+            'orientation': 'vertical', 'isStacked': True, \
+            'colors': colors, 'vAxis': {'title': 'Meses'}, 'seriesType': 'bars', \
+            'series': {len(colors)-1: {'type': 'steppedArea'}} })
         context['chart'] = chart
         return context
 
