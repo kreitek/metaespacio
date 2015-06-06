@@ -101,7 +101,7 @@ class MensualidadListGraph(MensualidadListSuma):
         "#4169E1",  # royal blue
         "#FFA500",  # orange
     ]
-    expenses_color = "red"
+    expenses_color = "#F08080" # light coral
 
     def get_template_names(self):
         return ["cuotas/mensualidad_list_graph.html"]
