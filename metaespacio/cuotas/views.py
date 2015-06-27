@@ -116,7 +116,7 @@ class MensualidadListGraph(MensualidadListSuma):
             data.append([u'Meses']+[x.nombre for x in context['columnas']]+[threshold])
             # Colores de las barras
             for i, x in enumerate(context['columnas']):
-                colors.append(self.bar_colors[i % len(self.bar_colors[i])])
+                colors.append(self.bar_colors[i % len(self.bar_colors)])
             colors.append(self.expenses_color)
         if context['sumas']:
             for k, x in context['sumas'].items():
