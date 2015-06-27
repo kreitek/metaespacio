@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
+
+from calendar import monthrange
+from collections import OrderedDict
+from datetime import timedelta, date
 from django.contrib.auth.models import User
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView
-from .models import Mensualidad
-from espacios.views import SiteMixin
-from collections import OrderedDict
 from graphos.sources.simple import SimpleDataSource
-from graphos.renderers.gchart import BarChart
+from espacios.views import SiteMixin
 from .gchart import ComboChart
+from .models import Mensualidad
 
-from calendar import monthrange
-from datetime import datetime, timedelta, date
-import calendar
 
 def monthdelta(d1, d2):
     delta = 0
@@ -25,12 +24,14 @@ def monthdelta(d1, d2):
             break
     return delta
 
+
 def add_months(sourcedate, months):
     month = sourcedate.month - 1 + months
     year = sourcedate.year + month / 12
     month = month % 12 + 1
-    day = min(sourcedate.day, calendar.monthrange(year, month)[1])
+    day = min(sourcedate.day, monthrange(year, month)[1])
     return date(year, month, day)
+
 
 class MensualidadList(SiteMixin, ListView):
     model = Mensualidad
@@ -88,7 +89,6 @@ class MensualidadListSuma(MensualidadList):
                         sumas_mensuales[new] = zeros[:]
         sumas_mensuales = OrderedDict(sorted(sumas_mensuales.items(), key=lambda t: t[0]))
 
-
         context['columnas'] = columnas
         context['sumas'] = sumas_mensuales
         return context
@@ -101,11 +101,11 @@ class MensualidadListGraph(MensualidadListSuma):
         "#4169E1",  # royal blue
         "#FFA500",  # orange
     ]
-    expenses_color = "#F08080" # light coral
+    expenses_color = "#F08080"  # light coral
 
     def get_template_names(self):
         return ["cuotas/mensualidad_list_graph.html"]
-      
+
     def get_context_data(self, **kwargs):
         context = super(MensualidadListGraph, self).get_context_data(**kwargs)
         data = []
@@ -122,11 +122,11 @@ class MensualidadListGraph(MensualidadListSuma):
             for k, x in context['sumas'].items():
                 # Para marcar los gastos fijos y la cuota minima
                 if context['usuario']:
-                    #FIXME: Fijar la cuota minima aplicable a su correspondiente mes
+                    # FIXME: Fijar la cuota minima aplicable a su correspondiente mes
                     #   Por ahora cuota minima fija a 10.0
-                    expenses = 9.95 # -0.05 para solapar la linea
-                else :
-                    #FIXME: Fijar gastos variables por cada mes
+                    expenses = 9.95  # -0.05 para solapar la linea
+                else:
+                    # FIXME: Fijar gastos variables por cada mes
                     #   Por ahora gastos fijos de 300.0
                     expenses = 300.0
                 # Datos de las mensualidades
@@ -134,13 +134,20 @@ class MensualidadListGraph(MensualidadListSuma):
         print(data)
 
         # Construye la grafica
-        chart = ComboChart(SimpleDataSource(data=data), width="100%;", \
-            height="auto;", options={'title': 'Mensualidades', \
-            'orientation': 'vertical', 'isStacked': True, \
-            'colors': colors, 'vAxis': {'title': 'Meses'}, 'seriesType': 'bars', \
-            'series': {len(colors)-1: {'type': 'steppedArea'}} })
+        options = {
+            'title': 'Mensualidades',
+            'orientation': 'vertical',
+            'isStacked': True,
+            'colors': colors,
+            'vAxis': {'title': 'Meses'},
+            'seriesType': 'bars',
+            'series': {len(colors)-1: {'type': 'steppedArea'}},
+        }
+        chart = ComboChart(SimpleDataSource(data=data), width="100%;",
+                           height="auto;", options=options)
         context['chart'] = chart
         return context
+
 
 class MensualidadListGeneralGraph(MensualidadListGraph):
     def get_template_names(self):
