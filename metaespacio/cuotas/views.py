@@ -62,6 +62,16 @@ class MensualidadListSuma(MensualidadList):
     def get_template_names(self):
         return ["cuotas/mensualidad_list_suma.html"]
 
+    def add_mensualidad(self, zeros, mes, columna, mensualidad, sumas_mensuales):
+        if mes not in sumas_mensuales:
+            sumas_mensuales[mes] = zeros[:]
+        n = len(zeros)
+        sumas_mensuales[mes][columna] += mensualidad.cantidad
+        if mensualidad.pago.forma_pago.liquido:
+            sumas_mensuales[mes][n-2] += mensualidad.cantidad
+        sumas_mensuales[mes][n-1] += mensualidad.cantidad
+        return sumas_mensuales
+
     def get_context_data(self, **kwargs):
         context = super(MensualidadListSuma, self).get_context_data(**kwargs)
         columnas = list(self.espacio.formapago_set.all().order_by('posicion'))
@@ -73,12 +83,13 @@ class MensualidadListSuma(MensualidadList):
             key = mensualidad.pago.forma_pago.pk
             columna = columnas_dict[key]
             mes = mensualidad.fecha.replace(day=1)
-            if mes not in sumas_mensuales:
-                sumas_mensuales[mes] = zeros[:]
-            sumas_mensuales[mes][columna] += mensualidad.cantidad
-            if mensualidad.pago.forma_pago.liquido:
-                sumas_mensuales[mes][n-2] += mensualidad.cantidad
-            sumas_mensuales[mes][n-1] += mensualidad.cantidad
+            cuotas = self.espacio.cuotaperiodica_set.all().order_by('fecha_inicial')
+            cuota_inicial = cuotas[0] if cuotas else None
+            if cuota_inicial:
+                if mes >= cuota_inicial.fecha_inicial:
+                    sumas_mensuales = self.add_mensualidad(zeros, mes, columna, mensualidad, sumas_mensuales)
+            else:
+                sumas_mensuales = self.add_mensualidad(zeros, mes, columna, mensualidad, sumas_mensuales)
 
         # Rellena de ceros los meses intermedios no pagados
         meses = sumas_mensuales.keys()
