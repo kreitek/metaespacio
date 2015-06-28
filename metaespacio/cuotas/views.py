@@ -64,9 +64,9 @@ class MensualidadListSuma(MensualidadList):
 
     def get_context_data(self, **kwargs):
         context = super(MensualidadListSuma, self).get_context_data(**kwargs)
-        columnas = list(self.espacio.formapago_set.all())
+        columnas = list(self.espacio.formapago_set.all().order_by('posicion'))
         columnas_dict = {x.pk: i for i, x in enumerate(columnas)}
-        n = len(columnas) + 1
+        n = len(columnas) + 1 + 1 # + total liquido + total 
         zeros = [0.0] * n
         sumas_mensuales = OrderedDict()
         for mensualidad in self.get_queryset():
@@ -76,6 +76,8 @@ class MensualidadListSuma(MensualidadList):
             if mes not in sumas_mensuales:
                 sumas_mensuales[mes] = zeros[:]
             sumas_mensuales[mes][columna] += mensualidad.cantidad
+            if mensualidad.pago.forma_pago.liquido:
+                sumas_mensuales[mes][n-2] += mensualidad.cantidad
             sumas_mensuales[mes][n-1] += mensualidad.cantidad
 
         # Rellena de ceros los meses intermedios no pagados
@@ -100,6 +102,7 @@ class MensualidadListGraph(MensualidadListSuma):
         "#32CD32",  # lime green
         "#4169E1",  # royal blue
         "#FFA500",  # orange
+        "#ADFF2F",  # greenyellow
     ]
     expenses_color = "#F08080"  # light coral
 
@@ -116,7 +119,10 @@ class MensualidadListGraph(MensualidadListSuma):
             data.append([u'Meses']+[x.nombre for x in context['columnas']]+[threshold])
             # Colores de las barras
             for i, x in enumerate(context['columnas']):
-                colors.append(self.bar_colors[i % len(self.bar_colors)])
+                if x.color != "" and not x.color is None:
+                    colors.append(x.color)
+                else:
+                    colors.append(self.bar_colors[i % len(self.bar_colors)])
             colors.append(self.expenses_color)
         if context['sumas']:
             for k, x in context['sumas'].items():
@@ -130,7 +136,7 @@ class MensualidadListGraph(MensualidadListSuma):
                     #   Por ahora gastos fijos de 300.0
                     expenses = 300.0
                 # Datos de las mensualidades
-                data.append([str(k.strftime('%b / %Y'))] + x[:-1] + [expenses])
+                data.append([str(k.strftime('%b / %Y'))] + x[:-2] + [expenses])
         print(data)
 
         # Construye la grafica

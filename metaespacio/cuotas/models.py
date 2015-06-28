@@ -10,6 +10,10 @@ class FormaPago(models.Model):
     espacio = models.ForeignKey(Espacio)
     nombre = models.CharField(max_length=255, blank=True, null=True)
     porcentaje_comision = models.FloatField(default=0.0)
+    comision_fija = models.FloatField(default=0.0)
+    liquido = models.BooleanField(default=True)
+    color = models.CharField(max_length=30, default="", blank=True)
+    posicion = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.nombre
