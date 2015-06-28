@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 
 
 class ComboChart(BaseChart):
+
     def get_template(self):
         return "gchart/combo_chart.html"
 

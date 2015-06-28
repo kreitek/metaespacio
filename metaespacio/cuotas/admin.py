@@ -13,7 +13,8 @@ class MensualidadInline(admin.TabularInline):
 
 class PagoAdmin(admin.ModelAdmin):
     date_hierarchy = 'fecha'
-    list_display = ('__unicode__', 'fecha', 'cantidad', 'numero_mensualidades', 'pagado_a')
+    list_display = (
+        '__unicode__', 'fecha', 'cantidad', 'numero_mensualidades', 'pagado_a')
     list_filter = ('forma_pago__espacio', )
     inlines = [MensualidadInline, ]
 
@@ -21,7 +22,8 @@ class PagoAdmin(admin.ModelAdmin):
         return obj.mensualidad_set.count()
 
     def pagado_a(self, obj):
-        l = obj.mensualidad_set.values_list('miembro__user__username', flat=True).distinct()
+        l = obj.mensualidad_set.values_list(
+            'miembro__user__username', flat=True).distinct()
         return ", ".join(l)
 
 

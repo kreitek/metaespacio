@@ -59,6 +59,7 @@ class MensualidadList(SiteMixin, ListView):
 
 
 class MensualidadListSuma(MensualidadList):
+
     def get_template_names(self):
         return ["cuotas/mensualidad_list_suma.html"]
 
@@ -67,45 +68,51 @@ class MensualidadListSuma(MensualidadList):
             sumas_mensuales[mes] = zeros[:]
         n = len(zeros)
         # Se calcula la comision
-        comision_variable = mensualidad.cantidad * mensualidad.pago.forma_pago.porcentaje_comision / 100
-        comision = max(mensualidad.pago.forma_pago.comision_fija, comision_variable)
+        comision_variable = mensualidad.cantidad * \
+            mensualidad.pago.forma_pago.porcentaje_comision / 100
+        comision = max(
+            mensualidad.pago.forma_pago.comision_fija, comision_variable)
         cantidad = mensualidad.cantidad - comision
         # Se aplican las sumas
         sumas_mensuales[mes][columna] += cantidad
         if mensualidad.pago.forma_pago.liquido:
-            sumas_mensuales[mes][n-2] += cantidad
-        sumas_mensuales[mes][n-1] += cantidad
+            sumas_mensuales[mes][n - 2] += cantidad
+        sumas_mensuales[mes][n - 1] += cantidad
         return sumas_mensuales
 
     def get_context_data(self, **kwargs):
         context = super(MensualidadListSuma, self).get_context_data(**kwargs)
         columnas = list(self.espacio.formapago_set.all().order_by('posicion'))
         columnas_dict = {x.pk: i for i, x in enumerate(columnas)}
-        n = len(columnas) + 1 + 1 # + total liquido + total 
+        n = len(columnas) + 1 + 1  # + total liquido + total
         zeros = [0.0] * n
         sumas_mensuales = OrderedDict()
         for mensualidad in self.get_queryset():
             key = mensualidad.pago.forma_pago.pk
             columna = columnas_dict[key]
             mes = mensualidad.fecha.replace(day=1)
-            cuotas = self.espacio.cuotaperiodica_set.all().order_by('fecha_inicial')
+            cuotas = self.espacio.cuotaperiodica_set.all().order_by(
+                'fecha_inicial')
             cuota_inicial = cuotas[0] if cuotas else None
             if cuota_inicial:
                 if mes >= cuota_inicial.fecha_inicial:
-                    sumas_mensuales = self.add_mensualidad(zeros, mes, columna, mensualidad, sumas_mensuales)
+                    sumas_mensuales = self.add_mensualidad(
+                        zeros, mes, columna, mensualidad, sumas_mensuales)
             else:
-                sumas_mensuales = self.add_mensualidad(zeros, mes, columna, mensualidad, sumas_mensuales)
+                sumas_mensuales = self.add_mensualidad(
+                    zeros, mes, columna, mensualidad, sumas_mensuales)
 
         # Rellena de ceros los meses intermedios no pagados
         meses = sumas_mensuales.keys()
         for i, mes in enumerate(meses):
-            if i < len(meses)-1:
-                mdelta = monthdelta(meses[i], meses[i+1])
+            if i < len(meses) - 1:
+                mdelta = monthdelta(meses[i], meses[i + 1])
                 if mdelta > 1:
                     for m in range(1, mdelta):
                         new = add_months(mes, m)
                         sumas_mensuales[new] = zeros[:]
-        sumas_mensuales = OrderedDict(sorted(sumas_mensuales.items(), key=lambda t: t[0]))
+        sumas_mensuales = OrderedDict(
+            sorted(sumas_mensuales.items(), key=lambda t: t[0]))
 
         context['columnas'] = columnas
         context['sumas'] = sumas_mensuales
@@ -131,8 +138,10 @@ class MensualidadListGraph(MensualidadListSuma):
         colors = []
         if context['columnas']:
             # Titulos de las barras
-            threshold = u'Gastos fijos' if not context['usuario'] else u'Cuota mínima'
-            data.append([u'Meses']+[x.nombre for x in context['columnas']]+[threshold])
+            threshold = u'Gastos fijos' if not context[
+                'usuario'] else u'Cuota mínima'
+            data.append(
+                [u'Meses'] + [x.nombre for x in context['columnas']] + [threshold])
             # Colores de las barras
             for i, x in enumerate(context['columnas']):
                 if x.color != "" and not x.color is None:
@@ -163,7 +172,7 @@ class MensualidadListGraph(MensualidadListSuma):
             'colors': colors,
             'vAxis': {'title': 'Meses'},
             'seriesType': 'bars',
-            'series': {len(colors)-1: {'type': 'steppedArea'}},
+            'series': {len(colors) - 1: {'type': 'steppedArea'}},
         }
         chart = ComboChart(SimpleDataSource(data=data), width="100%;",
                            height="auto;", options=options)
@@ -172,5 +181,6 @@ class MensualidadListGraph(MensualidadListSuma):
 
 
 class MensualidadListGeneralGraph(MensualidadListGraph):
+
     def get_template_names(self):
         return ["cuotas/mensualidad_list_suma.html"]
