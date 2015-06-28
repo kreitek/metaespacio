@@ -66,10 +66,15 @@ class MensualidadListSuma(MensualidadList):
         if mes not in sumas_mensuales:
             sumas_mensuales[mes] = zeros[:]
         n = len(zeros)
-        sumas_mensuales[mes][columna] += mensualidad.cantidad
+        # Se calcula la comision
+        comision_variable = mensualidad.cantidad * mensualidad.pago.forma_pago.porcentaje_comision / 100
+        comision = max(mensualidad.pago.forma_pago.comision_fija, comision_variable)
+        cantidad = mensualidad.cantidad - comision
+        # Se aplican las sumas
+        sumas_mensuales[mes][columna] += cantidad
         if mensualidad.pago.forma_pago.liquido:
-            sumas_mensuales[mes][n-2] += mensualidad.cantidad
-        sumas_mensuales[mes][n-1] += mensualidad.cantidad
+            sumas_mensuales[mes][n-2] += cantidad
+        sumas_mensuales[mes][n-1] += cantidad
         return sumas_mensuales
 
     def get_context_data(self, **kwargs):

@@ -31,7 +31,20 @@
             <td>{{object.miembro.user.username}}</td>
             {% endif %}
             <td class="text-right">{{object.cantidad|floatformat:2}} €</td>
-            <td>{{object.pago.forma_pago}}</td>
+            <td>{{object.pago.forma_pago}}
+                {% if object.pago.forma_pago.comision_fija > 0.0 or object.pago.forma_pago.porcentaje_comision > 0.0 %}
+                    <small>
+                        {% if object.pago.forma_pago.comision_fija > 0.0 and object.pago.forma_pago.porcentaje_comision > 0.0 %}
+                        (-max({{object.pago.forma_pago.comision_fija}} €,
+                            {{object.pago.forma_pago.porcentaje_comision}} %)
+                        {% elif object.pago.forma_pago.comision_fija > 0.0 %}
+                        (-{{object.pago.forma_pago.comision_fija}}€)
+                        {% else %}
+                        (-{{object.pago.forma_pago.porcentaje_comision}} %)
+                        {% endif %}
+                    </small>
+                {% endif %}
+            </td>
             <td>{{object.pago.description}}</td>
             <td>{{object.pago.fecha|date:"SHORT_DATE_FORMAT"}}</td>
             <td>
