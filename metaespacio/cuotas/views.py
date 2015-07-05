@@ -74,17 +74,24 @@ class MensualidadListSuma(MensualidadList):
             mensualidad.pago.forma_pago.comision_fija, comision_variable)
         cantidad = mensualidad.cantidad - comision
         # Se aplican las sumas
-        sumas_mensuales[mes][columna] += cantidad
-        if mensualidad.pago.forma_pago.liquido:
+        tipos = mensualidad.pago.tiposDePago
+        k_ingreso = [k for k, v in dict(tipos).items() if v == 'Ingresos'][0]
+        k_gastos = [k for k, v in dict(tipos).items() if v == 'Gastos'][0]
+
+        if mensualidad.pago.tipo == k_gastos:
+            sumas_mensuales[mes][-1] += cantidad
+        else:
+            sumas_mensuales[mes][columna] += cantidad
+            if mensualidad.pago.forma_pago.liquido:
+                sumas_mensuales[mes][n - 3] += cantidad
             sumas_mensuales[mes][n - 2] += cantidad
-        sumas_mensuales[mes][n - 1] += cantidad
         return sumas_mensuales
 
     def get_context_data(self, **kwargs):
         context = super(MensualidadListSuma, self).get_context_data(**kwargs)
         columnas = list(self.espacio.formapago_set.all().order_by('posicion'))
         columnas_dict = {x.pk: i for i, x in enumerate(columnas)}
-        n = len(columnas) + 1 + 1  # + total liquido + total
+        n = len(columnas) + 1 + 1 + 1  # + total liquido + total + gastos
         zeros = [0.0] * n
         sumas_mensuales = OrderedDict()
         for mensualidad in self.get_queryset():
@@ -149,19 +156,29 @@ class MensualidadListGraph(MensualidadListSuma):
                 else:
                     colors.append(self.bar_colors[i % len(self.bar_colors)])
             colors.append(self.expenses_color)
+        # Se añaden las sumas al gráfico
         if context['sumas']:
             for k, x in context['sumas'].items():
                 # Para marcar los gastos fijos y la cuota minima
                 if context['usuario']:
-                    # FIXME: Fijar la cuota minima aplicable a su correspondiente mes
-                    #   Por ahora cuota minima fija a 10.0
-                    expenses = 9.95  # -0.05 para solapar la linea
+                    cuota = self.espacio.cuotaperiodica_set \
+                        .filter(fecha_inicial__lte=k)\
+                        .order_by('fecha_inicial')
+                    cuota2 = cuota.filter(fecha_final__gte=k)\
+                        .order_by('fecha_inicial') if cuota else None
+                    if cuota2:
+                        # FIXME: Corregir en la visualizacion el solapamiento
+                        # de la linea
+                        # -0.05 para solapar la linea
+                        expenses = cuota2[0].cantidad - 0.05
+                    elif cuota:
+                        expenses = cuota[0].cantidad - 0.05
+                    else:
+                        expenses = 9.95  # 10 -0.05 para solapar la linea
                 else:
-                    # FIXME: Fijar gastos variables por cada mes
-                    #   Por ahora gastos fijos de 300.0
-                    expenses = 300.0
+                    expenses = x[-1]
                 # Datos de las mensualidades
-                data.append([str(k.strftime('%b / %Y'))] + x[:-2] + [expenses])
+                data.append([str(k.strftime('%b / %Y'))] + x[:-3] + [expenses])
         print(data)
 
         # Construye la grafica

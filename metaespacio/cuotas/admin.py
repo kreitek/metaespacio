@@ -40,8 +40,14 @@ class FormaPagoInline(admin.TabularInline):
     extra = 0
 
 
+class CategoriaPagoInline(admin.TabularInline):
+    model = models.CategoriaPago
+    extra = 0
+
+
 class EspacioAdmin2(EspacioAdmin):
-    inlines = EspacioAdmin.inlines + [FormaPagoInline, CuotaPeriodicaInline]
+    inlines = EspacioAdmin.inlines + \
+        [FormaPagoInline, CategoriaPagoInline, CuotaPeriodicaInline]
 
 admin.site.unregister(Espacio)
 admin.site.register(Espacio, EspacioAdmin2)

@@ -6,6 +6,7 @@ from espacios.models import Espacio, Miembro
 
 
 class FormaPago(models.Model):
+
     "Efectivo, Cuenta corriente, Stripe?, Otras"
     espacio = models.ForeignKey(Espacio)
     nombre = models.CharField(max_length=255, blank=True, null=True)
@@ -19,11 +20,13 @@ class FormaPago(models.Model):
         return self.nombre
 
     class Meta:
+        ordering = ('posicion', )
         verbose_name = "forma de pago"
         verbose_name_plural = "formas de pago"
 
 
 class CuotaPeriodica(models.Model):
+
     "Cantidad mensual a aportar por miembro"
     espacio = models.ForeignKey(Espacio)
     cantidad = models.FloatField()
@@ -42,9 +45,14 @@ class CuotaPeriodica(models.Model):
 
 
 class Pago(models.Model):
+    tiposDePago = ((1, 'Ingresos'),
+                   (2, 'Neutro'),
+                   (3, 'Gastos'), )
+
     pagador = models.ForeignKey(Miembro, blank=True, null=True)
     fecha = models.DateField()
     cantidad = models.FloatField()
+    tipo = models.IntegerField(choices=tiposDePago, default=1)
     forma_pago = models.ForeignKey(FormaPago)
     description = models.CharField(max_length=255, blank=True, null=True)
 
@@ -59,10 +67,28 @@ class Pago(models.Model):
         ordering = ('fecha', )
 
 
+class CategoriaPago(models.Model):
+
+    "Cuotas, Cursos, , Extra"
+    espacio = models.ForeignKey(Espacio)
+    nombre = models.CharField(max_length=255, blank=True, null=True)
+    color = models.CharField(max_length=30, default="", blank=True)
+    posicion = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        ordering = ('posicion', )
+        verbose_name = "categoría de pago"
+        verbose_name_plural = "categoríasde de pago"
+
+
 class Mensualidad(models.Model):
     pago = models.ForeignKey(Pago)
     miembro = models.ForeignKey(Miembro)
     fecha = models.DateField(blank=True, null=True)
+    categoria = models.ForeignKey(CategoriaPago, default=1)
     cantidad = models.FloatField()
 
     class Meta:

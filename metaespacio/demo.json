@@ -622,13 +622,40 @@
 },
 {
  "fields": {
+  "codename": "add_categoriapago",
+  "name": "Can add categor\u00eda",
+  "content_type": 24
+ },
+ "model": "auth.permission",
+ "pk": 70
+},
+{
+ "fields": {
+  "codename": "change_categoriapago",
+  "name": "Can change categor\u00eda",
+  "content_type": 24
+ },
+ "model": "auth.permission",
+ "pk": 71
+},
+{
+ "fields": {
+  "codename": "delete_categoriapago",
+  "name": "Can delete categor\u00eda",
+  "content_type": 24
+ },
+ "model": "auth.permission",
+ "pk": 72
+},
+{
+ "fields": {
   "username": "admin",
   "first_name": "Se\u00f1or",
   "last_name": "Administrador",
   "is_active": true,
   "is_superuser": true,
   "is_staff": true,
-  "last_login": "2015-05-07T16:44:31Z",
+  "last_login": "2015-06-28T11:19:51.384Z",
   "groups": [],
   "user_permissions": [],
   "password": "pbkdf2_sha256$20000$f4MJyC7pa9fw$9xKFN9HhLKvU3KSr1E5FTwe0+2CSW76NojxTQB9hHWk=",
@@ -680,12 +707,13 @@
   "google_plus": "",
   "youtube": "",
   "site": 1,
-  "facebook_fanpage": "",
+  "favicon": "",
   "blog": "",
   "google_site": "",
   "facebook_group": "",
   "nombre": "Espacio de prueba 1",
   "logo": "",
+  "facebook_fanpage": "",
   "slug": "prueba1"
  },
  "model": "espacios.espacio",
@@ -699,12 +727,13 @@
   "google_plus": "",
   "youtube": "",
   "site": 2,
-  "facebook_fanpage": "",
+  "favicon": "",
   "blog": "",
   "google_site": "",
   "facebook_group": "",
   "nombre": "Espacio de prueba 2",
   "logo": "",
+  "facebook_fanpage": "",
   "slug": "prueba2"
  },
  "model": "espacios.espacio",
@@ -732,9 +761,19 @@
 },
 {
  "fields": {
+  "es_socio": true,
+  "user": 1,
+  "fecha_alta": "2015-05-10",
+  "espacio": 2
+ },
+ "model": "espacios.miembro",
+ "pk": 3
+},
+{
+ "fields": {
   "body": "Esta es la informaci\u00f3n del espacio de prueba 1",
   "orden": 0,
-  "title": "Información de Inicio",
+  "title": "Informaci\u00f3n de Inicio",
   "menu": "Inicio",
   "espacio": 1,
   "slug": "inicio"
@@ -756,7 +795,7 @@
 },
 {
  "fields": {
-  "body": "Esto es otra p\u00e1gina solo para los efectos de verlo en el menu y probar.",
+  "body": "Esto es otra p\u00e1gina solo para los efectos de verlo en el menu y probar.\r\n\r\n<div class=\"text-center\">\r\n<iframe src=\"https://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;height=600&amp;wkst=2&amp;hl=es&amp;bgcolor=%23ffffff&amp;src=fh96421d58r4t61d0e0mkheq0k%40group.calendar.google.com&amp;color=%236B3304&amp;ctz=Atlantic%2FCanary\" style=\" border-width:0 \" width=\"800\" height=\"600\" frameborder=\"0\" scrolling=\"no\"></iframe>\r\n</div>",
   "orden": 1,
   "title": "Otra p\u00e1gina",
   "menu": "Otra p\u00e1gina",
@@ -845,35 +884,60 @@
 },
 {
  "fields": {
-  "nombre": "Contado",
-  "porcentaje_comision": 0.0,
-  "espacio": 1
+  "espacio": 1,
+  "liquido": true,
+  "color": "#32CD32",
+  "comision_fija": 0.0,
+  "posicion": 0,
+  "nombre": "Met\u00e1lico",
+  "porcentaje_comision": 0.0
  },
  "model": "cuotas.formapago",
  "pk": 1
 },
 {
  "fields": {
+  "espacio": 1,
+  "liquido": true,
+  "color": "#ADFF2F",
+  "comision_fija": 0.0,
+  "posicion": 2,
   "nombre": "Tarjeta",
-  "porcentaje_comision": 4.0,
-  "espacio": 1
+  "porcentaje_comision": 1.0
  },
  "model": "cuotas.formapago",
  "pk": 2
 },
 {
  "fields": {
-  "nombre": "Especie",
-  "porcentaje_comision": 0.0,
-  "espacio": 1
+  "espacio": 1,
+  "liquido": false,
+  "color": "#4169E1",
+  "comision_fija": 0.0,
+  "posicion": 3,
+  "nombre": "Material",
+  "porcentaje_comision": 0.0
  },
  "model": "cuotas.formapago",
  "pk": 3
 },
 {
  "fields": {
-  "fecha_inicial": "2015-01-01",
-  "fecha_final": "2016-12-31",
+  "espacio": 1,
+  "liquido": true,
+  "color": "#FFA500",
+  "comision_fija": 0.4,
+  "posicion": 1,
+  "nombre": "Cargo a Cuenta",
+  "porcentaje_comision": 0.0
+ },
+ "model": "cuotas.formapago",
+ "pk": 4
+},
+{
+ "fields": {
+  "fecha_inicial": "2015-04-01",
+  "fecha_final": null,
   "cantidad": 10.0,
   "espacio": 1
  },
@@ -882,50 +946,181 @@
 },
 {
  "fields": {
-  "fecha": "2015-04-01",
-  "forma_pago": 1,
   "description": "Pago dos meses al contado de prueba 1",
+  "tipo": 1,
+  "fecha": "2015-04-01",
+  "pagador": 1,
   "cantidad": 20.0,
-  "pagador": 1
+  "forma_pago": 1
  },
  "model": "cuotas.pago",
  "pk": 1
 },
 {
  "fields": {
-  "fecha": "2015-05-07",
-  "forma_pago": 1,
   "description": "",
+  "tipo": 1,
+  "fecha": "2015-05-07",
+  "pagador": 2,
   "cantidad": 10.0,
-  "pagador": 2
+  "forma_pago": 1
  },
  "model": "cuotas.pago",
  "pk": 2
 },
 {
  "fields": {
-  "fecha": "2015-02-01",
-  "forma_pago": 1,
   "description": "",
+  "tipo": 1,
+  "fecha": "2015-02-01",
+  "pagador": 1,
   "cantidad": 10.0,
-  "pagador": 1
+  "forma_pago": 1
  },
  "model": "cuotas.pago",
  "pk": 3
 },
 {
  "fields": {
-  "fecha": "2015-04-10",
-  "forma_pago": 1,
   "description": "Un pago extra de alguna cosa",
+  "tipo": 1,
+  "fecha": "2015-04-10",
+  "pagador": 1,
   "cantidad": 12.0,
-  "pagador": 1
+  "forma_pago": 1
  },
  "model": "cuotas.pago",
  "pk": 4
 },
 {
  "fields": {
+  "description": "Prueba de especie",
+  "tipo": 2,
+  "fecha": "2015-05-25",
+  "pagador": 1,
+  "cantidad": 5.23,
+  "forma_pago": 3
+ },
+ "model": "cuotas.pago",
+ "pk": 5
+},
+{
+ "fields": {
+  "description": "Pago parcial de la cuota",
+  "tipo": 1,
+  "fecha": "2015-05-25",
+  "pagador": 1,
+  "cantidad": 10.0,
+  "forma_pago": 1
+ },
+ "model": "cuotas.pago",
+ "pk": 6
+},
+{
+ "fields": {
+  "description": "Completado el pago de la cuota de junio",
+  "tipo": 1,
+  "fecha": "2015-05-26",
+  "pagador": 1,
+  "cantidad": 5.0,
+  "forma_pago": 2
+ },
+ "model": "cuotas.pago",
+ "pk": 7
+},
+{
+ "fields": {
+  "description": "Cuota de julio",
+  "tipo": 1,
+  "fecha": "2015-05-25",
+  "pagador": 1,
+  "cantidad": 20.0,
+  "forma_pago": 2
+ },
+ "model": "cuotas.pago",
+ "pk": 8
+},
+{
+ "fields": {
+  "description": "Cuota de diciembre",
+  "tipo": 1,
+  "fecha": "2015-06-06",
+  "pagador": 1,
+  "cantidad": 10.0,
+  "forma_pago": 1
+ },
+ "model": "cuotas.pago",
+ "pk": 9
+},
+{
+ "fields": {
+  "description": "Cuota de mayo extra",
+  "tipo": 1,
+  "fecha": "2015-06-28",
+  "pagador": 1,
+  "cantidad": 10.0,
+  "forma_pago": 4
+ },
+ "model": "cuotas.pago",
+ "pk": 10
+},
+{
+ "fields": {
+  "description": "Pago de abril del agua",
+  "tipo": 3,
+  "fecha": "2015-07-05",
+  "pagador": null,
+  "cantidad": 10.0,
+  "forma_pago": 1
+ },
+ "model": "cuotas.pago",
+ "pk": 11
+},
+{
+ "fields": {
+  "description": "Pago de abril de la luz",
+  "tipo": 3,
+  "fecha": "2015-07-05",
+  "pagador": 1,
+  "cantidad": 10.0,
+  "forma_pago": 1
+ },
+ "model": "cuotas.pago",
+ "pk": 12
+},
+{
+ "fields": {
+  "color": "",
+  "nombre": "Cuotas",
+  "posicion": 0,
+  "espacio": 1
+ },
+ "model": "cuotas.categoriapago",
+ "pk": 1
+},
+{
+ "fields": {
+  "color": "",
+  "nombre": "Cursos",
+  "posicion": 0,
+  "espacio": 1
+ },
+ "model": "cuotas.categoriapago",
+ "pk": 2
+},
+{
+ "fields": {
+  "color": "",
+  "nombre": "Extra",
+  "posicion": 0,
+  "espacio": 1
+ },
+ "model": "cuotas.categoriapago",
+ "pk": 3
+},
+{
+ "fields": {
+  "categoria": 1,
   "fecha": "2015-04-01",
   "miembro": 1,
   "cantidad": 10.0,
@@ -936,6 +1131,7 @@
 },
 {
  "fields": {
+  "categoria": 1,
   "fecha": "2015-05-01",
   "miembro": 1,
   "cantidad": 10.0,
@@ -946,6 +1142,7 @@
 },
 {
  "fields": {
+  "categoria": 1,
   "fecha": "2015-05-01",
   "miembro": 2,
   "cantidad": 10.0,
@@ -956,6 +1153,7 @@
 },
 {
  "fields": {
+  "categoria": 1,
   "fecha": "2015-02-01",
   "miembro": 1,
   "cantidad": 10.0,
@@ -966,6 +1164,7 @@
 },
 {
  "fields": {
+  "categoria": 1,
   "fecha": "2015-04-10",
   "miembro": 1,
   "cantidad": 12.0,
@@ -973,5 +1172,93 @@
  },
  "model": "cuotas.mensualidad",
  "pk": 5
+},
+{
+ "fields": {
+  "categoria": 3,
+  "fecha": "2015-05-25",
+  "miembro": 1,
+  "cantidad": 5.23,
+  "pago": 5
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 6
+},
+{
+ "fields": {
+  "categoria": 1,
+  "fecha": "2015-06-01",
+  "miembro": 1,
+  "cantidad": 15.0,
+  "pago": 6
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 7
+},
+{
+ "fields": {
+  "categoria": 1,
+  "fecha": "2015-06-01",
+  "miembro": 1,
+  "cantidad": 5.0,
+  "pago": 7
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 8
+},
+{
+ "fields": {
+  "categoria": 1,
+  "fecha": "2015-07-01",
+  "miembro": 1,
+  "cantidad": 20.0,
+  "pago": 8
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 9
+},
+{
+ "fields": {
+  "categoria": 1,
+  "fecha": "2014-12-01",
+  "miembro": 1,
+  "cantidad": 10.0,
+  "pago": 9
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 10
+},
+{
+ "fields": {
+  "categoria": 1,
+  "fecha": "2015-05-01",
+  "miembro": 1,
+  "cantidad": 10.0,
+  "pago": 10
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 11
+},
+{
+ "fields": {
+  "categoria": 1,
+  "fecha": "2015-04-30",
+  "miembro": 1,
+  "cantidad": 10.0,
+  "pago": 11
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 12
+},
+{
+ "fields": {
+  "categoria": 1,
+  "fecha": "2015-04-30",
+  "miembro": 1,
+  "cantidad": 10.0,
+  "pago": 12
+ },
+ "model": "cuotas.mensualidad",
+ "pk": 13
 }
 ]
