@@ -53,3 +53,15 @@ coverage.xml
 docs/_build/
 
 db.sqlite3
+
+# Migrations
+migrations
+
+# Virtualenv
+virtualenv
+
+# Setings_local
+settings_local.py
+
+# Media 
+media
