@@ -63,7 +63,7 @@ class MensualidadListSuma(MensualidadList):
     def get_template_names(self):
         return ["cuotas/mensualidad_list_suma.html"]
 
-    def add_mensualidad(self, zeros, mes, columna, mensualidad, sumas_mensuales):
+    def add_mensualidad(self, context, zeros, mes, columna, mensualidad, sumas_mensuales):
         if mes not in sumas_mensuales:
             sumas_mensuales[mes] = zeros[:]
         n = len(zeros)
@@ -72,7 +72,9 @@ class MensualidadListSuma(MensualidadList):
             mensualidad.pago.forma_pago.porcentaje_comision / 100
         comision = max(
             mensualidad.pago.forma_pago.comision_fija, comision_variable)
-        cantidad = mensualidad.cantidad - comision
+        cantidad = mensualidad.cantidad
+        if not context['usuario']: cantidad = cantidad - comision
+
         # Se aplican las sumas
         tipos = mensualidad.pago.tiposDePago
         k_ingreso = [k for k, v in dict(tipos).items() if v == 'Ingresos'][0]
@@ -103,11 +105,11 @@ class MensualidadListSuma(MensualidadList):
             cuota_inicial = cuotas[0] if cuotas else None
             if cuota_inicial:
                 if mes >= cuota_inicial.fecha_inicial:
-                    sumas_mensuales = self.add_mensualidad(
-                        zeros, mes, columna, mensualidad, sumas_mensuales)
+                    sumas_mensuales = self.add_mensualidad(context,
+                                                           zeros, mes, columna, mensualidad, sumas_mensuales)
             else:
-                sumas_mensuales = self.add_mensualidad(
-                    zeros, mes, columna, mensualidad, sumas_mensuales)
+                sumas_mensuales = self.add_mensualidad(context,
+                                                       zeros, mes, columna, mensualidad, sumas_mensuales)
 
         # Rellena de ceros los meses intermedios no pagados
         meses = sumas_mensuales.keys()
@@ -145,7 +147,7 @@ class MensualidadListGraph(MensualidadListSuma):
         colors = []
         if context['columnas']:
             # Titulos de las barras
-            threshold = u'Gastos fijos' if not context[
+            threshold = u'Gastos' if not context[
                 'usuario'] else u'Cuota mínima'
             data.append(
                 [u'Meses'] + [x.nombre for x in context['columnas']] + [threshold])
@@ -169,12 +171,11 @@ class MensualidadListGraph(MensualidadListSuma):
                     if cuota2:
                         # FIXME: Corregir en la visualizacion el solapamiento
                         # de la linea
-                        # -0.05 para solapar la linea
-                        expenses = cuota2[0].cantidad - 0.05
+                        expenses = cuota2[0].cantidad
                     elif cuota:
-                        expenses = cuota[0].cantidad - 0.05
+                        expenses = cuota[0].cantidad
                     else:
-                        expenses = 9.95  # 10 -0.05 para solapar la linea
+                        expenses = 10.0
                 else:
                     expenses = x[-1]
                 # Datos de las mensualidades
