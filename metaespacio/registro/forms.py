@@ -2,10 +2,10 @@
 from __future__ import unicode_literals
 from django import forms
 # from localflavor.es.forms import ESIdentityCardNumberField
-from captcha.fields import CaptchaField
 from django.contrib.auth.models import User
 import string
 import re
+
 
 def cuenta_upper_lower_digits_other(cadena):
     upper = lower = digits = other = 0
@@ -21,11 +21,24 @@ def cuenta_upper_lower_digits_other(cadena):
     return upper, lower, digits, other
 
 
+PREGUNTAS_RESPUESTAS = [
+    # FIXME estaria bien que el formulario escogiera una pregunta aleatoria
+    # de estas, pero de momento no ponemos sino
+    (u"Duemilanove, uno, yun, leonardo, ... ¿que son?", "arduino"),
+]
+
+
 class UserForm(forms.ModelForm):
     PASSWORD_HELP_TEXT = "Contraseña de un mínimo de 8 caracteres con una mayúscula, una minúscula y un número"
     password1 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput, help_text=PASSWORD_HELP_TEXT)
     password2 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput, help_text=PASSWORD_HELP_TEXT)
-    captcha = CaptchaField()
+    captcha = forms.CharField(label=u"Pregunta secreta", help_text=PREGUNTAS_RESPUESTAS[0][0])
+
+    def clean_captcha(self):
+        respuesta = self.cleaned_data['captcha'].lower().strip()
+        if respuesta != PREGUNTAS_RESPUESTAS[0][1]:
+            raise forms.ValidationError(u"Lo siento, pero para darte de alta tienes que responder correctamente a la pregunta secreta")
+        return respuesta
 
     def clean_username(self):
         username = self.cleaned_data['username']

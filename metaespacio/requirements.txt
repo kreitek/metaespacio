@@ -1,5 +1,4 @@
 django
-django-simple-captcha
 django-crispy-forms
 django-localflavor
 django-tastypie
