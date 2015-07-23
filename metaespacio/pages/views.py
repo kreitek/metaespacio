@@ -10,7 +10,7 @@ class PaginaView(FilterEspacioSiteMixin, DetailView):
 
     def get_object(self):
         _object = super(PaginaView, self).get_object()
-        if _object.privado and not self.miembro is None:
+        if not _object.privado or not self.miembro is None:
             return _object
         else:
             # FIXME: El mensaje de error afecta tambien a la renderizacion
