@@ -54,9 +54,6 @@ docs/_build/
 
 db.sqlite3
 
-# Migrations
-migrations
-
 # Virtualenv
 virtualenv
 
