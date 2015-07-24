@@ -8,12 +8,13 @@ class SiteMixin(object):
 
     def dispatch(self, request, *args, **kwargs):
         self.site = get_current_site(request)
-        if request.user.is_authenticated():
-            self.miembro = Miembro.objects.get(pk=request.user.pk)
-        else:
-            self.miembro = None
         # FIXME espacio-site debe ser un 1to1 no un fk
         self.espacio = self.site.espacio_set.first()
+        if request.user.is_authenticated():
+            self.miembro = Miembro.objects.filter(
+                user=request.user, espacio=self.espacio).first()
+        else:
+            self.miembro = None
         return super(SiteMixin, self).dispatch(request, *args, **kwargs)
 
 
