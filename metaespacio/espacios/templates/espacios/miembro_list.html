@@ -16,6 +16,7 @@
     </thead>
     <tbody>
         {% for object in object_list %}
+        {% if object.user.is_active or user.is_superuser %}
         <tr>
             <td>
                 {% if object.user.datospersonales.avatar %}
@@ -31,6 +32,7 @@
                 {% admin object object.user %}
             </td>
         </tr>
+        {% endif %}
         {% endfor %}
     </tbody>
 </table>
