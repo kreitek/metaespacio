@@ -19,9 +19,8 @@ herramientas de autogestión, como pueden ser wikis, grupos de trabajo.
 
 Todo esto es software libre, Affero GPL, si quieres te lo instalas tu, pero el
 beneficio está en cooperar.  No obstante, si acabas instalándolo y usándolo,
-avísanos, pues no nos vamos a preocupar mantener actualizaciones limpias, hasta
-que alguien nos avise, y vamos a estar sacando características nuevas todo el
-rato... somos un hackerspace ;-)
+avísanos porque vamos a estar sacando características nuevas todo el rato y
+podemos liarla parda... somos un hackerspace ;-)
 
 El idioma principal del proyecto es castellano, pero si hablas otro idioma y
 crees que este proyecto puede serte util en tu idioma, por favor contáctcanos y
@@ -44,7 +43,7 @@ When using virtualenv, you can install dependencies this way:
     pip install -r requirements.txt
     pip install -r requirements_dev.txt
     touch metaespacio/settings_local.py
-    ./manage.py makemigrations  # normally does nothing
+    #./manage.py makemigrations  # normally migrations are on the repo
     ./manage.py migrate
     ./manage.py loaddata demo.json  # creates admin/admin and user/user and some data
 
