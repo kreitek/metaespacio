@@ -1,5 +1,6 @@
 {% extends "common/base.html" %}
 {% load adminurl %}
+{% load cuotas_extra %}
 
 {% block body %}
 
@@ -18,6 +19,7 @@
             {% endif %}
             <th style="text-align: right">Cantidad</th>
             <th>Tipo</th>
+            <th>Categoría</th>
             <th>Forma de pago</th>
             <th>Concepto del pago</th>
             <th>Fecha de pago</th>
@@ -32,7 +34,8 @@
             <td>{{object.miembro.user.username}}</td>
             {% endif %}
             <td class="text-right">{{object.cantidad|floatformat:2}} €</td>
-            <td>{{object.pago.tipo}}</td>
+            <td>{% get_str_tipo object.pago.tipo %}</td>
+            <td>{{ object.categoria }}</td>
             <td>{{object.pago.forma_pago}}
                 {% if object.pago.forma_pago.comision_fija > 0.0 or object.pago.forma_pago.porcentaje_comision > 0.0 %}
                     <small>
