@@ -35,6 +35,7 @@ def add_months(sourcedate, months):
 
 class MensualidadList(SiteMixin, ListView):
     model = Mensualidad
+    paginate_by = 10
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated():

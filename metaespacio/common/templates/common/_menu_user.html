@@ -4,6 +4,9 @@
     <ul role="menu" class="dropdown-menu">
         <li><a href="{% url 'mensualidad_resumen' %}"> General </a></li>
         <li><a href="{% url 'mensualidad_resumen' user.username %}"> Ver Cuotas ({{ user.username }}) </a></li>
+        {% if user.is_superuser %}
+        <li><a href="{% url 'admin:cuotas_pago_add' %}"> Añadir nuevo pago </a></li>
+        {% endif %}
     </ul>
 </div>
 {% if espacio.encuesta_set.count %}

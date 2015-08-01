@@ -92,6 +92,6 @@ class Mensualidad(models.Model):
     cantidad = models.FloatField()
 
     class Meta:
-        ordering = ('fecha', )
+        ordering = ('-fecha', )
         verbose_name = "mensualidad"
         verbose_name_plural = "mensualidades"
