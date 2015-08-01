@@ -1,0 +1,40 @@
+{% extends "common/base.html" %}
+{% load adminurl %}
+
+{% block body %}
+
+{% if titulo %}
+<h1>Cuentas {{titulo}}</h1>
+{% else %}
+<h1>Cuentas {{espacio.nombre}}</h1>
+{% endif %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Cuenta</th>
+            <th>Signo</th>
+            <th>Lineas</th>
+            <th style="text-align: right">Cantidad</th>
+            <th>(extra)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{object.nombre}}</td>
+            <td>{{object.signo}}</td>
+            <td><a href="{% url 'lineas_cuenta' object.pk %}">{{object.linea_set.count}}</a></td>
+            <td style="text-align: right">{{object.suma|floatformat:2}}</td>
+            {% if user.is_superuser %}
+            <td><a href="{% url 'admin:contabilidad_cuenta_change' object.pk %}"><i class="glyphicon glyphicon-pencil"></i></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+{% include "common/_paginator.html" %}
+
+{% endblock body %}

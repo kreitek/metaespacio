@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',  # al final por un override de templates
     'cuotas',
     'graphos',
+    'contabilidad',
 )
 
 MIDDLEWARE_CLASSES = (

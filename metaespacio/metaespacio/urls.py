@@ -13,6 +13,7 @@ urlpatterns = patterns(
     url(r'^captcha/', include('captcha.urls')),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^espacios/', include('espacios.urls')),
+    url(r'^contabilidad/', include('contabilidad.urls')),
     # url(r'^biblioteca/', include('bibliotheca.urls')),
     # url(r'^api/', include('bibliotheca.api_urls)),
     url(r'^', include('pages.urls')),

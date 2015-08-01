@@ -1,0 +1,42 @@
+{% extends "common/base.html" %}
+{% load adminurl %}
+
+{% block body %}
+
+{% if titulo %}
+<h1>Cuotas {{titulo}}</h1>
+{% else %}
+<h1>Cuotas {{espacio.nombre}}</h1>
+{% endif %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Mensualidad</th>
+            <th>Usuario</th>
+            <th style="text-align: right">Cantidad</th>
+            <th>Concepto del pago</th>
+            <th>Fecha de pago</th>
+            <th>(extra)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{object.fecha|date:"m/Y"}}</td>
+            <td>{{object.miembro.user|default:""}}</td>
+            <td>{{object.cantidad}}</td>
+            <td>{{object.asiento.concepto}}</td>
+            <td>{{object.asiento.fecha|date:'SHORT_DATE_FORMAT'}}</td>
+            {% if user.is_superuser %}
+            <td><a href="{% url 'admin:contabilidad_asiento_change' object.asiento.pk %}"><i class="glyphicon glyphicon-pencil"></i></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+{% include "common/_paginator.html" %}
+
+{% endblock body %}
