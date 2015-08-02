@@ -22,8 +22,14 @@
     <thead>
         <tr>
             <th style="text-align: center">Mensualidad</th>
-            {% for columna in columnas %}
-            <th style="text-align: right">{{columna}}</th>
+            {% for cuenta in columnas %}
+            <th style="text-align: right">
+                {% if user.is_superuser %}
+                    <a href="{% url 'admin:contabilidad_cuenta_change' cuenta.pk %}">{{cuenta.nombre}}</a>
+                {% else %}
+                    {{cuenta.nombre}} 
+                {% endif %}
+            </th>
             {% endfor %}
             <th style="text-align: right">Total líquido</th>
             <th style="text-align: right">Total</th>

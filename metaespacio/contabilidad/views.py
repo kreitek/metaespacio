@@ -120,7 +120,6 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
         cuentas_qs = Cuenta.objects.filter(ver_miembros=True, espacio=self.espacio)
         cuentas = list(cuentas_qs)
         cuentas_dict = {cuenta.pk: i for i, cuenta in enumerate(cuentas)}
-        columnas = [cuenta.nombre for cuenta in cuentas]
 
         fechas = Asiento.objects.all().aggregate(models.Min('fecha'), models.Max('fecha'))
         fecha = fechas['fecha__min'].replace(day=1)
@@ -134,6 +133,6 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
                 index = cuentas_dict[c.pk]
                 sumas[fecha][index][0] += c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
             fecha += relativedelta(months=1)
-        context['columnas'] = columnas
+        context['columnas'] = cuentas
         context['sumas'] = sumas
         return context
