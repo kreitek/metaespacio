@@ -58,4 +58,4 @@ class Linea(models.Model):
         return "{:+.2f} ({})".format(self.cantidad, cuenta)
 
     class Meta:
-        ordering = ('asiento', '-fecha', '-cantidad')
+        ordering = ('asiento', '-cantidad', '-fecha')
