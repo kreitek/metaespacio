@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from dateutil.relativedelta import relativedelta
 import datetime
-from espacios.views import SiteMixin, MemberOnly
-from .models import Linea, Cuenta
+from espacios.views import SiteMixin, MemberOnly, AdminOnly
+from .models import Linea, Cuenta, Asiento
 
 
 class LineaList(SiteMixin, MemberOnly, ListView):
@@ -85,3 +85,9 @@ class LineasCuenta(SiteMixin, MemberOnly, ListView):
 
 class CuentasList(SiteMixin, MemberOnly, ListView):
     model = Cuenta
+
+
+class Ledger(SiteMixin, AdminOnly, ListView):
+    model = Asiento
+    template_name = "contabilidad/ledger.txt"
+    content_type = "text/plain"

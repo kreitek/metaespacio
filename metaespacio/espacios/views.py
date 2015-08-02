@@ -25,6 +25,13 @@ class MemberOnly(object):
         return super(MemberOnly, self).dispatch(request, *args, **kwargs)
 
 
+class AdminOnly(object):
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            raise Http404
+        return super(AdminOnly, self).dispatch(request, *args, **kwargs)
+
+
 class FilterEspacioSiteMixin(SiteMixin):
     def get_queryset(self):
         return super(FilterEspacioSiteMixin, self).get_queryset().filter(espacio__site=self.site)

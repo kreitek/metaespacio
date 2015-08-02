@@ -1,0 +1,4 @@
+{% for object in object_list %}{{object.fecha|date:"Y/m/d"}} {{object.concepto}}
+{% for linea in object.linea_set.all %}    {{linea.cuenta.nombre}}        {{linea.cantidad|floatformat:2}}
+{% endfor %}
+{% endfor %}
