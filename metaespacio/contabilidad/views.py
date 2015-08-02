@@ -130,7 +130,11 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
             cuentas_qs = cuentas_qs.filter(nombre__startswith=prefijo)
 
         # Asociamos cuentas a columnas. Proceso complejo:
-        subnombre = lambda x: x[len(prefijo):].split(":")[0]
+        def subnombre(x):
+            x = x[len(prefijo):]
+            if x.startswith(":"):
+                x = x[1:]
+            return x.split(":")[0]
         # Siendo la cuenta "Noseque:Cosa" y el prefijo "Noseque:", el subnombre es "Cosa"
         pk_nom_subnom = [(cuenta.pk, cuenta.nombre, subnombre(cuenta.nombre)) for i, cuenta in enumerate(cuentas_qs)]
         # Nuestras columnas van a ser todos los subnombres diferentes
@@ -152,7 +156,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
                 index = pk_dict[c.pk]
                 sumas[fecha][index][0] += c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
             fecha += relativedelta(months=1)
-        context['prefijo'] = prefijo
+        context['prefijo'] = prefijo + ":" if prefijo else ""
         context['columnas'] = columnas
         context['sumas'] = sumas
         return context
