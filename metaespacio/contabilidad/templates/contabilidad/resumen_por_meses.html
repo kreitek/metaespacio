@@ -34,8 +34,14 @@
         {% for anyo, cantidades in sumas.items %}
         <tr>
             <td class="text-center">{{anyo|date:"E / Y"}}</td>
-            {% for cantidad in cantidades %}
-            <td class="text-right">{{cantidad|floatformat:2}} €</td>
+            {% for cantidad, cuenta in cantidades %}
+            <td class="text-right">
+                {% if user.is_superuser %}
+                    <a href="{% url 'lineas' %}?cuenta={{cuenta.nombre}}&mensualidad={{anyo|date:"m/Y"}}">{{cantidad|floatformat:2}} €</a>
+                {% else %}
+                    {{cantidad|floatformat:2}} €
+                {% endif %}
+            </td>
             {% endfor %}
         </tr>
         {% endfor %}

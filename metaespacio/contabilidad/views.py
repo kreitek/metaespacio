@@ -128,11 +128,11 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
 
         sumas = collections.OrderedDict()
         while fecha <= fecha_max:
-            sumas[fecha] = [0.0] * len(columnas)
+            sumas[fecha] = [[0.0, c] for c in cuentas]
             cuentas_por_mes = cuentas_qs.filter(objeto_q_cuenta_por_mes(fecha)).annotate(models.Sum('linea__cantidad'))
             for c in cuentas_por_mes:
                 index = cuentas_dict[c.pk]
-                sumas[fecha][index] += c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
+                sumas[fecha][index][0] += c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
             fecha += relativedelta(months=1)
         context['columnas'] = columnas
         context['sumas'] = sumas
