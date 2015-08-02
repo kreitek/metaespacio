@@ -29,7 +29,9 @@
             <th style="text-align: right">Cantidad</th>
             <th>Concepto del pago</th>
             <th>Fecha de pago</th>
+            {% if user.is_superuser %}
             <th>(extra)</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
