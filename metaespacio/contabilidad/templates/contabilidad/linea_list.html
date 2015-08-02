@@ -12,8 +12,15 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            {% if 'cuenta' not in filters.keys %}
+            <th>Cuenta</th>
+            {% endif %}
+            {% if 'mensualidad' not in filters.keys %}
             <th>Mensualidad</th>
+            {% endif %}
+            {% if 'usuario' not in filters.keys %} 
             <th>Usuario</th>
+            {% endif %}
             <th style="text-align: right">Cantidad</th>
             <th>Concepto del pago</th>
             <th>Fecha de pago</th>
@@ -23,9 +30,16 @@
     <tbody>
         {% for object in object_list %}
         <tr>
-            <td>{{object.fecha|date:"m/Y"}}</td>
+            {% if 'cuenta' not in filters.keys %}
+            <td>{{object.cuenta_str}}</td>
+            {% endif %}
+            {% if 'mensualidad' not in filters %}
+            <td>{{object.fecha_str|date:"m/Y"}}</td>
+            {% endif %}
+            {% if 'usuario' not in filters %} 
             <td>{{object.miembro.user|default:""}}</td>
-            <td>{{object.cantidad}}</td>
+            {% endif %}
+            <td style="text-align: right">{{object.cantidad|floatformat:2}}</td>
             <td>{{object.asiento.concepto}}</td>
             <td>{{object.asiento.fecha|date:'SHORT_DATE_FORMAT'}}</td>
             {% if user.is_superuser %}

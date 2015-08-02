@@ -35,6 +35,17 @@ class Linea(models.Model):
     miembro = models.ForeignKey('espacios.Miembro', blank=True, null=True)
     fecha = models.DateField(blank=True, null=True)
 
+    def fecha_str(self):
+        return self.fecha if self.fecha else self.asiento.fecha
+
+    def cuenta_str(self):
+        if self.fecha:
+            return "{}:{}:{:02d}".format(self.cuenta.nombre, self.fecha.year, self.fecha.month)
+        elif self.miembro:
+            return "{}:{}".format(self.cuenta.nombre, self.miembro.user.username)
+        else:
+            return "{}".format(self.cuenta.nombre)
+
     def __unicode__(self):
         if self.miembro:
             cuenta = "{} de {}".format(self.cuenta, self.miembro.user)
