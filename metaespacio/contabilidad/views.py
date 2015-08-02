@@ -1,11 +1,34 @@
-from django.views.generic import ListView
-from django.db.models import Q
+from django.views.generic import ListView, TemplateView
+from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from dateutil.relativedelta import relativedelta
+import collections
 import datetime
 from espacios.views import SiteMixin, MemberOnly, AdminOnly
 from .models import Linea, Cuenta, Asiento
+
+
+def objeto_q_linea_por_mes(mes):
+    # Tenemos el problema de que las fechas en las lineas son opcionales y las fechas
+    # en los asientos obligatorios. Esto es para hacer busquedas por fecha sobre
+    # asientos. FIXME esto se puede meter como un manager en los modelos y queda
+    # mejor.
+    mes_ini = mes.replace(day=1)
+    mes_fin = mes_ini + relativedelta(months=1, days=-1)
+    Q1 = models.Q(fecha__isnull=False, fecha__gte=mes_ini, fecha__lte=mes_fin)
+    Q2 = models.Q(fecha__isnull=True, asiento__fecha__gte=mes_ini, asiento__fecha__lte=mes_fin)
+    return Q1 | Q2
+
+
+def objeto_q_cuenta_por_mes(mes):
+    # Es igual que el anterior agregando linea__ para hacer busquedas por fecha
+    # sobre cuentas. FIXME idem meter en un manager.
+    mes_ini = mes.replace(day=1)
+    mes_fin = mes_ini + relativedelta(months=1, days=-1)
+    Q1 = models.Q(linea__fecha__isnull=False, linea__fecha__gte=mes_ini, linea__fecha__lte=mes_fin)
+    Q2 = models.Q(linea__fecha__isnull=True, linea__asiento__fecha__gte=mes_ini, linea__asiento__fecha__lte=mes_fin)
+    return Q1 | Q2
 
 
 class LineaList(SiteMixin, MemberOnly, ListView):
@@ -13,7 +36,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
 
     def get_queryset(self):
         # la busqueda por fecha es lo que ha generado usar objetos Q
-        query = Q(cuenta__espacio__site=self.site)
+        query = models.Q(cuenta__espacio__site=self.site)
 
         # Esto es para poner las cosas que nos piden que busquen
         self.filters = {}
@@ -21,13 +44,13 @@ class LineaList(SiteMixin, MemberOnly, ListView):
         # busqueda por cuenta
         cuenta = self.request.GET.get('cuenta')
         if cuenta:
-            query &= Q(cuenta__nombre=cuenta)
+            query &= models.Q(cuenta__nombre=cuenta)
             self.filters['cuenta'] = cuenta
 
         # busqueda por usuario
         usuario = self.request.GET.get('usuario')
         if usuario:
-            query &= Q(miembro__user__username=usuario)
+            query &= models.Q(miembro__user__username=usuario)
             self.filters['usuario'] = usuario
 
         # busqueda por mensualidad mm/yyyy
@@ -37,11 +60,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
         except ValueError:
             mensualidad = None
         if mensualidad:
-            mensualidad_ini = mensualidad.replace(day=1)
-            mensualidad_fin = mensualidad_ini + relativedelta(months=1, days=-1)
-            Q1 = Q(fecha__isnull=False, fecha__gte=mensualidad_ini, fecha__lte=mensualidad_fin)
-            Q2 = Q(fecha__isnull=True, asiento__fecha__gte=mensualidad_ini, asiento__fecha__lte=mensualidad_fin)
-            query &= (Q1 | Q2)
+            query &= objeto_q_linea_por_mes(mensualidad)
             self.filters['mensualidad'] = mensualidad
 
         # lets go
@@ -91,3 +110,30 @@ class Ledger(SiteMixin, AdminOnly, ListView):
     model = Asiento
     template_name = "contabilidad/ledger.txt"
     content_type = "text/plain"
+
+
+class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
+    template_name = "contabilidad/resumen_por_meses.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ResumenPorMeses, self).get_context_data(**kwargs)
+        cuentas_qs = Cuenta.objects.filter(ver_miembros=True, espacio=self.espacio)
+        cuentas = list(cuentas_qs)
+        cuentas_dict = {cuenta.pk: i for i, cuenta in enumerate(cuentas)}
+        columnas = [cuenta.nombre for cuenta in cuentas]
+
+        fechas = Asiento.objects.all().aggregate(models.Min('fecha'), models.Max('fecha'))
+        fecha = fechas['fecha__min'].replace(day=1)
+        fecha_max = fechas['fecha__max'].replace(day=1)
+
+        sumas = collections.OrderedDict()
+        while fecha <= fecha_max:
+            sumas[fecha] = [0.0] * len(columnas)
+            cuentas_por_mes = cuentas_qs.filter(objeto_q_cuenta_por_mes(fecha)).annotate(models.Sum('linea__cantidad'))
+            for c in cuentas_por_mes:
+                index = cuentas_dict[c.pk]
+                sumas[fecha][index] += c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
+            fecha += relativedelta(months=1)
+        context['columnas'] = columnas
+        context['sumas'] = sumas
+        return context

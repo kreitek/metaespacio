@@ -35,6 +35,10 @@ class Linea(models.Model):
     miembro = models.ForeignKey('espacios.Miembro', blank=True, null=True)
     fecha = models.DateField(blank=True, null=True)
 
+    @property
+    def cantidad_user(self):
+        return self.cantidad if self.cuenta.signo == "+" else -self.cantidad
+
     def fecha_str(self):
         return self.fecha if self.fecha else self.asiento.fecha
 
