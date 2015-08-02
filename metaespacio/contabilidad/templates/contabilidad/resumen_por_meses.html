@@ -25,15 +25,12 @@
             {% for cuenta in columnas %}
             <th style="text-align: right">
                 {% if user.is_superuser %}
-                    <a href="{% url 'admin:contabilidad_cuenta_change' cuenta.pk %}">{{cuenta.nombre}}</a>
+                    <a href="{% url 'resumen' %}?cuentas={{prefijo}}{{cuenta}}">{{cuenta|default:'Total'}}</a>
                 {% else %}
-                    {{cuenta.nombre}} 
+                    {{cuenta}} 
                 {% endif %}
             </th>
             {% endfor %}
-            <th style="text-align: right">Total líquido</th>
-            <th style="text-align: right">Total</th>
-            <th style="text-align: right">Gastos</th>
         </tr>
     </thead>
     <tbody>
@@ -43,7 +40,7 @@
             {% for cantidad, cuenta in cantidades %}
             <td class="text-right">
                 {% if user.is_superuser %}
-                    <a href="{% url 'lineas' %}?cuenta={{cuenta.nombre}}&mensualidad={{anyo|date:"m/Y"}}">{{cantidad|floatformat:2}} €</a>
+                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{{cuenta}}&mensualidad={{anyo|date:"m/Y"}}">{{cantidad|floatformat:2}} €</a>
                 {% else %}
                     {{cantidad|floatformat:2}} €
                 {% endif %}

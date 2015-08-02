@@ -7,7 +7,7 @@
 <h1>Registros filtrados por:</h1>
 <ul>
 {% for k,v in filters.items %}
-<li><b>{{k}}</b> {{v}}</li>
+    <li><b>{{k}}</b> <a href="{% url 'lineas' %}?{{k}}={{v}}">{{v}}</a></li>
 {% endfor %}
 </ul>
 {% else %}
@@ -36,13 +36,19 @@
         {% for object in object_list %}
         <tr>
             {% if 'cuenta' not in filters.keys %}
-            <td>{{object.cuenta_str}}</td>
+            <td>
+                <a href="{% url 'lineas' %}?{{filters_str}}&cuenta={{object.cuenta.nombre}}">{{object.cuenta_str}}</a>
+            </td>
             {% endif %}
             {% if 'mensualidad' not in filters %}
-            <td>{{object.fecha_str|date:"m/Y"}}</td>
+            <td>
+                <a href="{% url 'lineas' %}?{{filters_str}}&mensualidad={{object.fecha_str|date:"m/Y"}}">{{object.fecha_str|date:"m/Y"}}</a>
+            </td>
             {% endif %}
             {% if 'usuario' not in filters %} 
-            <td>{{object.miembro.user|default:""}}</td>
+            <td>
+                <a href="{% url 'lineas' %}?{{filters_str}}&usuario={{object.miembro.user}}">{{object.miembro.user|default:""}}</a>
+            </td>
             {% endif %}
             <td style="text-align: right">{{object.cantidad|floatformat:2}}</td>
             <td>{{object.asiento.concepto}}</td>

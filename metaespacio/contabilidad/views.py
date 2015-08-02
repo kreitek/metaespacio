@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from dateutil.relativedelta import relativedelta
 import collections
 import datetime
+import urllib
 from espacios.views import SiteMixin, MemberOnly, AdminOnly
 from .models import Linea, Cuenta, Asiento
 
@@ -33,6 +34,7 @@ def objeto_q_cuenta_por_mes(mes):
 
 class LineaList(SiteMixin, MemberOnly, ListView):
     model = Linea
+    paginate_by = 20
 
     def get_queryset(self):
         # la busqueda por fecha es lo que ha generado usar objetos Q
@@ -44,7 +46,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
         # busqueda por cuenta
         cuenta = self.request.GET.get('cuenta')
         if cuenta:
-            query &= models.Q(cuenta__nombre=cuenta)
+            query &= models.Q(cuenta__nombre__startswith=cuenta)
             self.filters['cuenta'] = cuenta
 
         # busqueda por usuario
@@ -61,7 +63,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
             mensualidad = None
         if mensualidad:
             query &= objeto_q_linea_por_mes(mensualidad)
-            self.filters['mensualidad'] = mensualidad
+            self.filters['mensualidad'] = mensualidad.strftime("%m/%Y")
 
         # lets go
         return super(LineaList, self).get_queryset().filter(query).order_by('asiento__fecha', 'fecha')
@@ -69,6 +71,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
     def get_context_data(self, **kwargs):
         context = super(LineaList, self).get_context_data(**kwargs)
         context['filters'] = self.filters
+        context['filters_str'] = urllib.urlencode({k: v.encode('utf-8') for k, v in self.filters.items()})
         return context
 
 
@@ -117,22 +120,39 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ResumenPorMeses, self).get_context_data(**kwargs)
-        cuentas_qs = Cuenta.objects.filter(ver_miembros=True, espacio=self.espacio)
-        cuentas = list(cuentas_qs)
-        cuentas_dict = {cuenta.pk: i for i, cuenta in enumerate(cuentas)}
 
+        # empezamos con las cuentas del espacio para todos los publicos
+        cuentas_qs = Cuenta.objects.filter(ver_miembros=True, espacio=self.espacio)
+
+        # y filtramos por startwith del nombre de las cuentas si nos lo pasan
+        prefijo = self.request.GET.get('cuentas', '')
+        if prefijo:
+            cuentas_qs = cuentas_qs.filter(nombre__startswith=prefijo)
+
+        # Asociamos cuentas a columnas. Proceso complejo:
+        subnombre = lambda x: x[len(prefijo):].split(":")[0]
+        # Siendo la cuenta "Noseque:Cosa" y el prefijo "Noseque:", el subnombre es "Cosa"
+        pk_nom_subnom = [(cuenta.pk, cuenta.nombre, subnombre(cuenta.nombre)) for i, cuenta in enumerate(cuentas_qs)]
+        # Nuestras columnas van a ser todos los subnombres diferentes
+        columnas = sorted(set([subnom for pk, nom, subnom in pk_nom_subnom]))
+        # Y este es el array de transformacion de pk a que numero de columna le toca
+        pk_dict = {pk: columnas.index(subnom) for pk, nom, subnom in pk_nom_subnom}
+
+        # Nos quedamos con el minimo-maximo de los asientos en BD
         fechas = Asiento.objects.all().aggregate(models.Min('fecha'), models.Max('fecha'))
         fecha = fechas['fecha__min'].replace(day=1)
         fecha_max = fechas['fecha__max'].replace(day=1)
 
+        # El diccionario estara ordenado crecientemente. Recordar el orden.
         sumas = collections.OrderedDict()
         while fecha <= fecha_max:
-            sumas[fecha] = [[0.0, c] for c in cuentas]
+            sumas[fecha] = [[0.0, c] for c in columnas]
             cuentas_por_mes = cuentas_qs.filter(objeto_q_cuenta_por_mes(fecha)).annotate(models.Sum('linea__cantidad'))
             for c in cuentas_por_mes:
-                index = cuentas_dict[c.pk]
+                index = pk_dict[c.pk]
                 sumas[fecha][index][0] += c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
             fecha += relativedelta(months=1)
-        context['columnas'] = cuentas
+        context['prefijo'] = prefijo
+        context['columnas'] = columnas
         context['sumas'] = sumas
         return context

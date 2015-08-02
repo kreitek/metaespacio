@@ -24,7 +24,7 @@
         <tr>
             <td>{{object.nombre}}</td>
             <td>{{object.signo}}</td>
-            <td><a href="{% url 'lineas_cuenta' object.pk %}">{{object.linea_set.count}}</a></td>
+            <td><a href="{% url 'lineas' %}?cuenta={{object.nombre}}">{{object.linea_set.count}}</a></td>
             <td style="text-align: right">{{object.suma|floatformat:2}}</td>
             {% if user.is_superuser %}
             <td><a href="{% url 'admin:contabilidad_cuenta_change' object.pk %}"><i class="glyphicon glyphicon-pencil"></i></td>
