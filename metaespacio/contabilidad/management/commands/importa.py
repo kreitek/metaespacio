@@ -16,6 +16,8 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
+        1/0
+
         espacio = Espacio.objects.get(nombre__startswith="Andén")
         self.stdout.write("# Usando espacio: {}".format(espacio))
 
