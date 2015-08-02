@@ -45,7 +45,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
             self.filters['mensualidad'] = mensualidad
 
         # lets go
-        return super(LineaList, self).get_queryset().filter(query).order_by('fecha')
+        return super(LineaList, self).get_queryset().filter(query).order_by('asiento__fecha', 'fecha')
 
     def get_context_data(self, **kwargs):
         context = super(LineaList, self).get_context_data(**kwargs)

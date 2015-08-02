@@ -3,10 +3,15 @@
 
 {% block body %}
 
-{% if titulo %}
-<h1>Cuotas {{titulo}}</h1>
+{% if filters %}
+<h1>Registros filtrados por:</h1>
+<ul>
+{% for k,v in filters.items %}
+<li><b>{{k}}</b> {{v}}</li>
+{% endfor %}
+</ul>
 {% else %}
-<h1>Cuotas {{espacio.nombre}}</h1>
+<h1>Registros total</h1>
 {% endif %}
 
 <table class="table table-striped">
@@ -43,7 +48,7 @@
             <td>{{object.asiento.concepto}}</td>
             <td>{{object.asiento.fecha|date:'SHORT_DATE_FORMAT'}}</td>
             {% if user.is_superuser %}
-            <td><a href="{% url 'admin:contabilidad_asiento_change' object.asiento.pk %}"><i class="glyphicon glyphicon-pencil"></i></td>
+            <td><a href="{% url 'admin:contabilidad_asiento_change' object.asiento.pk %}">{{object.asiento.pk}} <i class="glyphicon glyphicon-pencil"></i></a></td>
             {% endif %}
         </tr>
         {% endfor %}
