@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'cuotas',
     'graphos',
     'contabilidad',
+    'adjuntos',
 )
 
 MIDDLEWARE_CLASSES = (
