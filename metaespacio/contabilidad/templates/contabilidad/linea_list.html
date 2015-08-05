@@ -56,7 +56,12 @@
             <td>{{object.asiento.concepto}}</td>
             <td>{{object.asiento.fecha|date:'SHORT_DATE_FORMAT'}}</td>
             {% if user.is_superuser %}
-            <td><a href="{% url 'admin:contabilidad_asiento_change' object.asiento.pk %}">{{object.asiento.pk}} <i class="glyphicon glyphicon-pencil"></i></a></td>
+            <td>
+                <a href="{% url 'admin:contabilidad_asiento_change' object.asiento.pk %}">{{object.asiento.pk}} <i class="glyphicon glyphicon-pencil"></i></a>
+                {% for adjunto in object.asiento.adjuntoasiento_set.all %}
+                <a href="{{MEDIA_URL}}{{adjunto.fichero}}"><i class="glyphicon glyphicon-file"></i></a>
+                {% endfor %}
+            </td>
             {% endif %}
         </tr>
         {% endfor %}
