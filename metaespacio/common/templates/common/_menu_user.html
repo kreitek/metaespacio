@@ -1,6 +1,6 @@
 {% if user.is_authenticated %}
 <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-euro"></i> Contabilidad <span class="caret"></span></button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-euro"></i> Vieja Cont. (deprecado) <span class="caret"></span></button>
     <ul role="menu" class="dropdown-menu">
         <li><a href="{% url 'mensualidad_resumen' %}"> General </a></li>
         <li><a href="{% url 'mensualidad_resumen' user.username %}"> Ver Cuotas ({{ user.username }}) </a></li>
@@ -10,7 +10,7 @@
     </ul>
 </div>
 <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-euro"></i> Contabilidad 2.0<span class="caret"></span></button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-euro"></i> Contabilidad <span class="caret"></span></button>
     <ul role="menu" class="dropdown-menu">
         <li><a href="{% url 'resumen' %}"> Resumen general </a></li>
         <li><a href="{% url 'cuentas' %}"> Resumen de cuentas </a></li>
