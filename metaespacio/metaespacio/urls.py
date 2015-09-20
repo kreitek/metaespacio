@@ -16,6 +16,7 @@ urlpatterns = patterns(
     url(r'^contabilidad/', include('contabilidad.urls')),
     # url(r'^biblioteca/', include('bibliotheca.urls')),
     # url(r'^api/', include('bibliotheca.api_urls)),
+    url(r'^openid/', include('oidc_provider.urls', namespace='oidc_provider')),
     url(r'^', include('pages.urls')),
 )
 

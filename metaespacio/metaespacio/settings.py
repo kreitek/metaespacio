@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_extensions',
+    'oidc_provider',
     'crispy_forms',
     'common',
     'registro',
@@ -125,3 +126,6 @@ MEDIA_URL = "/media/"
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = "/"
 CRISPY_TEMPLATE_PACK = "bootstrap3"
+SITE_URL = 'http://metaespacio.org'
+LOGIN_URL = '/accounts/login'
+OIDC_RSA_KEY_FOLDER = BASE_DIR
