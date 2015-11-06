@@ -55,7 +55,7 @@
             {% for cuenta, cantidad in total.items %}
               <td class="text-right"><strong>
               {% if user.is_superuser %}
-                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{{cuenta}}&mensualidad={{anyo|date:"m/Y"}}">{{cantidad|floatformat:2}} €</a>
+                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{{cuenta}}">{{cantidad|floatformat:2}} €</a>
                 {% else %}
                     {{cantidad|floatformat:2}} €
               {% endif %}
