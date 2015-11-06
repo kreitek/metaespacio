@@ -3,10 +3,10 @@
 
 {% block body %}
 
-{% if filters %}
+{% if filtros %}
 <h1>Registros filtrados por:</h1>
 <ul>
-{% for k,v in filters.items %}
+{% for k,v in filtros.items %}
     <li><b>{{k}}</b> <a href="{% url 'lineas' %}?{{k}}={{v}}">{{v}}</a></li>
 {% endfor %}
 </ul>
@@ -17,13 +17,13 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            {% if 'cuenta' not in filters.keys %}
+            {% if 'cuenta' not in filtros.keys %}
             <th>Cuenta</th>
             {% endif %}
-            {% if 'mensualidad' not in filters.keys %}
+            {% if 'mensualidad' not in filtros.keys %}
             <th>Mensualidad</th>
             {% endif %}
-            {% if 'usuario' not in filters.keys %} 
+            {% if 'usuario' not in filtros.keys %} 
             <th>Usuario</th>
             {% endif %}
             <th style="text-align: right">Cantidad</th>
@@ -37,19 +37,19 @@
     <tbody>
         {% for object in object_list %}
         <tr>
-            {% if 'cuenta' not in filters.keys %}
+            {% if 'cuenta' not in filtros.keys %}
             <td>
-                <a href="{% url 'lineas' %}?{{filters_str}}&cuenta={{object.cuenta.nombre}}">{{object.cuenta_str}}</a>
+                <a href="{% url 'lineas' %}?{{filtros_str}}&cuenta={{object.cuenta.nombre}}">{{object.cuenta_str}}</a>
             </td>
             {% endif %}
-            {% if 'mensualidad' not in filters %}
+            {% if 'mensualidad' not in filtros %}
             <td>
-                <a href="{% url 'lineas' %}?{{filters_str}}&mensualidad={{object.fecha_str|date:"m/Y"}}">{{object.fecha_str|date:"m/Y"}}</a>
+                <a href="{% url 'lineas' %}?{{filtros_str}}&mensualidad={{object.fecha_str|date:"m/Y"}}">{{object.fecha_str|date:"m/Y"}}</a>
             </td>
             {% endif %}
-            {% if 'usuario' not in filters %} 
+            {% if 'usuario' not in filtros %} 
             <td>
-                <a href="{% url 'lineas' %}?{{filters_str}}&usuario={{object.miembro.user}}">{{object.miembro.user|default:""}}</a>
+                <a href="{% url 'lineas' %}?{{filtros_str}}&usuario={{object.miembro.user}}">{{object.miembro.user|default:""}}</a>
             </td>
             {% endif %}
             <td style="text-align: right">{{object.cantidad|floatformat:2}}</td>

@@ -41,19 +41,19 @@ class LineaList(SiteMixin, MemberOnly, ListView):
         query = models.Q(cuenta__espacio__site=self.site)
 
         # Esto es para poner las cosas que nos piden que busquen
-        self.filters = {}
+        self.filtros = {}
 
         # busqueda por cuenta
         cuenta = self.request.GET.get('cuenta')
         if cuenta:
             query &= models.Q(cuenta__nombre__startswith=cuenta)
-            self.filters['cuenta'] = cuenta
+            self.filtros['cuenta'] = cuenta
 
         # busqueda por usuario
         usuario = self.request.GET.get('usuario')
         if usuario:
             query &= models.Q(miembro__user__username=usuario)
-            self.filters['usuario'] = usuario
+            self.filtros['usuario'] = usuario
 
         # busqueda por mensualidad mm/yyyy
         mensualidad = self.request.GET.get('mensualidad', '')
@@ -63,15 +63,15 @@ class LineaList(SiteMixin, MemberOnly, ListView):
             mensualidad = None
         if mensualidad:
             query &= objeto_q_linea_por_mes(mensualidad)
-            self.filters['mensualidad'] = mensualidad.strftime("%m/%Y")
+            self.filtros['mensualidad'] = mensualidad.strftime("%m/%Y")
 
         # lets go
         return super(LineaList, self).get_queryset().filter(query).order_by('-fecha', 'asiento__fecha')
 
     def get_context_data(self, **kwargs):
         context = super(LineaList, self).get_context_data(**kwargs)
-        context['filters'] = self.filters
-        context['filters_str'] = urllib.urlencode({k: v.encode('utf-8') for k, v in self.filters.items()})
+        context['filtros'] = self.filtros
+        context['filtros_str'] = urllib.urlencode({k: v.encode('utf-8') for k, v in self.filtros.items()})
         return context
 
 
