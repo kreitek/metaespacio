@@ -49,6 +49,21 @@
         </tr>
         {% endfor %}
     </tbody>
+    <tfoot>
+        <tr>
+            <th class="text-center">Total</th>
+            {% for cuenta, cantidad in total.items %}
+              <td class="text-right"><strong>
+              {% if user.is_superuser %}
+                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{{cuenta}}&mensualidad={{anyo|date:"m/Y"}}">{{cantidad|floatformat:2}} €</a>
+                {% else %}
+                    {{cantidad|floatformat:2}} €
+              {% endif %}
+              </strong>
+              </td>
+            {% endfor %}
+        </tr>
+    </tfoot>
 </table>
 
 {% if usuario %}

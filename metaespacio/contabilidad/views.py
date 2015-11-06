@@ -136,7 +136,10 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
                 x = x[1:]
             return x.split(":")[0]
         # Siendo la cuenta "Noseque:Cosa" y el prefijo "Noseque:", el subnombre es "Cosa"
-        pk_nom_subnom = [(cuenta.pk, cuenta.nombre, subnombre(cuenta.nombre)) for i, cuenta in enumerate(cuentas_qs)]
+        pk_nom_subnom = [
+            (cuenta.pk, cuenta.nombre, subnombre(cuenta.nombre)) 
+            for i, cuenta in enumerate(cuentas_qs)
+            ]
         # Nuestras columnas van a ser todos los subnombres diferentes
         columnas = sorted(set([subnom for pk, nom, subnom in pk_nom_subnom]))
         # Y este es el array de transformacion de pk a que numero de columna le toca
@@ -149,14 +152,24 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
 
         # El diccionario estara ordenado crecientemente. Recordar el orden.
         sumas = collections.OrderedDict()
+        total = collections.OrderedDict(zip(columnas, [0.0]*len(columnas)))
         while fecha <= fecha_max:
             sumas[fecha] = [[0.0, c] for c in columnas]
-            cuentas_por_mes = cuentas_qs.filter(objeto_q_cuenta_por_mes(fecha)).annotate(models.Sum('linea__cantidad'))
+            cuentas_por_mes = cuentas_qs  \
+                .filter(objeto_q_cuenta_por_mes(fecha))  \
+                .annotate(models.Sum('linea__cantidad'))
             for c in cuentas_por_mes:
                 index = pk_dict[c.pk]
-                sumas[fecha][index][0] += c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
+                acc = c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
+                sumas[fecha][index][0] += acc
+                total[subnombre(c.nombre)] += acc
             fecha += relativedelta(months=1)
+
+
+
         context['prefijo'] = prefijo + ":" if prefijo else ""
         context['columnas'] = columnas
         context['sumas'] = sumas
+        context['total'] = total
+        context['cuentas_por_mes'] = cuentas_por_mes
         return context
