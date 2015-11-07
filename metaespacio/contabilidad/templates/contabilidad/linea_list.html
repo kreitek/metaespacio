@@ -1,5 +1,5 @@
 {% extends "common/base.html" %}
-{% load adminurl %}
+{% load adminurl suma %}
 
 {% block body %}
 
@@ -52,7 +52,7 @@
                 <a href="{% url 'lineas' %}?{{filtros_str}}&usuario={{object.miembro.user}}">{{object.miembro.user|default:""}}</a>
             </td>
             {% endif %}
-            <td style="text-align: right">{{object.cantidad|floatformat:2}}</td>
+            <td style="text-align: right">{{object.cantidad|floatformat:2}} {% suma_add "sumador" object.cantidad %}</td>
             <td>{{object.asiento.concepto}}</td>
             <td>{{object.asiento.fecha|date:'SHORT_DATE_FORMAT'}}</td>
             {% if user.is_superuser %}
@@ -65,8 +65,14 @@
             {% endif %}
         </tr>
         {% endfor %}
-        
     </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <th>Total</th>
+            <th style="text-align: right">{{sumador|floatformat:2}}</th>
+        </tr>
+    </tfoot>
 </table>
 
 {% include "common/_paginator.html" %}
