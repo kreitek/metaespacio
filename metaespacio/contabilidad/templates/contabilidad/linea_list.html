@@ -68,8 +68,15 @@
     </tbody>
     <tfoot>
         <tr>
-            <td></td>
-            <th>Total</th>
+            {% if 'cuenta' not in filtros.keys %}
+            <th></th>
+            {% endif %}
+            {% if 'mensualidad' not in filtros.keys %}
+            <th></th>
+            {% endif %}
+            {% if 'usuario' not in filtros.keys %} 
+            <th></th>
+            {% endif %}
             <th style="text-align: right">{{sumador|floatformat:2}}</th>
         </tr>
     </tfoot>
