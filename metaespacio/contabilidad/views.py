@@ -66,7 +66,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
             self.filtros['mensualidad'] = mensualidad.strftime("%m/%Y")
 
         # lets go
-        return super(LineaList, self).get_queryset().filter(query).order_by('-fecha', 'asiento__fecha')
+        return super(LineaList, self).get_queryset().filter(query).order_by('-asiento__fecha', '-fecha')
 
     def get_context_data(self, **kwargs):
         context = super(LineaList, self).get_context_data(**kwargs)
