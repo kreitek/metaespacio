@@ -3,4 +3,4 @@ django-crispy-forms
 django-localflavor
 django-tastypie
 django-graphos==0.0.2a
-django-oidc-provider
+django-oidc-provider==0.1.2
