@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'registro',
     'espacios',
     'pages',
-    'captcha',
     'taquilla',
     'encuestas',
     # 'bibliotheca',  # necesita actualizar a 1.8
