@@ -28,7 +28,7 @@
             <td>{{object.user.last_name}}</td>
             <td>
                 {{object.fecha_alta}}
-                {% if user.is_superuser %} <a class="pull-right" href="{% url 'mensualidad_resumen' object.user.username %}"><span class="glyphicon glyphicon-briefcase"></span></a> {% endif %}
+                {% if user.is_superuser %} <a class="pull-right" href="{% url 'lineas_usuario' object.user.username %}"><span class="glyphicon glyphicon-briefcase"></span></a> {% endif %}
                 {% admin object object.user %}
             </td>
         </tr>
