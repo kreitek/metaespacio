@@ -84,7 +84,7 @@ class LineasUsuario(SiteMixin, MemberOnly, ListView):
         if username:
             url_user = get_object_or_404(User, username=username)
             kwargs["miembro__user"] = url_user
-        return super(LineasUsuario, self).get_queryset().filter(**kwargs).order_by('fecha')
+        return super(LineasUsuario, self).get_queryset().filter(**kwargs).order_by('-asiento__fecha', '-fecha')
 
     def get_context_data(self, **kwargs):
         context = super(LineasUsuario, self).get_context_data(**kwargs)

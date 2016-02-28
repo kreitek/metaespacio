@@ -23,6 +23,8 @@ class MiembroAdmin(admin.ModelAdmin):
 
 
 class UserAdmin3(UserAdmin2):
+    list_display = ['username', 'date_joined', 'email', 'first_name', 'last_name', 'is_staff']
+    ordering = ['date_joined', 'username']
     inlines = UserAdmin2.inlines + [MiembroInline]
 
 
