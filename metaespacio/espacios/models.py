@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from contabilidad.models import Cuenta
 
 
 def logos_upload_to(instance, filename):
@@ -25,6 +26,10 @@ class Espacio(models.Model):
     miembros = models.ManyToManyField(User, through='Miembro')
     logo = models.ImageField(upload_to=logos_upload_to, blank=True, null=True)
     favicon = models.ImageField(upload_to=favicons_upload_to, blank=True, null=True, help_text="El formato debe ser PNG y tamaño 16x16 o 32x32")
+
+    #contabilidad
+    cuotas = models.ManyToManyField(Cuenta, related_name='cuenta_de', null=True)
+    cuota_minima = models.FloatField(null=True)
 
     # enlaces redes sociales y otros
     facebook_fanpage = models.URLField(blank=True, null=True)

@@ -4,3 +4,4 @@ django-localflavor
 django-tastypie
 django-graphos==0.0.2a
 django-oidc-provider
+djangorestframework

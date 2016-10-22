@@ -17,7 +17,9 @@ urlpatterns = patterns(
     # url(r'^api/', include('bibliotheca.api_urls)),
     url(r'^openid/', include('oidc_provider.urls', namespace='oidc_provider')),
     url(r'^', include('pages.urls')),
+    url(r'^rest/', include('rest.urls')),
 )
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
