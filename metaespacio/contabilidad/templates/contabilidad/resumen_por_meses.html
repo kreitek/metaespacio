@@ -48,6 +48,18 @@
             {% endfor %}
         </tr>
         {% endfor %}
+        <tr>
+            <td class="text-center">Previsión</td>
+            {% for cantidad, cuenta in prevision %}
+            <td class="text-right">
+                {% if user.is_superuser %}
+                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{{cuenta}}&mensualidad=prevision">{{cantidad|floatformat:2}} €</a>
+                {% else %}
+                    {{cantidad|floatformat:2}} €
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
     </tbody>
     <tfoot>
         <tr>

@@ -22,6 +22,17 @@ def objeto_q_linea_por_mes(mes):
     return Q1 | Q2
 
 
+def objeto_q_linea_futura(mes):
+    # Tenemos el problema de que las fechas en las lineas son opcionales y las fechas
+    # en los asientos obligatorios. Esto es para hacer busquedas por fecha sobre
+    # asientos. FIXME esto se puede meter como un manager en los modelos y queda
+    # mejor.
+    mes_ini = mes.replace(day=1)
+    Q1 = models.Q(fecha__isnull=False, fecha__gte=mes_ini)
+    Q2 = models.Q(fecha__isnull=True, asiento__fecha__gte=mes_ini)
+    return Q1 | Q2
+
+
 def objeto_q_cuenta_por_mes(mes):
     # Es igual que el anterior agregando linea__ para hacer busquedas por fecha
     # sobre cuentas. FIXME idem meter en un manager.
@@ -29,6 +40,15 @@ def objeto_q_cuenta_por_mes(mes):
     mes_fin = mes_ini + relativedelta(months=1, days=-1)
     Q1 = models.Q(linea__fecha__isnull=False, linea__fecha__gte=mes_ini, linea__fecha__lte=mes_fin)
     Q2 = models.Q(linea__fecha__isnull=True, linea__asiento__fecha__gte=mes_ini, linea__asiento__fecha__lte=mes_fin)
+    return Q1 | Q2
+
+
+def objeto_q_cuenta_futura(mes):
+    # Es igual que el anterior agregando linea__ para hacer busquedas por fecha
+    # sobre cuentas. FIXME idem meter en un manager.
+    mes_ini = mes.replace(day=1)
+    Q1 = models.Q(linea__fecha__isnull=False, linea__fecha__gte=mes_ini)
+    Q2 = models.Q(linea__fecha__isnull=True, linea__asiento__fecha__gte=mes_ini)
     return Q1 | Q2
 
 
@@ -57,13 +77,17 @@ class LineaList(SiteMixin, MemberOnly, ListView):
 
         # busqueda por mensualidad mm/yyyy
         mensualidad = self.request.GET.get('mensualidad', '')
-        try:
-            mensualidad = datetime.datetime.strptime(mensualidad, "%m/%Y").date()
-        except ValueError:
-            mensualidad = None
-        if mensualidad:
-            query &= objeto_q_linea_por_mes(mensualidad)
-            self.filtros['mensualidad'] = mensualidad.strftime("%m/%Y")
+        if mensualidad == 'prevision':
+            query &= objeto_q_linea_futura(datetime.datetime.now().date())
+            self.filtros['mensualidad'] = 'prevision'
+        else:
+            try:
+                mensualidad = datetime.datetime.strptime(mensualidad, "%m/%Y").date()
+            except ValueError:
+                mensualidad = None
+            if mensualidad:
+                query &= objeto_q_linea_por_mes(mensualidad)
+                self.filtros['mensualidad'] = mensualidad.strftime("%m/%Y")
 
         # lets go
         return super(LineaList, self).get_queryset().filter(query).order_by('-asiento__fecha', '-fecha')
@@ -149,6 +173,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
         fechas = Asiento.objects.all().aggregate(models.Min('fecha'), models.Max('fecha'))
         fecha = fechas['fecha__min'].replace(day=1)
         fecha_max = fechas['fecha__max'].replace(day=1)
+        fecha_hoy = datetime.datetime.now().date().replace(day=1)
 
         # El diccionario estara ordenado crecientemente. Recordar el orden.
         sumas = collections.OrderedDict()
@@ -165,11 +190,23 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
                 total[subnombre(c.nombre)] += acc
             fecha += relativedelta(months=1)
 
-
-
         context['prefijo'] = prefijo + ":" if prefijo else ""
+        # El diccionario estara ordenado crecientemente. Recordar el orden.
+        total_prev = collections.OrderedDict(zip(columnas, [0.0]*len(columnas)))
+        sumas_prev = [[0.0, c] for c in columnas]
+        cuentas_futuras = cuentas_qs  \
+            .filter(objeto_q_cuenta_futura(fecha_hoy))  \
+            .annotate(models.Sum('linea__cantidad'))
+        for c in cuentas_futuras:
+            index = pk_dict[c.pk]
+            acc = c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
+            sumas_prev[index][0] += acc
+            total[subnombre(c.nombre)] += acc
+
+
         context['columnas'] = columnas
         context['sumas'] = sumas
+        context['prevision'] = sumas_prev
         context['total'] = total
         context['cuentas_por_mes'] = cuentas_por_mes
         return context
