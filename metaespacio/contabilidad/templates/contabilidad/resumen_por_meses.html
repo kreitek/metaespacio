@@ -25,7 +25,7 @@
             {% for cuenta in columnas %}
             <th style="text-align: right">
                 {% if user.is_superuser %}
-                    <a href="{% url 'resumen' %}?cuentas={{prefijo}}{{cuenta}}">{{cuenta|default:'Total'}}</a>
+                    <a href="{% url 'resumen' %}?cuentas={{prefijo}}{% if cuenta %}:{{cuenta}}{% endif %}">{{cuenta|default:'Total'}}</a>
                 {% else %}
                     {{cuenta}} 
                 {% endif %}

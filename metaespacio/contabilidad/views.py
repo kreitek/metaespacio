@@ -190,7 +190,6 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
                 total[subnombre(c.nombre)] += acc
             fecha += relativedelta(months=1)
 
-        context['prefijo'] = prefijo + ":" if prefijo else ""
         # El diccionario estara ordenado crecientemente. Recordar el orden.
         total_prev = collections.OrderedDict(zip(columnas, [0.0]*len(columnas)))
         sumas_prev = [[0.0, c] for c in columnas]
@@ -204,6 +203,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
             total[subnombre(c.nombre)] += acc
 
 
+        context['prefijo'] = prefijo if prefijo else ""
         context['columnas'] = columnas
         context['sumas'] = sumas
         context['prevision'] = sumas_prev
