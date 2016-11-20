@@ -27,7 +27,7 @@ def objeto_q_linea_futura(mes):
     # en los asientos obligatorios. Esto es para hacer busquedas por fecha sobre
     # asientos. FIXME esto se puede meter como un manager en los modelos y queda
     # mejor.
-    mes_ini = mes.replace(day=1) + relativedelta(months=1, days=-1)
+    mes_ini = mes.replace(day=1) + relativedelta(months=1)
     Q1 = models.Q(fecha__isnull=False, fecha__gte=mes_ini)
     Q2 = models.Q(fecha__isnull=True, asiento__fecha__gte=mes_ini)
     return Q1 | Q2
@@ -46,7 +46,7 @@ def objeto_q_cuenta_por_mes(mes):
 def objeto_q_cuenta_futura(mes):
     # Es igual que el anterior agregando linea__ para hacer busquedas por fecha
     # sobre cuentas. FIXME idem meter en un manager.
-    mes_ini = mes.replace(day=1) + relativedelta(months=1, days=-1)
+    mes_ini = mes.replace(day=1) + relativedelta(months=1)
     Q1 = models.Q(linea__fecha__isnull=False, linea__fecha__gte=mes_ini)
     Q2 = models.Q(linea__fecha__isnull=True, linea__asiento__fecha__gte=mes_ini)
     return Q1 | Q2
