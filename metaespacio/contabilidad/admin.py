@@ -24,8 +24,8 @@ class AsientoAdmin(admin.ModelAdmin):
         return mark_safe("<br/>".join([show(x) for x in obj.linea_set.all()]))
 
     def correcto(self, obj):
-        d = obj.diferencia()
-        return "OK" if abs(d) < 0.01 else d
+        return abs(obj.diferencia()) < 0.01
+    correcto.boolean = True
 
 
 class CuentaAdmin(admin.ModelAdmin):
