@@ -14,6 +14,7 @@ class AsientoAdmin(admin.ModelAdmin):
     date_hierarchy = "fecha"
     list_display = ('fecha', 'concepto', 'lineas', 'correcto')
     list_filter = ("espacio", "linea__cuenta")
+    search_fields = ('concepto', )
     inlines = [LineaInline]
 
     def lineas(self, obj):
