@@ -13,7 +13,7 @@ class LineaInline(admin.TabularInline):
 class AsientoAdmin(admin.ModelAdmin):
     date_hierarchy = "fecha"
     list_display = ('fecha', 'concepto', 'lineas', 'correcto')
-    list_filter = ("espacio", "linea__cuenta")
+    list_filter = ("espacio", "linea__miembro", "linea__cuenta")
     search_fields = ('concepto', )
     inlines = [LineaInline]
 
