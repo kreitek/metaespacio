@@ -32,7 +32,7 @@ class Asiento(models.Model):
         return "{} {}".format(self.concepto, self.fecha)
 
     def diferencia(self):
-        return sum([l.cantidad * l.cuenta.signo_real for l in self.linea_set.all()])
+        return self.linea_set.aggregate(models.Sum('cantidad'))['cantidad__sum']
 
 
 class Linea(models.Model):

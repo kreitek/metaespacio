@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Cuenta, Asiento, Linea
+from django.utils.safestring import mark_safe
 
 
 class LineaInline(admin.TabularInline):
@@ -14,7 +15,7 @@ class AsientoAdmin(admin.ModelAdmin):
     inlines = [LineaInline]
 
     def lineas(self, obj):
-        return " ".join([unicode(x) for x in obj.linea_set.all()])
+        return mark_safe("<br/>".join([unicode(x) for x in obj.linea_set.all()]))
 
     def correcto(self, obj):
         d = obj.diferencia()
