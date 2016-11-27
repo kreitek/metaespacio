@@ -149,6 +149,7 @@ if DEBUG:
     # en desarrollo no se usa
     ALLOWED_HOSTS = []
     INSTALLED_APPS += ('debug_toolbar', )
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
 
 if PRODUCCION:
     # FIXME Esto revisarlo porque tampoco lo estamos poniendo aqui exactamente
