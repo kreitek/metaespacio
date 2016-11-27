@@ -8,6 +8,10 @@ class Cuenta(models.Model):
     ver_miembros = models.BooleanField(default=True)
     signo = models.CharField(max_length=1, choices=(('+', '+'), ('-', '-')), default='+')
 
+    @property
+    def signo_real(self):
+        return 1 if self.signo == "+" else -1
+
     def __unicode__(self):
         return "{} ({})".format(self.nombre, self.signo)
 
@@ -26,6 +30,9 @@ class Asiento(models.Model):
 
     def __unicode__(self):
         return "{} {}".format(self.concepto, self.fecha)
+
+    def diferencia(self):
+        return sum([l.cantidad * l.cuenta.signo_real for l in self.linea_set.all()])
 
 
 class Linea(models.Model):

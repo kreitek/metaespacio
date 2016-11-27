@@ -9,12 +9,16 @@ class LineaInline(admin.TabularInline):
 
 class AsientoAdmin(admin.ModelAdmin):
     date_hierarchy = "fecha"
-    list_display = ('fecha', 'concepto', 'lineas', )
+    list_display = ('fecha', 'concepto', 'lineas', 'correcto')
     list_filter = ("espacio", "linea__cuenta")
     inlines = [LineaInline]
 
     def lineas(self, obj):
         return " ".join([unicode(x) for x in obj.linea_set.all()])
+
+    def correcto(self, obj):
+        d = obj.diferencia()
+        return "OK" if abs(d) < 0.01 else d
 
 
 class CuentaAdmin(admin.ModelAdmin):
