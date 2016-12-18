@@ -8,6 +8,7 @@ from .models import Cuenta, Asiento, Linea
 class LineaInline(admin.TabularInline):
     model = Linea
     extra = 2
+    ordering = ("cuenta__nombre", "cantidad")
 
 
 class AsientoAdmin(admin.ModelAdmin):
