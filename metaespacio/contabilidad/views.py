@@ -204,3 +204,43 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
         context['total'] = total
         context['cuentas_por_mes'] = cuentas_por_mes
         return context
+
+
+class Oficial(SiteMixin, MemberOnly, TemplateView):
+    template_name = "contabilidad/oficial.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(Oficial, self).get_context_data(**kwargs)
+
+        # empezamos con las cuentas del espacio para todos los publicos
+        cuentas_qs = Cuenta.objects.filter(ver_miembros=True, espacio=self.espacio)
+
+        # y filtramos por startwith del nombre de las cuentas si nos lo pasan
+        prefijo = self.request.GET.get('cuentas', 'Oficial')
+        cuentas_qs = cuentas_qs.filter(nombre__startswith=prefijo)
+
+        # Siendo la cuenta "Noseque:Cosa:Tal" y el prefijo "Noseque:", el ultimo_nombre es "Tal"
+        pk_nom_subnom = [
+            (cuenta.pk, cuenta.nombre, cuenta.nombre_sin_prefijo(prefijo))
+            for i, cuenta in enumerate(cuentas_qs)
+            ]
+        # Nuestras columnas van a ser todos los subnombres diferentes
+        columnas = sorted(set([subnom for pk, nom, subnom in pk_nom_subnom]))
+        # Y este es el array de transformacion de pk a que numero de columna le toca
+        pk_dict = {pk: columnas.index(subnom) for pk, nom, subnom in pk_nom_subnom}
+
+        # El diccionario estara ordenado crecientemente. Recordar el orden.
+        asientos_qs = Asiento.objects.filter(fecha__year=self.kwargs.get('year'))
+        asientos_qs = asientos_qs.filter(linea__cuenta__in=cuentas_qs).order_by('fecha').distinct()
+
+        asientos = []
+        total = [0.0 for c in columnas]
+        for a in asientos_qs:
+            for l in a.linea_set.filter(cuenta__in=cuentas_qs):
+                index = pk_dict[l.cuenta.pk]
+                total[index] += l.cantidad
+            asientos.append([a, total[:]])
+
+        context['columnas'] = columnas
+        context['asientos'] = asientos
+        return context

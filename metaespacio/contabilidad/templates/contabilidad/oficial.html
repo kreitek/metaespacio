@@ -1,0 +1,36 @@
+{% extends "common/base.html" %}
+{% load adminurl suma asiento %}
+
+{% block body %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Asiento</th>
+            <th>Movimientos</th>
+            {% for columna in columnas %}
+            <th style="text-align: right">{{columna}}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for asiento, totales in asientos %}
+        <tr>
+            <td>{{asiento.fecha|date:'d/m/Y'}}</td>
+            <td>
+                <a href="{% url 'admin:contabilidad_asiento_change' asiento.pk %}" title="{{asiento.concepto}}">#{{asiento.pk}}</a>
+                {% for aa in asiento.adjuntoasiento_set.all %}
+                <a href="{{ aa.fichero.url }}" title="{{aa.fichero.name}}"><i class="glyphicon glyphicon-file"></i></a>
+                {% endfor %}
+            </td>
+            <td>{% asiento_resumen asiento "Oficial" %}</td>
+            {% for item in totales %}
+            <td style="text-align: right">{{item|floatformat:2}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}
