@@ -10,7 +10,7 @@ from .models import Cuenta, Asiento, Linea
 class LineaInline(admin.TabularInline):
     model = Linea
     extra = 2
-    ordering = ("cuenta__nombre", "cantidad", "miembro")
+    ordering = ("cuenta__nombre", "cantidad", "miembro__user__username")
 
 
 class AsientoAdmin(admin.ModelAdmin):
