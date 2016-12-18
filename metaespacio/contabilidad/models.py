@@ -22,6 +22,27 @@ class Cuenta(models.Model):
         ordering = ('espacio', 'nombre')
         unique_together = ('espacio', 'nombre')
 
+    def nombre_sin_prefijo(self, prefijo):
+        x = self.nombre[:]
+        if x.startswith(prefijo):
+            x = x[len(prefijo):]
+            if x.startswith(":"):
+                x = x[1:]
+        return x
+
+    def primer_nombre(self, prefijo=None):
+        return self.nombre_sin_prefijo(prefijo).split(":")[0]
+
+    def ultimo_nombre(self, prefijo=None):
+        return self.nombre_sin_prefijo(prefijo).split(":")[-1]
+
+    def subnombre(self, prefijo=None):
+        if self.nombre.starswith(prefijo):
+            x = x[len(prefijo):]
+            if x.startswith(":"):
+                x = x[1:]
+        return x.split(":")[-1]
+
 
 class Asiento(models.Model):
     espacio = models.ForeignKey('espacios.Espacio')

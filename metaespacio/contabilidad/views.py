@@ -153,15 +153,9 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
         if prefijo:
             cuentas_qs = cuentas_qs.filter(nombre__startswith=prefijo)
 
-        # Asociamos cuentas a columnas. Proceso complejo:
-        def subnombre(x):
-            x = x[len(prefijo):]
-            if x.startswith(":"):
-                x = x[1:]
-            return x.split(":")[0]
-        # Siendo la cuenta "Noseque:Cosa" y el prefijo "Noseque:", el subnombre es "Cosa"
+        # Siendo la cuenta "Noseque:Cosa" y el prefijo "Noseque:", el primer_nombre es "Cosa"
         pk_nom_subnom = [
-            (cuenta.pk, cuenta.nombre, subnombre(cuenta.nombre)) 
+            (cuenta.pk, cuenta.nombre, cuenta.primer_nombre(prefijo))
             for i, cuenta in enumerate(cuentas_qs)
             ]
         # Nuestras columnas van a ser todos los subnombres diferentes
@@ -187,7 +181,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
                 index = pk_dict[c.pk]
                 acc = c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
                 sumas[fecha][index][0] += acc
-                total[subnombre(c.nombre)] += acc
+                total[c.primer_nombre(prefijo)] += acc
             fecha += relativedelta(months=1)
 
         # El diccionario estara ordenado crecientemente. Recordar el orden.
@@ -200,7 +194,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
             index = pk_dict[c.pk]
             acc = c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
             sumas_prev[index][0] += acc
-            total[subnombre(c.nombre)] += acc
+            total[c.primer_nombre(prefijo)] += acc
 
 
         context['prefijo'] = prefijo if prefijo else ""
