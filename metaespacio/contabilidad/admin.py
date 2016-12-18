@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 from django.contrib import admin
+from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 from .models import Cuenta, Asiento, Linea
 
@@ -17,6 +19,7 @@ class AsientoAdmin(admin.ModelAdmin):
     list_filter = ("espacio", "linea__miembro", "linea__cuenta")
     search_fields = ('concepto', )
     inlines = [LineaInline]
+    actions = ["duplicar", ]
 
     def lineas(self, obj):
         url = reverse("admin:contabilidad_asiento_changelist")
@@ -34,6 +37,29 @@ class AsientoAdmin(admin.ModelAdmin):
             return None
         return abs(value) < 0.01
     oficial.boolean = True
+
+    def duplicar(self, request, qs):
+        for obj in qs:
+            asiento = Asiento.objects.create(
+                espacio=obj.espacio,
+                concepto="Copia de {}".format(obj.concepto),
+                fecha=timezone.now(),
+                )
+            for linea in obj.linea_set.all():
+                l = Linea.objects.create(
+                    asiento=asiento,
+                    cuenta=linea.cuenta,
+                    cantidad=linea.cantidad,
+                    miembro=linea.miembro,
+                    fecha=timezone.now() if linea.fecha else None,
+                    )
+            msg = 'Creado asiento <a href="{}">#{}</a> a partir del <a href="{}">#{}</a>'.format(
+                reverse("admin:contabilidad_asiento_change", args=[asiento.pk]),
+                asiento.pk,
+                reverse("admin:contabilidad_asiento_change", args=[obj.pk]),
+                obj.pk,
+                )
+            messages.success(request, mark_safe(msg))
 
 
 class CuentaAdmin(admin.ModelAdmin):
