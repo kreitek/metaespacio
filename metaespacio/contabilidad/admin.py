@@ -29,8 +29,8 @@ class AsientoAdmin(admin.ModelAdmin):
 
 
 class CuentaAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'espacio', 'signo')
-    list_filter = ("espacio", )
+    list_display = ('nombre', 'espacio', 'signo', 'ver_miembros')
+    list_filter = ("espacio", 'signo', 'ver_miembros')
 
 admin.site.register(Asiento, AsientoAdmin)
 admin.site.register(Cuenta, CuentaAdmin)
