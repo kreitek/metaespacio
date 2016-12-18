@@ -230,7 +230,10 @@ class Oficial(SiteMixin, MemberOnly, TemplateView):
         pk_dict = {pk: columnas.index(subnom) for pk, nom, subnom in pk_nom_subnom}
 
         # El diccionario estara ordenado crecientemente. Recordar el orden.
-        asientos_qs = Asiento.objects.filter(fecha__year=self.kwargs.get('year'))
+        year = self.kwargs.get('year')
+        asientos_qs = Asiento.objects.all()
+        if year:
+            asientos_qs = asientos_qs.filter(fecha__year=year)
         asientos_qs = asientos_qs.filter(linea__cuenta__in=cuentas_qs).order_by('fecha').distinct()
 
         asientos = []
