@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+
 from django.contrib import admin
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -10,7 +11,7 @@ from .models import Cuenta, Asiento, Linea
 class LineaInline(admin.TabularInline):
     model = Linea
     extra = 2
-    ordering = ("cuenta__nombre", "cantidad", "miembro__user__username")
+    ordering = ("cuenta__nombre", "-cantidad", "miembro__user__username")
 
 
 class AsientoAdmin(admin.ModelAdmin):
