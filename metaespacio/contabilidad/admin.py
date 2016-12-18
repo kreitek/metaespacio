@@ -12,7 +12,7 @@ class LineaInline(admin.TabularInline):
 
 class AsientoAdmin(admin.ModelAdmin):
     date_hierarchy = "fecha"
-    list_display = ('fecha', 'concepto', 'lineas', 'correcto')
+    list_display = ('fecha', 'concepto', 'lineas', 'correcto', 'oficial')
     list_filter = ("espacio", "linea__miembro", "linea__cuenta")
     search_fields = ('concepto', )
     inlines = [LineaInline]
@@ -26,6 +26,13 @@ class AsientoAdmin(admin.ModelAdmin):
     def correcto(self, obj):
         return abs(obj.diferencia()) < 0.01
     correcto.boolean = True
+
+    def oficial(self, obj):
+        value = obj.diferencia("Oficial")
+        if value is None:
+            return None
+        return abs(value) < 0.01
+    oficial.boolean = True
 
 
 class CuentaAdmin(admin.ModelAdmin):

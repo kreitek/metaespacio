@@ -52,8 +52,11 @@ class Asiento(models.Model):
     def __unicode__(self):
         return "{} {}".format(self.concepto, self.fecha)
 
-    def diferencia(self):
-        return self.linea_set.aggregate(models.Sum('cantidad'))['cantidad__sum']
+    def diferencia(self, prefijo=None):
+        qs = self.linea_set.all()
+        if prefijo:
+            qs = qs.filter(cuenta__nombre__startswith=prefijo)
+        return qs.aggregate(models.Sum('cantidad'))['cantidad__sum']
 
 
 class Linea(models.Model):
