@@ -34,8 +34,13 @@ class AdminOnly(object):
 
 class FilterEspacioSiteMixin(SiteMixin):
     def get_queryset(self):
-        return super(FilterEspacioSiteMixin, self).get_queryset().filter(espacio__site=self.site)
+        return super(FilterEspacioSiteMixin, self).get_queryset().filter(
+                espacio__site=self.site)
 
 
 class ListMember(FilterEspacioSiteMixin, ListView):
     model = Miembro
+
+    def get_queryset(self):
+        return super(ListMember, self).get_queryset().filter(
+                    user__is_active=True)
