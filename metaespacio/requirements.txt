@@ -7,3 +7,4 @@ django-oidc-provider==0.1.2
 djangorestframework
 django_extensions
 django_debug_toolbar
+pillow

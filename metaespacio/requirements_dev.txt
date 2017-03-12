@@ -2,3 +2,4 @@ django-extensions
 pygraphviz  # para django-extensions (graph_models)
 django_debug_toolbar
 Werkzeug
+ipdb
