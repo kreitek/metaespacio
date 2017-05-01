@@ -89,6 +89,10 @@ class LineaList(SiteMixin, MemberOnly, ListView):
                 query &= objeto_q_linea_por_mes(mensualidad)
                 self.filtros['mensualidad'] = mensualidad.strftime("%m/%Y")
 
+        # Calcula la cantidad total de la consulta
+        self.total = self.model.objects.filter(query). \
+            aggregate(cantidad_sum=models.Sum('cantidad')).get('cantidad_sum') or 0
+
         # lets go
         return super(LineaList, self).get_queryset().filter(query).order_by('-asiento__fecha', '-fecha')
 
@@ -96,6 +100,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
         context = super(LineaList, self).get_context_data(**kwargs)
         context['filtros'] = self.filtros
         context['filtros_str'] = urllib.urlencode({k: v.encode('utf-8') for k, v in self.filtros.items()})
+        context['total'] = self.total
         return context
 
 
