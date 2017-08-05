@@ -52,6 +52,15 @@ def objeto_q_cuenta_futura(mes):
     return Q1 | Q2
 
 
+def objeto_q_cuenta_anterior(mes):
+    # Es igual que el anterior agregando linea__ para hacer busquedas por fecha
+    # sobre cuentas. FIXME idem meter en un manager.
+    mes_fin = mes.replace(day=1) - relativedelta(months=1)
+    Q1 = models.Q(linea__fecha__isnull=False, linea__fecha__lte=mes_fin)
+    Q2 = models.Q(linea__fecha__isnull=True, linea__asiento__fecha__lte=mes_fin)
+    return Q1 | Q2
+
+
 class LineaList(SiteMixin, MemberOnly, ListView):
     model = Linea
     paginate_by = 20
@@ -209,11 +218,25 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
             sumas_prev[index][0] += acc
             total[c.primer_nombre(prefijo)] += acc
 
+        # El diccionario estara ordenado crecientemente. Recordar el orden.
+        if prefijo_anyo and not prefijo_anyo == unicode(fecha.year):
+            sumas_ante = [[0.0, c] for c in columnas]
+            cuentas_futuras = cuentas_qs  \
+                .filter(objeto_q_cuenta_anterior(fecha))  \
+                .annotate(models.Sum('linea__cantidad'))
+            for c in cuentas_futuras:
+                index = pk_dict[c.pk]
+                acc = c.linea__cantidad__sum if c.signo == "+" else -c.linea__cantidad__sum
+                sumas_ante[index][0] += acc
+                total[c.primer_nombre(prefijo)] += acc
+
 
         context['prefijo'] = prefijo if prefijo else ""
         context['prefijo_anyo'] = prefijo_anyo if prefijo_anyo else ""
         context['columnas'] = columnas
         context['sumas'] = sumas
+        context['anterioridad'] = sumas_ante if prefijo_anyo and \
+                not prefijo_anyo == unicode(fecha.year) else ""
         context['prevision'] = sumas_prev if not prefijo_anyo or \
                 unicode(fecha_hoy.year) == prefijo_anyo else ""
         context['total'] = total
