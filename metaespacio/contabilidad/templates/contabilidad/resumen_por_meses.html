@@ -40,7 +40,7 @@
             {% for cantidad, cuenta in anterioridad %}
             <td class="text-right">
                 {% if user.is_superuser %}
-                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}&mensualidad=anterioridad">{{cantidad|floatformat:2}} €</a>
+                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}&mensualidad=anterioridad{% if prefijo_anyo %}-{{prefijo_anyo}}{% endif %}">{{cantidad|floatformat:2}} €</a>
                 {% else %}
                     {{cantidad|floatformat:2}} €
                 {% endif %}

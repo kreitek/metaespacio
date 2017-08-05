@@ -8,6 +8,7 @@ import datetime
 import urllib
 from espacios.views import SiteMixin, MemberOnly, AdminOnly
 from .models import Linea, Cuenta, Asiento
+import re
 
 
 def objeto_q_linea_por_mes(mes):
@@ -33,6 +34,17 @@ def objeto_q_linea_futura(mes):
     return Q1 | Q2
 
 
+def objeto_q_linea_anterior(mes):
+    # Tenemos el problema de que las fechas en las lineas son opcionales y las fechas
+    # en los asientos obligatorios. Esto es para hacer busquedas por fecha sobre
+    # asientos. FIXME esto se puede meter como un manager en los modelos y queda
+    # mejor.
+    mes_ini = mes.replace(day=1) + relativedelta(days=-2)
+    Q1 = models.Q(fecha__isnull=False, fecha__lte=mes_ini)
+    Q2 = models.Q(fecha__isnull=True, asiento__fecha__lte=mes_ini)
+    return Q1 | Q2
+
+
 def objeto_q_cuenta_por_mes(mes):
     # Es igual que el anterior agregando linea__ para hacer busquedas por fecha
     # sobre cuentas. FIXME idem meter en un manager.
@@ -55,7 +67,7 @@ def objeto_q_cuenta_futura(mes):
 def objeto_q_cuenta_anterior(mes):
     # Es igual que el anterior agregando linea__ para hacer busquedas por fecha
     # sobre cuentas. FIXME idem meter en un manager.
-    mes_fin = mes.replace(day=1) - relativedelta(months=1)
+    mes_fin = mes.replace(day=1) + relativedelta(days=-2)
     Q1 = models.Q(linea__fecha__isnull=False, linea__fecha__lte=mes_fin)
     Q2 = models.Q(linea__fecha__isnull=True, linea__asiento__fecha__lte=mes_fin)
     return Q1 | Q2
@@ -81,6 +93,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
         # busqueda por cuenta
         anyo = self.request.GET.get('anyo')
         if anyo:
+            anyo = re.sub("\D", "", anyo)
             query &= models.Q(asiento__fecha__year=anyo)
             self.filtros['anyo'] = anyo
 
@@ -95,6 +108,11 @@ class LineaList(SiteMixin, MemberOnly, ListView):
         if mensualidad == 'prevision':
             query &= objeto_q_linea_futura(datetime.datetime.now().date())
             self.filtros['mensualidad'] = 'prevision'
+        elif mensualidad.startswith('anterioridad'):
+            anyo = re.sub("\D", "", mensualidad)
+            if anyo:
+                query &= objeto_q_linea_anterior(datetime.datetime(int(anyo), 1, 31))
+                self.filtros['mensualidad'] = mensualidad
         else:
             try:
                 mensualidad = datetime.datetime.strptime(mensualidad, "%m/%Y").date()
@@ -232,7 +250,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
         if prefijo_anyo and not prefijo_anyo == unicode(fecha_ini.year):
             sumas_ante = [[0.0, c] for c in columnas]
             cuentas_futuras = cuentas_qs  \
-                .filter(objeto_q_cuenta_anterior(fecha))  \
+                .filter(objeto_q_cuenta_anterior(fechas['fecha__min'].replace(day=1)))  \
                 .annotate(models.Sum('linea__cantidad'))
             for c in cuentas_futuras:
                 index = pk_dict[c.pk]
