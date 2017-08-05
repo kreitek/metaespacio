@@ -214,7 +214,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
         context['prefijo_anyo'] = prefijo_anyo if prefijo_anyo else ""
         context['columnas'] = columnas
         context['sumas'] = sumas
-        context['prevision'] = sumas_prev if prefijo_anyo and \
+        context['prevision'] = sumas_prev if not prefijo_anyo or \
                 unicode(fecha_hoy.year) == prefijo_anyo else ""
         context['total'] = total
         context['cuentas_por_mes'] = cuentas_por_mes
