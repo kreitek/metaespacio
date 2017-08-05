@@ -78,6 +78,12 @@ class LineaList(SiteMixin, MemberOnly, ListView):
             query &= models.Q(cuenta__nombre__startswith=cuenta)
             self.filtros['cuenta'] = cuenta
 
+        # busqueda por cuenta
+        anyo = self.request.GET.get('anyo')
+        if anyo:
+            query &= models.Q(asiento__fecha__year=anyo)
+            self.filtros['anyo'] = anyo
+
         # busqueda por usuario
         usuario = self.request.GET.get('usuario')
         if usuario:
