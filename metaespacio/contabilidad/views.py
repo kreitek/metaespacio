@@ -180,6 +180,10 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
         # Consultamos los asientos de BD
         fechas = Asiento.objects.all()
 
+        # Guardamos la fecha inicial
+        fechas_ini = fechas.aggregate(models.Min('fecha'), models.Max('fecha'))
+        fecha_ini = fechas_ini['fecha__min'].replace(day=1)
+
         # y filtramos por el anyo de la fecha si nos lo pasan
         prefijo_anyo = self.request.GET.get('anyo', '')
         if prefijo_anyo:
@@ -219,7 +223,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
             total[c.primer_nombre(prefijo)] += acc
 
         # El diccionario estara ordenado crecientemente. Recordar el orden.
-        if prefijo_anyo and not prefijo_anyo == unicode(fecha.year):
+        if prefijo_anyo and not prefijo_anyo == unicode(fecha_ini.year):
             sumas_ante = [[0.0, c] for c in columnas]
             cuentas_futuras = cuentas_qs  \
                 .filter(objeto_q_cuenta_anterior(fecha))  \
@@ -236,7 +240,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
         context['columnas'] = columnas
         context['sumas'] = sumas
         context['anterioridad'] = sumas_ante if prefijo_anyo and \
-                not prefijo_anyo == unicode(fecha.year) else ""
+                not prefijo_anyo == unicode(fecha_ini.year) else ""
         context['prevision'] = sumas_prev if not prefijo_anyo or \
                 unicode(fecha_hoy.year) == prefijo_anyo else ""
         context['total'] = total
