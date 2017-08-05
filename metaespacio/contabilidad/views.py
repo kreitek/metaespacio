@@ -168,8 +168,16 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
         # Y este es el array de transformacion de pk a que numero de columna le toca
         pk_dict = {pk: columnas.index(subnom) for pk, nom, subnom in pk_nom_subnom}
 
+        # Consultamos los asientos de BD
+        fechas = Asiento.objects.all()
+
+        # y filtramos por el anyo de la fecha si nos lo pasan
+        prefijo_anyo = self.request.GET.get('anyo', '')
+        if prefijo_anyo:
+            fechas = fechas.filter(fecha__year=prefijo_anyo)
+
         # Nos quedamos con el minimo-maximo de los asientos en BD
-        fechas = Asiento.objects.all().aggregate(models.Min('fecha'), models.Max('fecha'))
+        fechas = fechas.aggregate(models.Min('fecha'), models.Max('fecha'))
         fecha = fechas['fecha__min'].replace(day=1)
         fecha_max = fechas['fecha__max'].replace(day=1)
         fecha_hoy = datetime.datetime.now().date().replace(day=1)
@@ -203,9 +211,11 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
 
 
         context['prefijo'] = prefijo if prefijo else ""
+        context['prefijo_anyo'] = prefijo_anyo if prefijo_anyo else ""
         context['columnas'] = columnas
         context['sumas'] = sumas
-        context['prevision'] = sumas_prev
+        context['prevision'] = sumas_prev if prefijo_anyo and \
+                unicode(fecha_hoy.year) == prefijo_anyo else ""
         context['total'] = total
         context['cuentas_por_mes'] = cuentas_por_mes
         return context

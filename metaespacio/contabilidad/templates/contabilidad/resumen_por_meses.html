@@ -25,7 +25,7 @@
             {% for cuenta in columnas %}
             <th style="text-align: right">
                 {% if user.is_superuser %}
-                    <a href="{% url 'resumen' %}?cuentas={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}">{{cuenta|default:'Total'}}</a>
+                    <a href="{% url 'resumen' %}?cuentas={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}{% if prefijo_anyo %}&anyo={{prefijo_anyo}}{% endif %}">{{cuenta|default:'Total'}}</a>
                 {% else %}
                     {{cuenta}} 
                 {% endif %}
@@ -36,11 +36,11 @@
     <tbody>
         {% for anyo, cantidades in sumas.items %}
         <tr>
-            <td class="text-center">{{anyo|date:"E / Y"}}</td>
+            <td class="text-center">{{anyo|date:"E"}} / <a href="{% url 'resumen' %}?anyo={{anyo|date:'Y'}}{% if cuenta %}&cuentas={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}{% endif %}">{{anyo|date:"Y"}}</td>
             {% for cantidad, cuenta in cantidades %}
             <td class="text-right">
                 {% if user.is_superuser %}
-                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}&mensualidad={{anyo|date:"m/Y"}}">{{cantidad|floatformat:2}} €</a>
+                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}&mensualidad={{anyo|date:'m/Y'}}">{{cantidad|floatformat:2}} €</a>
                 {% else %}
                     {{cantidad|floatformat:2}} €
                 {% endif %}
@@ -48,18 +48,20 @@
             {% endfor %}
         </tr>
         {% endfor %}
+        {% if prevision %}
         <tr>
             <td class="text-center">Previsión</td>
             {% for cantidad, cuenta in prevision %}
             <td class="text-right">
                 {% if user.is_superuser %}
-                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}&mensualidad=prevision">{{cantidad|floatformat:2}} €</a>
+                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}&mensualidad=prevision{% if prefijo_anyo %}&anyo={{prefijo_anyo}}{% endif %}">{{cantidad|floatformat:2}} €</a>
                 {% else %}
                     {{cantidad|floatformat:2}} €
                 {% endif %}
             </td>
             {% endfor %}
         </tr>
+        {% endif %}
     </tbody>
     <tfoot>
         <tr>
@@ -67,7 +69,7 @@
             {% for cuenta, cantidad in total.items %}
               <td class="text-right"><strong>
               {% if user.is_superuser %}
-                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}">{{cantidad|floatformat:2}} €</a>
+                    <a href="{% url 'lineas' %}?cuenta={{prefijo}}{% if cuenta and prefijo %}:{% endif %}{{cuenta}}{% if prefijo_anyo %}&anyo={{prefijo_anyo}}{% endif %}">{{cantidad|floatformat:2}} €</a>
                 {% else %}
                     {{cantidad|floatformat:2}} €
               {% endif %}
