@@ -1,0 +1,73 @@
+[
+{
+ "fields": {
+  "nombre": "Donaci\u00f3n con factura",
+  "es_donacion": true,
+  "es_metalico": false,
+  "es_oficial": true,
+  "espacio": 1
+ },
+ "model": "contabilidad2.validacion",
+ "pk": 1
+},
+{
+ "fields": {
+  "nombre": "Donaci\u00f3n sin factura",
+  "es_donacion": true,
+  "es_metalico": false,
+  "es_oficial": false,
+  "espacio": 1
+ },
+ "model": "contabilidad2.validacion",
+ "pk": 2
+},
+{
+ "fields": {
+  "nombre": "En efectivo",
+  "es_donacion": false,
+  "es_metalico": true,
+  "es_oficial": false,
+  "espacio": 1
+ },
+ "model": "contabilidad2.validacion",
+ "pk": 3
+},
+{
+ "fields": {
+  "nombre": "En triodos",
+  "es_donacion": false,
+  "es_metalico": false,
+  "es_oficial": true,
+  "espacio": 1
+ },
+ "model": "contabilidad2.validacion",
+ "pk": 4
+},
+{
+ "fields": {
+  "nombre": "Compra inventariable",
+  "ayuda": "Cosas que perduran mas de 3 meses",
+  "espacio": 1
+ },
+ "model": "contabilidad2.categoria",
+ "pk": 1
+},
+{
+ "fields": {
+  "nombre": "Fungible/Consumible",
+  "ayuda": "Compras que duran <3 meses",
+  "espacio": 1
+ },
+ "model": "contabilidad2.categoria",
+ "pk": 2
+},
+{
+ "fields": {
+  "nombre": "Cuota",
+  "ayuda": "",
+  "espacio": 1
+ },
+ "model": "contabilidad2.categoria",
+ "pk": 3
+}
+]
