@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.sites.models import Site
 from django.http import Http404
 from django.views.generic import ListView
 from .models import Miembro
@@ -7,7 +8,10 @@ from .models import Miembro
 
 class SiteMixin(object):
     def dispatch(self, request, *args, **kwargs):
-        self.site = get_current_site(request)
+        try:
+            self.site = get_current_site(request)
+        except Site.DoesNotExist:
+            raise Http404
         # FIXME espacio-site debe ser un 1to1 no un fk
         self.espacio = self.site.espacio_set.first()
         if request.user.is_authenticated():
