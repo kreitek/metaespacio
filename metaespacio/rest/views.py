@@ -40,8 +40,8 @@ def spaceapi(request):
         "url": "https://kreitek.org",
         "location": {
             "address": "Colegio Nuryana, Calle San Francisco de Paula, San Cristobal de La Laguna, Santa Cruz de Tenerife, Spain",
-            "lon": 28.4787801,
-            "lat": -16.3256688
+            "lon": 28.480287,
+            "lat": -16.323105
         },
         "contact": {
             "email": "info@kreitek.org",
@@ -55,7 +55,7 @@ def spaceapi(request):
                 "open": "https://kreitek.org//sites/default/files/site_open.gif",
                 "closed": "https://kreitek.org//sites/default/files/site_closed.gif"
             },
-            "open": False
+            "open": None
         },
         "projects": [
             "https://github.com/kreitek",
