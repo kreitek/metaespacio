@@ -36,7 +36,7 @@ def spaceapi(request):
     context = {
         "api": "0.13",
         "space": "Kreitek",
-        "logo": "https://kreitek.org//sites/default/files/kreitek_imagen.jpg",
+        "logo": "https://metaespacio.kreitek.org/static/rest/logo.png",
         "url": "https://kreitek.org",
         "location": {
             "address": "Instituto Nuryana, Camino San Francisco de Paula 64 planta -2, San Cristobal de La Laguna, Santa Cruz de Tenerife, Spain",
@@ -52,14 +52,14 @@ def spaceapi(request):
         ],
         "state": {
             "icon": {
-                "open": "https://kreitek.org//sites/default/files/site_open.gif",
-                "closed": "https://kreitek.org//sites/default/files/site_closed.gif"
+                "open": "https://metaespacio.kreitek.org/static/rest/open.jpg",
+                "closed": "https://metaespacio.kreitek.org/static/rest/closed.jpg"
             },
             "open": None
         },
         "projects": [
-            "https://github.com/kreitek",
-            "https://wiki.kreitek.org"
+            "https://wiki.kreitek.org",
+            "https://github.com/kreitek"
         ]
     }
     response = JsonResponse(context)
