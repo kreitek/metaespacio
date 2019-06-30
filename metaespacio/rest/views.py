@@ -39,7 +39,7 @@ def spaceapi(request):
         "logo": "https://kreitek.org//sites/default/files/kreitek_imagen.jpg",
         "url": "https://kreitek.org",
         "location": {
-            "address": "Colegio Nuryana, Calle San Francisco de Paula, San Cristobal de La Laguna, Santa Cruz de Tenerife, Spain",
+            "address": "Instituto Nuryana, Camino San Francisco de Paula 64 planta -2, San Cristobal de La Laguna, Santa Cruz de Tenerife, Spain",
             "lon": 28.480287,
             "lat": -16.323105
         },
