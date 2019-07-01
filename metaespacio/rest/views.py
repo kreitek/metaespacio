@@ -52,8 +52,8 @@ def spaceapi(request):
         ],
         "state": {
             "icon": {
-                "open": "https://metaespacio.kreitek.org/static/rest/open.jpg",
-                "closed": "https://metaespacio.kreitek.org/static/rest/closed.jpg"
+                "open": "https://metaespacio.kreitek.org/static/rest/open.png",
+                "closed": "https://metaespacio.kreitek.org/static/rest/closed.png"
             },
             "open": None
         },
