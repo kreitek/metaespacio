@@ -13,6 +13,7 @@ urlpatterns = patterns(
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^espacios/', include('espacios.urls')),
     url(r'^contabilidad/', include('contabilidad.urls')),
+    url(r'^caronte/', include('caronte.urls')),
     # url(r'^biblioteca/', include('bibliotheca.urls')),
     # url(r'^api/', include('bibliotheca.api_urls)),
     url(r'^openid/', include('oidc_provider.urls', namespace='oidc_provider')),

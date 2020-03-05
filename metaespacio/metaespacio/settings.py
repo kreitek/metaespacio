@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'graphos',
     'contabilidad',
     'adjuntos',
+    'caronte',
     'rest',
     'rest_framework',
 )

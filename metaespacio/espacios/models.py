@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.utils import timezone
 from contabilidad.models import Cuenta
 
 
@@ -41,6 +42,18 @@ class Espacio(models.Model):
     www = models.URLField(blank=True, null=True)
     blog = models.URLField(blank=True, null=True)
     google_site = models.URLField(blank=True, null=True)
+
+    def esta_abierto(self, now=None):
+        if not now:
+            now = timezone.now()
+        qs = self.entradasalida_set.filter(entrada__gt=now, salida__isnull=True)
+        return qs.exists()
+
+    def cierra(self, now=None):
+        if not now:
+            now = timezone.now()
+        qs = self.entradasalida_set.filter(entrada__gt=now, salida__isnull=True)
+        qs.update(salida=now)
 
     def __unicode__(self):
         return "{}".format(self.nombre)

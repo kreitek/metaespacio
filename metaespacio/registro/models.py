@@ -25,9 +25,3 @@ class DatosPersonales(models.Model):
         verbose_name_plural = "datos personales"
 
 
-class Mac(models.Model):
-    user = models.ForeignKey(User)
-    mac = models.CharField(max_length=20)
-
-    def __unicode__(self):
-        return "{} ({})".format(self.mac, self.user)
