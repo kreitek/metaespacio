@@ -1,10 +1,9 @@
-from __future__ import unicode_literals
 from django.db import models
 
 
 class Cuenta(models.Model):
     nombre = models.CharField(max_length=255)
-    espacio = models.ForeignKey('espacios.Espacio')
+    espacio = models.ForeignKey('espacios.Espacio', on_delete=models.CASCADE)
     ver_miembros = models.BooleanField(default=True)
     signo = models.CharField(max_length=1, choices=(('+', '+'), ('-', '-')), default='+')
 
@@ -12,7 +11,7 @@ class Cuenta(models.Model):
     def signo_real(self):
         return 1 if self.signo == "+" else -1
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} ({})".format(self.nombre, self.signo)
 
     def suma(self):
@@ -37,7 +36,8 @@ class Cuenta(models.Model):
         return self.nombre_sin_prefijo(prefijo).split(":")[-1]
 
     def subnombre(self, prefijo=None):
-        if self.nombre.starswith(prefijo):
+        x = self.nombre
+        if x.startswith(prefijo):
             x = x[len(prefijo):]
             if x.startswith(":"):
                 x = x[1:]
@@ -45,11 +45,11 @@ class Cuenta(models.Model):
 
 
 class Asiento(models.Model):
-    espacio = models.ForeignKey('espacios.Espacio')
+    espacio = models.ForeignKey('espacios.Espacio', on_delete=models.CASCADE)
     concepto = models.CharField(max_length=255)
     fecha = models.DateField()
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} {}".format(self.concepto, self.fecha)
 
     def diferencia(self, prefijo=None):
@@ -60,10 +60,10 @@ class Asiento(models.Model):
 
 
 class Linea(models.Model):
-    asiento = models.ForeignKey(Asiento)
-    cuenta = models.ForeignKey(Cuenta)
+    asiento = models.ForeignKey(Asiento, on_delete=models.CASCADE)
+    cuenta = models.ForeignKey(Cuenta, on_delete=models.CASCADE)
     cantidad = models.FloatField()
-    miembro = models.ForeignKey('espacios.Miembro', blank=True, null=True)
+    miembro = models.ForeignKey('espacios.Miembro', blank=True, null=True, on_delete=models.SET_NULL)
     fecha = models.DateField(blank=True, null=True)
 
     @property
@@ -81,11 +81,11 @@ class Linea(models.Model):
         else:
             return "{}".format(self.cuenta.nombre)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.miembro:
             cuenta = "{} de {}".format(self.cuenta, self.miembro.user)
         else:
-            cuenta = unicode(self.cuenta)
+            cuenta = str(self.cuenta)
         return "{:+.2f} ({})".format(self.cantidad, cuenta)
 
     class Meta:

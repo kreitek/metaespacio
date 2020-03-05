@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from django.db import models
 import os
 
@@ -16,7 +14,7 @@ class Validacion(models.Model):
     es_metalico = models.BooleanField()
     es_oficial = models.BooleanField(help_text="Tiene factura o fue por el banco")
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre
 
     class Meta:
@@ -30,7 +28,7 @@ class Categoria(models.Model):
     nombre = models.CharField(max_length=255)
     ayuda = models.CharField(max_length=255, blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.ayuda:
             return "{} ({})".format(self.nombre, self.ayuda)
         else:
@@ -59,7 +57,7 @@ class Registro(models.Model):
     fecha_pago = models.DateField(verbose_name="fecha de pago", blank=True, null=True)
     notas = models.TextField(blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} {}".format(self.fecha_factura, self.concepto)
 
     class Meta:

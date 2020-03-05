@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-
 from django.contrib import admin
-from . import models
-from espacios.models import Espacio
 from espacios.admin import EspacioAdmin
+from espacios.models import Espacio
+from . import models
 
 
 class MensualidadInline(admin.TabularInline):
@@ -14,7 +12,7 @@ class MensualidadInline(admin.TabularInline):
 class PagoAdmin(admin.ModelAdmin):
     date_hierarchy = 'fecha'
     list_display = (
-        '__unicode__', 'fecha', 'cantidad', 'numero_mensualidades', 'pagado_a')
+        '__str__', 'fecha', 'cantidad', 'numero_mensualidades', 'pagado_a')
     list_filter = ('forma_pago__espacio', )
     inlines = [MensualidadInline, ]
 
@@ -48,6 +46,7 @@ class CategoriaPagoInline(admin.TabularInline):
 class EspacioAdmin2(EspacioAdmin):
     inlines = EspacioAdmin.inlines + \
         [FormaPagoInline, CategoriaPagoInline, CuotaPeriodicaInline]
+
 
 admin.site.unregister(Espacio)
 admin.site.register(Espacio, EspacioAdmin2)

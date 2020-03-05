@@ -9,5 +9,5 @@ def _upload_to(self, filename):
 
 
 class AdjuntoAsiento(models.Model):
-    asiento = models.ForeignKey(Asiento)
+    asiento = models.ForeignKey(Asiento, on_delete=models.CASCADE)
     fichero = models.FileField(upload_to=_upload_to)

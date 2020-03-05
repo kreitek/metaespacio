@@ -12,5 +12,6 @@ class AdjuntoInline(admin.TabularInline):
 class AsientoAdminNew(AsientoAdmin):
     inlines = AsientoAdmin.inlines + [AdjuntoInline]
 
+
 admin.site.unregister(Asiento)
 admin.site.register(Asiento, AsientoAdminNew)

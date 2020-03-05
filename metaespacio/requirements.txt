@@ -1,11 +1,11 @@
-django < 1.9
+django < 3
 django-crispy-forms
-django-localflavor < 2
+django-localflavor
 django-tastypie
-django-graphos==0.0.2a
-django-oidc-provider==0.1.2
-djangorestframework < 3.7
+django-graphos
+djangorestframework
 django_extensions
-django_debug_toolbar < 1.10
+django_debug_toolbar
 pillow
 gunicorn
+django-oidc-provider

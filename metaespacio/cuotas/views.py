@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from calendar import monthrange
 from collections import OrderedDict
 from datetime import timedelta, date
@@ -7,8 +5,8 @@ from django.contrib.auth.models import User
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView
-from graphos.sources.simple import SimpleDataSource
 from espacios.views import SiteMixin
+from graphos.sources.simple import SimpleDataSource
 from .gchart import ComboChart
 from .models import Mensualidad
 
@@ -74,7 +72,8 @@ class MensualidadListSuma(MensualidadList):
         comision = max(
             mensualidad.pago.forma_pago.comision_fija, comision_variable)
         cantidad = mensualidad.cantidad
-        if not context['usuario']: cantidad = cantidad - comision
+        if not context['usuario']:
+            cantidad = cantidad - comision
 
         # Se aplican las sumas
         tipos = mensualidad.pago.tiposDePago
@@ -154,7 +153,7 @@ class MensualidadListGraph(MensualidadListSuma):
                 [u'Meses'] + [x.nombre for x in context['columnas']] + [threshold])
             # Colores de las barras
             for i, x in enumerate(context['columnas']):
-                if x.color != "" and not x.color is None:
+                if x.color != "" and x.color is not None:
                     colors.append(x.color)
                 else:
                     colors.append(self.bar_colors[i % len(self.bar_colors)])

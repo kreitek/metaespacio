@@ -17,7 +17,8 @@ class CreateUser(CreateView):
         self.object.is_active = False
         self.object.set_password(form.cleaned_data["password1"])
         self.object.save()
-        messages.success(self.request, 'Creado usuario. El usuario está desactivado hasta que un administrador lo revise. ')
+        messages.success(self.request, 'Creado usuario. El usuario está desactivado ' +
+                         'hasta que un administrador lo revise. ')
         return redirect_url
 
 

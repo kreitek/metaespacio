@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from django import forms
 # from localflavor.es.forms import ESIdentityCardNumberField
 from django.contrib.auth.models import User
@@ -24,29 +22,30 @@ def cuenta_upper_lower_digits_other(cadena):
 PREGUNTAS_RESPUESTAS = [
     # FIXME estaria bien que el formulario escogiera una pregunta aleatoria
     # de estas, pero de momento no ponemos sino
-    (u"Duemilanove, uno, yun, leonardo, ... ¿que son?", "arduino"),
+    ("Duemilanove, uno, yun, leonardo, ... ¿que son?", "arduino"),
 ]
 
 
 class UserForm(forms.ModelForm):
     PASSWORD_HELP_TEXT = "Contraseña de un mínimo de 8 caracteres con una mayúscula, una minúscula y un número"
-    password1 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput, help_text=PASSWORD_HELP_TEXT)
-    password2 = forms.CharField(label=u"Contraseña", widget=forms.PasswordInput, help_text=PASSWORD_HELP_TEXT)
-    captcha = forms.CharField(label=u"Pregunta secreta", help_text=PREGUNTAS_RESPUESTAS[0][0])
+    password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput, help_text=PASSWORD_HELP_TEXT)
+    password2 = forms.CharField(label="Contraseña", widget=forms.PasswordInput, help_text=PASSWORD_HELP_TEXT)
+    captcha = forms.CharField(label="Pregunta secreta", help_text=PREGUNTAS_RESPUESTAS[0][0])
 
     def clean_captcha(self):
         respuesta = self.cleaned_data['captcha'].lower().strip()
         if respuesta != PREGUNTAS_RESPUESTAS[0][1]:
-            raise forms.ValidationError(u"Lo siento, pero para darte de alta tienes que responder correctamente a la pregunta secreta")
+            raise forms.ValidationError("Lo siento, pero para darte de alta tienes que responder "
+                                        "correctamente a la pregunta secreta")
         return respuesta
 
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.filter(username__iexact=username).count() > 0:
-            raise forms.ValidationError(u"El nombre de usuario está en uso")
+            raise forms.ValidationError("El nombre de usuario está en uso")
         # BUG: El mensaje de ayuda del username entra en contradicción con la siguiente validación
         if re.match(r"^([a-zA-Z0-9_])+$", username) is None:
-            raise forms.ValidationError(u"El nombre de usuario solo debe contener letras o cifras o _")
+            raise forms.ValidationError("El nombre de usuario solo debe contener letras o cifras o _")
         return username
 
     def clean_password1(self):
@@ -54,15 +53,15 @@ class UserForm(forms.ModelForm):
         upper, lower, digits, other = cuenta_upper_lower_digits_other(passwd)
         required = []
         if len(passwd) < 8:
-            required.append(u"8 caracteres")
+            required.append("8 caracteres")
         if upper == 0:
-            required.append(u"una mayúscula")
+            required.append("una mayúscula")
         if lower == 0:
-            required.append(u"una minúscula")
+            required.append("una minúscula")
         if digits == 0:
-            required.append(u"un número")
+            required.append("un número")
         if len(required) > 0:
-            msg = u"Requerido: {}".format(", ".join(required))
+            msg = "Requerido: {}".format(", ".join(required))
             raise forms.ValidationError(msg)
         return passwd
 

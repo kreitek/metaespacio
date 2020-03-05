@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
 from django.template import Library
-from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
+from django.urls import reverse
 
 register = Library()
 
@@ -12,7 +10,7 @@ def admin(context, *objs):
     out = ""
     if "user" in context and context["user"].is_superuser:
         for obj in objs:
-            if isinstance(obj, str) or isinstance(obj, unicode):
+            if isinstance(obj, str):
                 if obj:
                     app, model = obj.split("_", 1)
                     url = reverse('admin:{}_{}_add'.format(app, model))
@@ -22,4 +20,4 @@ def admin(context, *objs):
                 model = obj.__class__.__name__.lower()
                 url = reverse('admin:{}_{}_change'.format(app, model), args=[obj.pk])
                 out += '<a href="{}" target="admin" title="edit {} (pk={})" class="pull-right"><span class="glyphicon glyphicon-pencil"></span></a>'.format(url, model, obj.pk)
-    return out
+    return mark_safe(out)

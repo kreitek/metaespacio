@@ -1,8 +1,6 @@
-from __future__ import unicode_literals
-
 from django.contrib import admin
 from django.contrib import messages
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from .models import Cuenta, Asiento, Linea
@@ -66,6 +64,7 @@ class AsientoAdmin(admin.ModelAdmin):
 class CuentaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'espacio', 'signo', 'ver_miembros')
     list_filter = ("espacio", 'signo', 'ver_miembros')
+
 
 admin.site.register(Asiento, AsientoAdmin)
 admin.site.register(Cuenta, CuentaAdmin)

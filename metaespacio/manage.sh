@@ -9,7 +9,7 @@ set -e
 
 test -e .virtualenv || {
     log creando .virtualenv
-    virtualenv .virtualenv --python=python2
+    virtualenv .virtualenv --python=python3
 }
 
 log Activando .virtualenv

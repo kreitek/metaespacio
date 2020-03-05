@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from espacios.models import Espacio, Miembro
 
 
 class Encuesta(models.Model):
-    espacio = models.ForeignKey(Espacio)
+    espacio = models.ForeignKey(Espacio, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField()
     fecha_finalizacion = models.DateTimeField(blank=True, null=True)
     pregunta = models.CharField(max_length=255)
@@ -29,26 +26,26 @@ class Encuesta(models.Model):
     def miembro_count(self):
         return Miembro.objects.filter(voto__opcion__encuesta=self).order_by('pk').distinct().count()
 
-    def __unicode__(self):
+    def __str__(self):
         return "{}".format(self.pregunta)
 
 
 class Opcion(models.Model):
-    encuesta = models.ForeignKey(Encuesta)
+    encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE)
     eleccion = models.CharField(max_length=255)
     texto = models.TextField(blank=True)
 
     def voto_count(self):
         return self.voto_set.count()
 
-    def __unicode__(self):
+    def __str__(self):
         return "{}".format(self.eleccion)
 
 
 class Voto(models.Model):
-    miembro = models.ForeignKey(Miembro)
-    opcion = models.ForeignKey(Opcion)
+    miembro = models.ForeignKey(Miembro, on_delete=models.CASCADE)
+    opcion = models.ForeignKey(Opcion, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '{} vota {}'.format(self.miembro, self.opcion)

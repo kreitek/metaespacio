@@ -18,7 +18,7 @@ class EspacioAdmin(admin.ModelAdmin):
 
 
 class MiembroAdmin(admin.ModelAdmin):
-    list_display = ['__unicode__', 'fecha_alta']
+    list_display = ['__str__', 'fecha_alta']
     list_filter = ['espacio']
 
 

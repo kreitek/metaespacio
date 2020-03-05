@@ -93,7 +93,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
         # busqueda por cuenta
         anyo = self.request.GET.get('anyo')
         if anyo:
-            anyo = re.sub("\D", "", anyo)
+            anyo = re.sub(r"\D", "", anyo)
             query &= models.Q(asiento__fecha__year=anyo)
             self.filtros['anyo'] = anyo
 
@@ -109,7 +109,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
             query &= objeto_q_linea_futura(datetime.datetime.now().date())
             self.filtros['mensualidad'] = 'prevision'
         elif mensualidad.startswith('anterioridad'):
-            anyo = re.sub("\D", "", mensualidad)
+            anyo = re.sub(r"\D", "", mensualidad)
             if anyo:
                 query &= objeto_q_linea_anterior(datetime.datetime(int(anyo), 1, 31))
                 self.filtros['mensualidad'] = mensualidad
@@ -132,7 +132,7 @@ class LineaList(SiteMixin, MemberOnly, ListView):
     def get_context_data(self, **kwargs):
         context = super(LineaList, self).get_context_data(**kwargs)
         context['filtros'] = self.filtros
-        context['filtros_str'] = urllib.urlencode({k: v.encode('utf-8') for k, v in self.filtros.items()})
+        context['filtros_str'] = urllib.parse.urlencode({k: v.encode('utf-8') for k, v in self.filtros.items()})
         context['total'] = self.total
         return context
 
@@ -247,7 +247,7 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
             total[c.primer_nombre(prefijo)] += acc
 
         # El diccionario estara ordenado crecientemente. Recordar el orden.
-        if prefijo_anyo and not prefijo_anyo == unicode(fecha_ini.year):
+        if prefijo_anyo and not prefijo_anyo == str(fecha_ini.year):
             sumas_ante = [[0.0, c] for c in columnas]
             cuentas_futuras = cuentas_qs  \
                 .filter(objeto_q_cuenta_anterior(fechas['fecha__min'].replace(day=1)))  \
@@ -258,15 +258,14 @@ class ResumenPorMeses(SiteMixin, MemberOnly, TemplateView):
                 sumas_ante[index][0] += acc
                 total[c.primer_nombre(prefijo)] += acc
 
-
         context['prefijo'] = prefijo if prefijo else ""
         context['prefijo_anyo'] = prefijo_anyo if prefijo_anyo else ""
         context['columnas'] = columnas
         context['sumas'] = sumas
         context['anterioridad'] = sumas_ante if prefijo_anyo and \
-                not prefijo_anyo == unicode(fecha_ini.year) else ""
+            not prefijo_anyo == str(fecha_ini.year) else ""
         context['prevision'] = sumas_prev if not prefijo_anyo or \
-                unicode(fecha_hoy.year) == prefijo_anyo else ""
+            str(fecha_hoy.year) == prefijo_anyo else ""
         context['total'] = total
         context['cuentas_por_mes'] = cuentas_por_mes
         return context

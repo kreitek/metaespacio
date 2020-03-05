@@ -3,7 +3,8 @@ from . import models
 
 
 class PaginaAdmin(admin.ModelAdmin):
-    list_display = ['__unicode__', 'espacio', 'orden', 'menu']
+    list_display = ['__str__', 'espacio', 'orden', 'menu']
     list_filter = ['espacio']
+
 
 admin.site.register(models.Pagina, PaginaAdmin)

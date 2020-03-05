@@ -54,20 +54,32 @@ INSTALLED_APPS = (
     'rest_framework',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
 
-from django.conf import global_settings
-TEMPLATE_CONTEXT_PROCESSORS = \
-    global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-        'common.context_processor.site',
-    )
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'common.context_processor.site',
+            ],
+        },
+    },
+]
 
 ROOT_URLCONF = 'metaespacio.urls'
 
@@ -98,8 +110,6 @@ USE_L10N = True
 USE_TZ = True
 
 # SITE_ID = 1
-
-TEMPLATE_LOADERS = ('django.template.loaders.app_directories.Loader', )
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
@@ -151,7 +161,7 @@ if DEBUG:
     # en desarrollo no se usa
     ALLOWED_HOSTS = []
     INSTALLED_APPS += ('debug_toolbar', )
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 
 if PRODUCCION:
     # FIXME Esto revisarlo porque tampoco lo estamos poniendo aqui exactamente

@@ -1,8 +1,7 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from . import views as v
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^lineas/$', v.LineaList.as_view(), name="lineas"),
     url(r'^lineas/usuario/(?P<username>[\w_-]+)$', v.LineasUsuario.as_view(), name="lineas_usuario"),
     url(r'^cuentas/$', v.CuentasList.as_view(), name="cuentas"),
@@ -11,4 +10,4 @@ urlpatterns = patterns(
     url(r'^ledger$', v.Ledger.as_view(), name="ledger"),
     url(r'^oficial/$', v.Oficial.as_view(), name="oficial"),
     url(r'^oficial/(?P<year>\d+)$', v.Oficial.as_view(), name="oficial_year"),
-)
+]

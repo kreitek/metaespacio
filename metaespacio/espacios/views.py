@@ -14,7 +14,7 @@ class SiteMixin(object):
             raise Http404
         # FIXME espacio-site debe ser un 1to1 no un fk
         self.espacio = self.site.espacio_set.first()
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             self.miembro = Miembro.objects.filter(
                 user=request.user, espacio=self.espacio).first()
         else:
