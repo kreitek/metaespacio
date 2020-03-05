@@ -6,6 +6,6 @@ django-graphos==0.0.2a
 django-oidc-provider==0.1.2
 djangorestframework < 3.7
 django_extensions
-django_debug_toolbar
+django_debug_toolbar < 1.10
 pillow
 gunicorn
