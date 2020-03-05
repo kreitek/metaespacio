@@ -1,10 +1,14 @@
 from django.contrib import admin
 
-from .models import Lector, EntradaSalida
+from .models import Lector, Autorizacion, EntradaSalida
 
 
 class LectorAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'slug', 'espacio', 'last_uptime')
+
+
+class AutorizacionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'codigo')
 
 
 class EntradaSalidaAdmin(admin.ModelAdmin):
@@ -15,4 +19,5 @@ class EntradaSalidaAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Lector, LectorAdmin)
+admin.site.register(Autorizacion, AutorizacionAdmin)
 admin.site.register(EntradaSalida, EntradaSalidaAdmin)
