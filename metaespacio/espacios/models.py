@@ -46,7 +46,7 @@ class Espacio(models.Model):
     def esta_abierto(self, now=None):
         if not now:
             now = timezone.now()
-        qs = self.entradasalida_set.filter(entrada__gt=now, salida__isnull=True)
+        qs = self.entradasalida_set.filter(entrada__lt=now, salida__isnull=True)
         return qs.exists()
 
     def cierra(self, now=None):

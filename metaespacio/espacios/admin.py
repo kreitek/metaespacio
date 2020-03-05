@@ -10,7 +10,7 @@ class MiembroInline(admin.TabularInline):
 
 
 class EspacioAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'cuenta_miembros', 'site']
+    list_display = ['nombre', 'cuenta_miembros', 'site', 'esta_abierto']
     inlines = [MiembroInline, ]
 
     def cuenta_miembros(self, obj):
