@@ -35,4 +35,6 @@ def lector_keepalive(request, lector_slug):
     except Lector.DoesNotExist:
         return HttpResponse("KO")
     lector.uptime()
-    return HttpResponse("OK")
+    espacio = lector.espacio
+    msg = "{} {} {}".format(lector.nombre, espacio.nombre, "abierto" if espacio.esta_abierto else "cerrado")
+    return HttpResponse(msg)
